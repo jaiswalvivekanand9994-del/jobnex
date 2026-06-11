@@ -86,30 +86,30 @@ a{text-decoration:none;color:inherit}button{cursor:pointer;border:none;backgroun
 .s-signup-btn{padding:7px 15px;background:linear-gradient(135deg,var(--sf),var(--sf2));color:#fff;border-radius:9px;font-weight:700;font-size:.8rem;box-shadow:0 3px 0 var(--sfd);cursor:pointer;transition:var(--trs);font-family:var(--sans)}
 .s-signup-btn:hover{transform:translateY(-2px)}
 /* User profile pill in navbar */
-.s-user-pill{display:flex;align-items:center;gap:7px;padding:5px 12px 5px 6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:100px;cursor:pointer;transition:var(--tr);position:relative}
-.s-user-pill:hover{background:rgba(255,255,255,.14)}
+.s-user-pill{display:flex;align-items:center;gap:7px;padding:5px 13px 5px 5px;background:rgba(255,107,43,.15);border:1.5px solid rgba(255,107,43,.35);border-radius:100px;cursor:pointer;transition:var(--tr);position:relative}
+.s-user-pill:hover{background:rgba(255,107,43,.25);border-color:rgba(255,107,43,.5)}
 .s-user-av{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--sf),var(--gd));display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:800;color:#fff;flex-shrink:0}
 .s-user-name{font-size:.75rem;font-weight:600;color:#fff;max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 /* User dropdown */
-.s-user-dd{position:absolute;top:calc(100% + 9px);right:0;background:var(--nv2);border:1px solid rgba(255,255,255,.12);border-radius:var(--r2);width:200px;box-shadow:0 12px 40px rgba(0,0,0,.4);opacity:0;pointer-events:none;transform:translateY(-7px);transition:all .2s;z-index:600}
+.s-user-dd{position:absolute;top:calc(100% + 9px);right:0;background:var(--nv);border:1px solid rgba(255,107,43,.25);border-radius:var(--r2);width:220px;box-shadow:0 16px 48px rgba(0,0,0,.55);opacity:0;pointer-events:none;transform:translateY(-7px);transition:all .25s;z-index:1000}
 .s-user-dd.open{opacity:1;pointer-events:all;transform:translateY(0)}
-.su-head{padding:12px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:9px}
+.su-head{padding:14px;border-bottom:1px solid rgba(255,107,43,.2);display:flex;align-items:center;gap:10px;background:rgba(255,107,43,.08);border-radius:var(--r2) var(--r2) 0 0}
 .su-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--sf),var(--gd));display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;color:#fff}
 .su-name{font-size:.82rem;font-weight:700;color:#fff}
 .su-email{font-size:.65rem;color:rgba(255,255,255,.42);margin-top:1px}
-.su-item{display:flex;align-items:center;gap:8px;padding:9px 12px;cursor:pointer;font-size:.78rem;color:rgba(255,255,255,.65);transition:var(--tr);border-radius:var(--r);margin:3px 5px}
-.su-item:hover{background:rgba(255,255,255,.08);color:#fff}
+.su-item{display:flex;align-items:center;gap:9px;padding:10px 13px;cursor:pointer;font-size:.78rem;color:rgba(255,255,255,.72);transition:var(--tr);border-radius:var(--r);margin:2px 6px;font-weight:500}
+.su-item:hover{background:rgba(255,107,43,.12);color:#fff}
 .su-item.danger{color:var(--ro2)}
 .su-item.danger:hover{background:var(--rodim)}
-.su-sep{height:1px;background:rgba(255,255,255,.08);margin:3px 0}
+.su-sep{height:1px;background:rgba(255,255,255,.07);margin:4px 0}
 /* Auth Modal */
 #authOv{position:fixed;inset:0;z-index:5000;background:rgba(0,0,0,.75);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:18px}
 #authOv.open{display:flex}
 #authBox{background:var(--nv);border:1px solid rgba(255,255,255,.1);border-radius:var(--r3);padding:0;width:100%;max-width:420px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.5);transform:translateY(14px);transition:transform .25s}
 #authOv.open #authBox{transform:translateY(0)}
 .auth-tabs{display:flex;border-bottom:1px solid rgba(255,255,255,.08)}
-.auth-tab{flex:1;padding:14px;text-align:center;font-size:.82rem;font-weight:700;cursor:pointer;color:rgba(255,255,255,.45);transition:var(--tr);background:none;border:none;font-family:var(--sans)}
-.auth-tab.active{color:var(--sf2);border-bottom:2px solid var(--sf)}
+.auth-tab{flex:1;padding:14px;text-align:center;font-size:.84rem;font-weight:700;cursor:pointer;color:rgba(255,255,255,.45);transition:var(--tr);background:none;border:none;font-family:var(--sans);letter-spacing:.01em}
+.auth-tab.active{color:#fff;border-bottom:2.5px solid var(--sf);background:rgba(255,107,43,.07)}
 .auth-body{padding:24px}
 .auth-logo{text-align:center;margin-bottom:20px}
 .auth-logo-mark{width:44px;height:44px;border-radius:11px;background:linear-gradient(135deg,var(--sf),var(--gd));display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:1.1rem;font-weight:800;color:#fff;box-shadow:0 4px 14px rgba(255,107,43,.35)}
@@ -120,8 +120,8 @@ a{text-decoration:none;color:inherit}button{cursor:pointer;border:none;backgroun
 .auth-inp{width:100%;padding:10px 13px;border-radius:var(--r);border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;font-size:.85rem;outline:none;transition:var(--tr);font-family:var(--sans)}
 .auth-inp:focus{border-color:var(--sf);background:rgba(255,107,43,.07);box-shadow:0 0 0 3px rgba(255,107,43,.12)}
 .auth-inp::placeholder{color:rgba(255,255,255,.25)}
-.auth-submit{width:100%;padding:12px;border-radius:11px;background:linear-gradient(135deg,var(--sf),var(--sf2));color:#fff;font-size:.9rem;font-weight:800;cursor:pointer;box-shadow:0 5px 0 var(--sfd);transition:var(--tr);font-family:var(--sans);margin-top:4px}
-.auth-submit:hover{transform:translateY(-2px)}
+.auth-submit{width:100%;padding:13px;border-radius:11px;background:linear-gradient(135deg,var(--sf),var(--sf2));color:#fff;font-size:.9rem;font-weight:800;cursor:pointer;box-shadow:0 5px 0 var(--sfd);transition:var(--trs);font-family:var(--sans);margin-top:4px;letter-spacing:.02em}
+.auth-submit:hover{transform:translateY(-2px);box-shadow:0 7px 0 var(--sfd)}
 .auth-err{display:none;padding:9px 12px;background:rgba(244,63,94,.15);border:1px solid rgba(244,63,94,.25);border-radius:8px;font-size:.76rem;color:var(--ro2);margin-bottom:12px}
 .auth-divider{display:flex;align-items:center;gap:10px;margin:14px 0}
 .auth-divider span{font-size:.7rem;color:rgba(255,255,255,.25)}
@@ -140,7 +140,7 @@ a{text-decoration:none;color:inherit}button{cursor:pointer;border:none;backgroun
 .mob-nav.open{display:flex}
 .mob-link{padding:13px 14px;border-radius:11px;color:rgba(255,255,255,.75);font-size:.9rem;font-weight:600;display:flex;align-items:center;gap:9px;cursor:pointer;transition:var(--tr);border:1px solid transparent}
 .mob-link:hover{background:rgba(255,107,43,.1);color:var(--sf2);border-color:rgba(255,107,43,.2)}
-.a11y-bar{position:fixed;top:70px;right:14px;z-index:600;display:flex;gap:3px;background:rgba(10,22,40,.92);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:3px 7px;backdrop-filter:blur(12px)}
+.a11y-bar{position:fixed;top:70px;left:14px;z-index:600;display:flex;gap:3px;background:rgba(10,22,40,.92);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:3px 7px;backdrop-filter:blur(12px)}
 .a11y-btn{padding:4px 9px;border-radius:100px;font-size:.65rem;font-weight:700;cursor:pointer;color:rgba(255,255,255,.65);transition:var(--tr)}
 .a11y-btn:hover{background:rgba(255,107,43,.2);color:var(--sf2)}
 
@@ -704,7 +704,7 @@ tbody tr:hover td{background:var(--bg3);color:var(--tx)}
       <div class="s-user-dd" id="userDD">
         <div class="su-head">
           <div class="su-av" id="ddAv">U</div>
-          <div><div class="su-name" id="ddName">User</div><div class="su-email" id="ddEmail">user@email.com</div></div>
+          <div style="flex:1;min-width:0"><div class="su-name" id="ddName">User</div><div class="su-email" id="ddEmail">user@email.com</div><div style="margin-top:4px"><span style="font-size:.6rem;font-weight:800;padding:2px 7px;border-radius:100px;background:rgba(255,107,43,.2);color:var(--sf2);border:1px solid rgba(255,107,43,.3)">🆓 Free Plan</span></div></div>
         </div>
         <div style="padding:5px">
           <div class="su-item" onclick="showPage('latest');closeUserDD()">💼 Browse Jobs</div>
@@ -2202,6 +2202,8 @@ function updateAuthUI() {
     document.getElementById('userPillName').textContent = siteUser.name.split(' ')[0];
     document.getElementById('ddName').textContent   = siteUser.name;
     document.getElementById('ddEmail').textContent  = siteUser.email;
+    var planBadge = document.querySelector('.su-head span');
+    if(planBadge) { var p=siteUser.plan||'free'; planBadge.textContent = p==='pro'?'🚀 Pro Plan':p==='enterprise'?'💼 Enterprise':'🆓 Free Plan'; planBadge.style.background=p==='pro'?'rgba(255,107,43,.2)':p==='enterprise'?'rgba(139,92,246,.2)':'rgba(255,255,255,.08)'; planBadge.style.color=p==='pro'?'var(--sf2)':p==='enterprise'?'var(--vi2)':'rgba(255,255,255,.55)'; }
   } else {
     authBtns.style.display = 'flex';
     userPill.style.display = 'none';
