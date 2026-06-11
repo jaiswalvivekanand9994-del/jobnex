@@ -69,7 +69,7 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// ── SPA Fallback — serve index.html for all non-API routes ───────────────────
+// SPA Fallback — serve index.html for all non-API routes including /admin
 app.get('*', (req, res) => {
   if (req.path.startsWith('/api')) {
     return res.status(404).json({ success: false, message: 'API route not found' });

@@ -1,5 +1,5 @@
 {
-  "name": "multijob-india-backend",
+  "name": "jobnex-backend",
   "version": "1.0.0",
   "description": "Multi Job India — Node.js + MongoDB Backend API",
   "main": "server.js",

@@ -1579,7 +1579,94 @@ tbody tr:hover td{background:var(--bg3);color:var(--tx)}
   </div><div class="acard"><div class="atbl"><table><thead><tr><th>User</th><th>Email</th><th>State</th><th>Plan</th><th>Apps</th><th>Joined</th><th>Status</th><th>Actions</th></tr></thead><tbody id="usersTbl"></tbody></table></div></div></div>
   <div class="apage" id="page-employers"><div class="aph"><div><h2>Employers</h2><p>520 registered companies</p></div><div><button class="abtn ab-p ab-sm">+ Add Employer</button></div></div><div class="acard"><div class="atbl"><table><thead><tr><th>Company</th><th>Type</th><th>Jobs</th><th>Hired</th><th>Plan</th><th>Verified</th><th>Actions</th></tr></thead><tbody id="empTbl"></tbody></table></div></div></div>
   <div class="apage" id="page-applications"><div class="aph"><div><h2>Applications</h2><p>48 new pending review</p></div></div><div class="astats"><div class="astat"><div class="asl">Today</div><div class="asv">4,892</div><span class="adelta dup">↑ 12%</span></div><div class="astat"><div class="asl">Pending</div><div class="asv">48</div><span class="adelta ddn">Action needed</span></div><div class="astat"><div class="asl">Shortlisted</div><div class="asv">1,204</div><span class="adelta dup">↑ 34</span></div><div class="astat"><div class="asl">Rejected</div><div class="asv">892</div></div></div><div class="acard mt12"><div class="atbl"><table><thead><tr><th>Applicant</th><th>Job Applied</th><th>Applied On</th><th>AI Score</th><th>Status</th><th>Actions</th></tr></thead><tbody id="appsTbl"></tbody></table></div></div></div>
-  <div class="apage" id="page-adsense"><div class="aph"><div><h2>💰 Google AdSense</h2><p>Ad units, revenue and placements</p></div><div><button class="abtn ab-p ab-sm" onclick="showToast('Ad Unit Created','New slot added.','ok')">+ New Ad Unit</button></div></div><div class="astats"><div class="astat"><div class="asl">Today Earnings</div><div class="asv">₹3,240</div><span class="adelta dup">↑ 14.2%</span></div><div class="astat"><div class="asl">This Month</div><div class="asv">₹84,720</div><span class="adelta dup">↑ 8.6%</span></div><div class="astat"><div class="asl">Page RPM</div><div class="asv">₹18.40</div><span class="adelta dup">↑ ₹2.10</span></div><div class="astat"><div class="asl">CTR</div><div class="asv">2.84%</div><span class="adelta dup">↑ 0.3%</span></div></div><div class="ag64 mt12"><div class="acard"><div class="acard-tit">Daily Earnings (14 days)</div><div class="chart-box"><canvas id="adsChart"></canvas></div></div><div class="acard"><div class="acard-tit">Auto Ads Script</div><div style="background:var(--bg);border-radius:var(--r);padding:11px;font-family:var(--mono);font-size:.65rem;color:var(--tx2);line-height:1.6;margin-bottom:9px;word-break:break-all">&lt;script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"&gt;&lt;/script&gt;</div><button class="abtn ab-g ab-sm" onclick="showToast('Copied!','AdSense code copied.','ok')">📋 Copy Code</button></div></div></div>
+  <div class="apage" id="page-adsense">
+    <div class="aph">
+      <div><h2>💰 Google AdSense</h2><p>Full ad management, revenue analytics and placement tools</p></div>
+      <div style="display:flex;gap:6px">
+        <button class="abtn ab-g ab-sm" onclick="exportCSV()">📊 Export Revenue</button>
+        <button class="abtn ab-p ab-sm" onclick="openModal('newAdUnitModal')">+ New Ad Unit</button>
+      </div>
+    </div>
+
+    <!-- Publisher ID Banner -->
+    <div style="background:linear-gradient(135deg,rgba(245,158,11,.12),rgba(245,158,11,.05));border:1px solid rgba(245,158,11,.3);border-radius:var(--r2);padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <div style="width:38px;height:38px;border-radius:9px;background:rgba(245,158,11,.2);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0">💰</div>
+      <div style="flex:1;min-width:200px">
+        <div style="font-size:.7rem;font-weight:700;color:var(--gd);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Google AdSense Publisher ID</div>
+        <div style="font-family:var(--mono);font-size:.88rem;color:var(--tx);font-weight:600" id="pubIdDisplay">ca-pub-XXXXXXXXXXXXXXXX</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:7px">
+        <span class="pill p-g" style="font-size:.65rem">● Account Active</span>
+        <span class="pill p-b" style="font-size:.65rem">Auto Ads ON</span>
+        <button class="abtn ab-g ab-sm" onclick="var id=prompt('Enter your Publisher ID:','ca-pub-XXXXXXXXXXXXXXXX');if(id){document.getElementById('pubIdDisplay').textContent=id;showToast('Publisher ID Updated','Saved successfully.','ok');}">✏️ Edit ID</button>
+      </div>
+    </div>
+
+    <!-- Revenue Stats -->
+    <div class="astats">
+      <div class="astat"><div class="asl">Today's Earnings</div><div class="asv" style="color:var(--gd)">₹3,240</div><span class="adelta dup">↑ 14.2% vs yesterday</span><div class="as-ic" style="background:var(--gddim)">💰</div></div>
+      <div class="astat"><div class="asl">Monthly Total</div><div class="asv">₹84,720</div><span class="adelta dup">↑ 8.6% vs last month</span><div class="as-ic" style="background:var(--gddim)">📅</div></div>
+      <div class="astat"><div class="asl">Page RPM</div><div class="asv">₹18.40</div><span class="adelta dup">↑ ₹2.10</span><div class="as-ic" style="background:var(--skdim)">📈</div></div>
+      <div class="astat"><div class="asl">CTR</div><div class="asv">2.84%</div><span class="adelta dup">↑ 0.3% this week</span><div class="as-ic" style="background:var(--emdim)">🎯</div></div>
+    </div>
+    <div class="astats mt12">
+      <div class="astat"><div class="asl">Total Impressions</div><div class="asv">1.24M</div><span class="adelta dup">↑ 12.4%</span></div>
+      <div class="astat"><div class="asl">Total Clicks</div><div class="asv">35,216</div><span class="adelta dup">↑ 9.8%</span></div>
+      <div class="astat"><div class="asl">Est. Annual</div><div class="asv">₹10.2L</div><span class="adelta dup">On track</span></div>
+      <div class="astat"><div class="asl">Active Ad Units</div><div class="asv">8</div><span class="adelta dup">All running</span></div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="ag2 mt12">
+      <div class="acard">
+        <div class="acard-tit" style="color:var(--gd)">📈 Daily Earnings — Last 14 Days</div>
+        <div class="chart-box" style="height:220px"><canvas id="adsChart"></canvas></div>
+      </div>
+      <div class="acard">
+        <div class="acard-tit">🍩 Revenue by Ad Type</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:center">
+          <div class="chart-box" style="height:160px"><canvas id="adTypeChart"></canvas></div>
+          <div id="adTypeLegend" style="display:flex;flex-direction:column;gap:7px;padding-left:9px"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ad Units Table -->
+    <div class="acard mt12">
+      <div class="acard-tit">📋 Ad Units (8 Active) <span onclick="openModal('newAdUnitModal')" style="color:var(--sf)">+ Add Unit</span></div>
+      <div class="atbl">
+        <table>
+          <thead><tr><th>Unit Name</th><th>Format</th><th>Size</th><th>Impressions</th><th>Clicks</th><th>CTR</th><th>Today ₹</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="adUnitsTbl"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Code Snippets + Best Practices -->
+    <div class="ag2 mt12">
+      <div class="acard">
+        <div class="acard-tit">📋 Ready-to-Copy Code Snippets</div>
+        <div style="display:flex;flex-direction:column;gap:9px" id="adSnippets"></div>
+      </div>
+      <div class="acard">
+        <div class="acard-tit">✅ Best Practices</div>
+        <div id="adBestPractices" style="display:flex;flex-direction:column;gap:7px"></div>
+      </div>
+    </div>
+
+    <!-- Live Ad Slot Previews -->
+    <div class="acard mt12">
+      <div class="acard-tit">👁️ Live Ad Slot Previews — Where Ads Appear on Your Site</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:4px" id="adPreviews"></div>
+    </div>
+
+    <!-- Placement Map -->
+    <div class="acard mt12">
+      <div class="acard-tit">🗺️ Placement Map — Per-Page Ad Guide</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:4px" id="adPlacementMap"></div>
+    </div>
+
+  </div>
   <div class="apage" id="page-subscriptions"><div class="aph"><div><h2>💎 Subscriptions</h2><p>SaaS plan management and MRR tracking</p></div></div><div class="astats"><div class="astat"><div class="asl">Monthly Revenue</div><div class="asv">₹7.6L</div><span class="adelta dup">↑ 18.4%</span></div><div class="astat"><div class="asl">Pro Subscribers</div><div class="asv">1,792</div><span class="adelta dup">↑ 124</span></div><div class="astat"><div class="asl">Enterprise</div><div class="asv">48</div><span class="adelta dup">↑ 3</span></div><div class="astat"><div class="asl">Churn Rate</div><div class="asv">2.1%</div><span class="adelta ddn">Low</span></div></div><div class="ag3 mt12"><div class="acard" style="text-align:center"><div style="font-size:.65rem;font-weight:700;color:var(--tx3);text-transform:uppercase;margin-bottom:6px">Free Plan</div><div style="font-family:var(--disp);font-size:1.8rem;font-weight:800;color:var(--tx)">₹0</div><div style="font-family:var(--disp);font-size:1.4rem;font-weight:800;color:var(--em);margin:7px 0">3,18,740</div><div style="font-size:.68rem;color:var(--tx3)">Active users</div></div><div class="acard" style="text-align:center;border-color:var(--sf)"><div style="font-size:.65rem;font-weight:700;color:var(--sf);text-transform:uppercase;margin-bottom:6px">⭐ Pro Plan</div><div style="font-family:var(--disp);font-size:1.8rem;font-weight:800;color:var(--tx)">₹299</div><div style="font-family:var(--disp);font-size:1.4rem;font-weight:800;color:var(--sf);margin:7px 0">1,792</div><div style="font-size:.68rem;color:var(--tx3)">₹5.36L MRR</div></div><div class="acard" style="text-align:center;border-color:var(--vi)"><div style="font-size:.65rem;font-weight:700;color:var(--vi);text-transform:uppercase;margin-bottom:6px">Enterprise</div><div style="font-family:var(--disp);font-size:1.8rem;font-weight:800;color:var(--tx)">₹4,999</div><div style="font-family:var(--disp);font-size:1.4rem;font-weight:800;color:var(--vi);margin:7px 0">48</div><div style="font-size:.68rem;color:var(--tx3)">₹2.4L MRR</div></div></div><div class="acard mt12"><div class="acard-tit">Recent Subscriptions</div><div class="atbl"><table><thead><tr><th>User</th><th>Plan</th><th>Amount</th><th>Method</th><th>Date</th><th>Status</th></tr></thead><tbody id="subsTbl"></tbody></table></div></div></div>
   <div class="apage" id="page-payments">
   <div class="aph"><div><h2>💳 Payments</h2><p>Razorpay transaction history</p></div><div style="display:flex;gap:6px"><button class="abtn ab-g ab-sm" onclick="exportCSV()">📊 Export</button><button class="abtn ab-p ab-sm" onclick="showToast('Razorpay','Opening Razorpay dashboard...','info')">Open Razorpay →</button></div></div>
@@ -1670,6 +1757,18 @@ tbody tr:hover td{background:var(--bg3);color:var(--tx)}
   <div class="apage" id="page-private-jobs"><div class="aph"><div><h2>🏢 Private Jobs</h2></div><div><button class="abtn ab-p ab-sm" onclick="nav('add-job')">+ Add Private Job</button></div></div><div class="acard"><div class="atbl"><table><thead><tr><th>Title</th><th>Company</th><th>Salary</th><th>Location</th><th>Applied</th><th>Status</th><th>Actions</th></tr></thead><tbody id="pvtJobsTbl"></tbody></table></div></div></div>
 
   <!-- MODALS -->
+  <div class="amov" id="newAdUnitModal">
+    <div class="amo">
+      <div class="amo-hd"><div class="amo-tit">+ Create New Ad Unit</div><div class="amo-cls" onclick="closeModal('newAdUnitModal')">✕</div></div>
+      <div class="arow"><div><label class="albl">Unit Name *</label><input type="text" class="ainp" placeholder="e.g. Homepage Leaderboard"></div></div>
+      <div class="arow c2"><div><label class="albl">Ad Format</label><select class="asel"><option>Display</option><option>In-feed</option><option>In-article</option><option>Matched content</option><option>Link unit</option></select></div><div><label class="albl">Ad Size</label><select class="asel"><option>Responsive (Auto)</option><option>728×90 Leaderboard</option><option>300×250 Rectangle</option><option>160×600 Wide Skyscraper</option><option>320×50 Mobile Banner</option><option>Fluid (In-feed)</option></select></div></div>
+      <div class="arow"><div><label class="albl">Placement</label><select class="asel"><option>Below Navbar (All pages)</option><option>Job Cards Grid (In-feed)</option><option>Job Detail Sidebar</option><option>News Page Feed</option><option>Mobile Footer Anchor</option><option>Homepage CTA Section</option></select></div></div>
+      <div class="arow"><div><label class="albl">Ad Unit ID (from AdSense)</label><input type="text" class="ainp" placeholder="e.g. 1234567890"></div></div>
+      <div class="arow"><div><label class="albl">Notes</label><input type="text" class="ainp" placeholder="Optional notes about this unit"></div></div>
+      <div class="amo-ft"><button class="abtn ab-g" onclick="closeModal('newAdUnitModal')">Cancel</button><button class="abtn ab-p" onclick="closeModal('newAdUnitModal');showToast('Ad Unit Created!','New unit added and active.','ok')">Create Unit</button></div>
+    </div>
+  </div>
+
   <div class="amov" id="addJobModal">
     <div class="amo">
       <div class="amo-hd"><div class="amo-tit">+ Add New Job</div><div class="amo-cls" onclick="closeModal('addJobModal')">✕</div></div>
@@ -2053,6 +2152,7 @@ function getViews(id) {
 function trackView(id) { var k='v_'+id, v=Number(localStorage.getItem(k)||100)+1; localStorage.setItem(k,v); }
 
 // ============ DARK MODE / A11Y ============
+function toggleDark() { document.body.classList.toggle('dark-site'); showToast('Theme','Dark mode toggled.','info'); }
 function toggleHC() { document.body.classList.toggle('hc'); showToast('Accessibility','High contrast toggled.','info'); }
 function changeFS(d) { var r = parseFloat(getComputedStyle(document.documentElement).fontSize)||16; document.documentElement.style.fontSize = Math.min(Math.max(r+d*2,12),24)+'px'; showToast('Font size','Adjusted font size.','info'); }
 
@@ -2424,10 +2524,203 @@ function initAnalyticsCharts() {
 }
 
 function initAdsChart() {
-  var el = document.getElementById('adsChart'); if(!el) return;
-  if(el._chart) el._chart.destroy();
-  var days = ['Jun 1','Jun 3','Jun 5','Jun 7','Jun 9','Jun 11'];
-  el._chart = new Chart(el, {type:'bar',data:{labels:days,datasets:[{label:'Earnings (₹)',data:[2840,3120,2960,3480,3240,3840],backgroundColor:'rgba(245,158,11,.7)',borderRadius:5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#9BA3BC',font:{size:10}}}},scales:{x:{ticks:{color:'#5C6480',font:{size:9}},grid:{color:'rgba(42,47,62,.5)'}},y:{ticks:{color:'#5C6480',font:{size:9}},grid:{color:'rgba(42,47,62,.5)'}}}}});
+  // 1. Daily Earnings Line Chart (14 days, gold)
+  var el = document.getElementById('adsChart');
+  if(el) {
+    if(el._chart) el._chart.destroy();
+    var days14 = ['Jun 1','Jun 2','Jun 3','Jun 4','Jun 5','Jun 6','Jun 7','Jun 8','Jun 9','Jun 10','Jun 11','Jun 12','Jun 13','Jun 14'];
+    var earnings = [2840,3120,2680,3480,3240,3840,2920,3560,3180,3640,3240,3920,3480,4120];
+    el._chart = new Chart(el, {
+      type:'line',
+      data:{ labels:days14, datasets:[{
+        label:'Earnings (₹)', data:earnings,
+        borderColor:'#F59E0B', backgroundColor:'rgba(245,158,11,.12)',
+        tension:.4, fill:true, pointBackgroundColor:'#F59E0B',
+        pointRadius:3, pointHoverRadius:6
+      }]},
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{
+          legend:{labels:{color:'#9BA3BC',font:{size:10}}},
+          tooltip:{ callbacks:{ label:function(c){ return ' ₹'+c.parsed.y.toLocaleString('en-IN'); } } }
+        },
+        scales:{
+          x:{ticks:{color:'#5C6480',font:{size:9}},grid:{color:'rgba(42,47,62,.5)'}},
+          y:{ticks:{color:'#5C6480',font:{size:9},callback:function(v){return '₹'+v.toLocaleString('en-IN');}},grid:{color:'rgba(42,47,62,.5)'}}
+        }
+      }
+    });
+  }
+
+  // 2. Revenue by Ad Type Doughnut
+  var el2 = document.getElementById('adTypeChart');
+  if(el2) {
+    if(el2._chart) el2._chart.destroy();
+    var types = ['Display','In-feed','In-article','Anchor'];
+    var typeData = [42,28,18,12];
+    var typeColors = ['#F59E0B','#FF6B2B','#38BDF8','#10B981'];
+    el2._chart = new Chart(el2, {
+      type:'doughnut',
+      data:{ labels:types, datasets:[{data:typeData,backgroundColor:typeColors,borderWidth:0}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},cutout:'68%'}
+    });
+    var leg = document.getElementById('adTypeLegend');
+    if(leg) leg.innerHTML = types.map(function(t,i){
+      return '<div style="display:flex;align-items:center;gap:6px">'
+        +'<div style="width:8px;height:8px;border-radius:50%;background:'+typeColors[i]+';flex-shrink:0"></div>'
+        +'<span style="font-size:.68rem;color:var(--tx2);flex:1">'+t+'</span>'
+        +'<span style="font-size:.68rem;font-weight:700;color:var(--tx)">'+typeData[i]+'%</span>'
+        +'</div>';
+    }).join('');
+  }
+
+  // 3. Ad Units Table
+  renderAdUnitsTbl();
+
+  // 4. Code Snippets
+  renderAdSnippets();
+
+  // 5. Best Practices
+  renderAdBestPractices();
+
+  // 6. Live Ad Previews
+  renderAdPreviews();
+
+  // 7. Placement Map
+  renderAdPlacementMap();
+}
+
+function renderAdUnitsTbl() {
+  var el = document.getElementById('adUnitsTbl'); if(!el) return;
+  var units = [
+    {name:'Homepage Leaderboard',   fmt:'Display',   size:'728×90',   imp:'124,820', clk:'3,544', ctr:'2.84%', earn:'₹1,240', status:'Active'},
+    {name:'Job Cards In-feed',      fmt:'In-feed',   size:'Fluid',    imp:'98,420',  clk:'2,952', ctr:'3.00%', earn:'₹840',   status:'Active'},
+    {name:'Job Detail Sidebar',     fmt:'Display',   size:'300×250',  imp:'76,840',  clk:'1,844', ctr:'2.40%', earn:'₹620',   status:'Active'},
+    {name:'News Feed In-article',   fmt:'In-article',size:'Fluid',    imp:'54,210',  clk:'1,626', ctr:'3.00%', earn:'₹380',   status:'Active'},
+    {name:'Mobile Footer Anchor',   fmt:'Anchor',    size:'320×50',   imp:'48,924',  clk:'1,224', ctr:'2.50%', earn:'₹280',   status:'Active'},
+    {name:'Education Page Display', fmt:'Display',   size:'300×250',  imp:'32,840',  clk:'788',   ctr:'2.40%', earn:'₹180',   status:'Active'},
+    {name:'Govt Jobs Leaderboard',  fmt:'Display',   size:'728×90',   imp:'28,420',  clk:'568',   ctr:'2.00%', earn:'₹124',   status:'Paused'},
+    {name:'Resume Builder Banner',  fmt:'Display',   size:'468×60',   imp:'18,240',  clk:'328',   ctr:'1.80%', earn:'₹64',    status:'Draft'}
+  ];
+  el.innerHTML = units.map(function(u){
+    var sc = u.status==='Active'?'p-g':u.status==='Paused'?'p-a':'p-gr';
+    return '<tr>'
+      +'<td class="tdp">'+u.name+'</td>'
+      +'<td><span class="pill p-b">'+u.fmt+'</span></td>'
+      +'<td class="tdm">'+u.size+'</td>'
+      +'<td>'+u.imp+'</td>'
+      +'<td>'+u.clk+'</td>'
+      +'<td style="color:var(--em);font-weight:700">'+u.ctr+'</td>'
+      +'<td style="color:var(--gd);font-weight:700">'+u.earn+'</td>'
+      +'<td><span class="pill '+sc+'">'+u.status+'</span></td>'
+      +'<td><button class="abtn ab-g ab-xs" style="margin-right:3px" onclick="showToast(\'Get Code\',\'Code copied to clipboard!\',\'ok\')">📋 Code</button>'
+      +'<button class="abtn ab-d ab-xs" onclick="showToast(\'Paused\',\'Ad unit paused.\',\'info\')">⏸</button></td>'
+      +'</tr>';
+  }).join('');
+}
+
+function renderAdSnippets() {
+  var el = document.getElementById('adSnippets'); if(!el) return;
+  var snippets = [
+    {
+      name:'1. Auto Ads — Paste in <head>',
+      icon:'🔧',
+      code:'&lt;script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"&gt;&lt;/script&gt;'
+    },
+    {
+      name:'2. Leaderboard 728×90',
+      icon:'📰',
+      code:'&lt;ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"&gt;&lt;/ins&gt;'
+    },
+    {
+      name:'3. In-feed Fluid (Job Cards)',
+      icon:'🃏',
+      code:'&lt;ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-fb+5w+4e-db+86" data-ad-client="ca-pub-XXXX" data-ad-slot="9876543210"&gt;&lt;/ins&gt;'
+    },
+    {
+      name:'4. Sidebar 300×250 Rectangle',
+      icon:'📦',
+      code:'&lt;ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-XXXX" data-ad-slot="1122334455"&gt;&lt;/ins&gt;'
+    },
+    {
+      name:'5. Anchor / Sticky Footer',
+      icon:'📌',
+      code:'Auto Ads handles anchor automatically. Enable in AdSense Dashboard → Auto Ads → Anchor Ads toggle ON.'
+    }
+  ];
+  el.innerHTML = snippets.map(function(s){
+    return '<div style="background:var(--bg3);border-radius:var(--r);border:1px solid var(--bd)">'
+      +'<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 11px;border-bottom:1px solid var(--bd)">'
+      +'<span style="font-size:.72rem;font-weight:700;color:var(--gd)">'+s.icon+' '+s.name+'</span>'
+      +'<button class="abtn ab-g ab-xs" onclick="showToast(\'Copied!\',\'Paste it into your HTML.\',\'ok\')">📋 Copy</button>'
+      +'</div>'
+      +'<div style="padding:9px 11px;font-family:var(--mono);font-size:.62rem;color:var(--tx2);line-height:1.6;word-break:break-all">'+s.code+'</div>'
+      +'</div>';
+  }).join('');
+}
+
+function renderAdBestPractices() {
+  var el = document.getElementById('adBestPractices'); if(!el) return;
+  var dos = [
+    {ok:true,  icon:'✅', txt:'Max 3 ads per page — Google recommends quality over quantity'},
+    {ok:true,  icon:'✅', txt:'Place at least one ad above the fold for best RPM'},
+    {ok:true,  icon:'✅', txt:'Always use Responsive / Auto size for mobile compatibility'},
+    {ok:true,  icon:'✅', txt:'In-feed ads between job cards get 3× higher CTR'},
+    {ok:false, icon:'❌', txt:'Never click your own ads — instant account ban'},
+    {ok:false, icon:'❌', txt:'Never place ads that overlap content or mislead users'},
+    {ok:false, icon:'❌', txt:'Never hide ads or place them off-screen'},
+    {ok:false, icon:'❌', txt:'Avoid more than 2 ads on mobile — hurts Core Web Vitals'}
+  ];
+  el.innerHTML = dos.map(function(d){
+    var bg = d.ok ? 'rgba(16,185,129,.07)' : 'rgba(244,63,94,.07)';
+    var bd = d.ok ? 'rgba(16,185,129,.2)' : 'rgba(244,63,94,.2)';
+    var tc = d.ok ? 'var(--em)' : 'var(--ro)';
+    return '<div style="display:flex;gap:9px;padding:9px 11px;background:'+bg+';border:1px solid '+bd+';border-radius:var(--r);align-items:flex-start">'
+      +'<span style="font-size:.9rem;flex-shrink:0;margin-top:1px">'+d.icon+'</span>'
+      +'<span style="font-size:.73rem;color:var(--tx2);line-height:1.5">'+d.txt+'</span>'
+      +'</div>';
+  }).join('');
+}
+
+function renderAdPreviews() {
+  var el = document.getElementById('adPreviews'); if(!el) return;
+  var previews = [
+    {name:'Below Navbar',      size:'728×90', pos:'Top of every page',    color:'var(--gd)'},
+    {name:'Job Cards In-feed', size:'Fluid',  pos:'Between job listings',  color:'var(--sf)'},
+    {name:'Job Detail Sidebar',size:'300×250',pos:'Right sidebar',          color:'var(--sk)'},
+    {name:'News Article',      size:'Fluid',  pos:'Mid-article',            color:'var(--vi)'},
+    {name:'Mobile Footer',     size:'320×50', pos:'Sticky bottom on mobile',color:'var(--em)'},
+    {name:'Education Page',    size:'300×250',pos:'Course grid',             color:'var(--ro)'}
+  ];
+  el.innerHTML = previews.map(function(p){
+    return '<div style="border:2px dashed '+p.color+'33;border-radius:var(--r2);padding:14px;text-align:center;background:'+p.color+'08;cursor:default" title="'+p.name+'">'
+      +'<div style="font-size:.62rem;font-weight:700;color:'+p.color+';text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">'+p.name+'</div>'
+      +'<div style="background:'+p.color+'15;border:1px dashed '+p.color+'44;border-radius:6px;padding:12px 8px;margin-bottom:6px">'
+      +'<div style="font-size:.68rem;color:'+p.color+';font-weight:600">Ad Slot</div>'
+      +'<div style="font-family:var(--mono);font-size:.58rem;color:var(--tx3);margin-top:2px">'+p.size+'</div>'
+      +'</div>'
+      +'<div style="font-size:.65rem;color:var(--tx3)">📍 '+p.pos+'</div>'
+      +'</div>';
+  }).join('');
+}
+
+function renderAdPlacementMap() {
+  var el = document.getElementById('adPlacementMap'); if(!el) return;
+  var pages = [
+    {page:'🏠 Home',         ads:['Below navbar (728×90)','Job cards in-feed','Footer banner']},
+    {page:'⚡ Job Listings', ads:['Top leaderboard','Between jobs (in-feed)','Sidebar 300×250']},
+    {page:'💼 Job Detail',   ads:['Below job title','Sidebar sticky 300×250','Related jobs section']},
+    {page:'📰 News',         ads:['In-article (mid content)','Below headline (728×90)']},
+    {page:'🎓 Education',    ads:['Between course cards','Course detail sidebar']},
+    {page:'📱 Mobile',       ads:['Anchor sticky footer (320×50)','In-feed only — no sidebar']}
+  ];
+  el.innerHTML = pages.map(function(p){
+    return '<div class="acard" style="padding:13px">'
+      +'<div style="font-size:.8rem;font-weight:700;color:var(--tx);margin-bottom:9px;border-bottom:1px solid var(--bd);padding-bottom:7px">'+p.page+'</div>'
+      +'<div style="display:flex;flex-direction:column;gap:5px">'
+      +p.ads.map(function(a){ return '<div style="display:flex;gap:6px;font-size:.7rem;color:var(--tx2)"><span style="color:var(--gd);flex-shrink:0">▶</span>'+a+'</div>'; }).join('')
+      +'</div></div>';
+  }).join('');
 }
 
 function initWeeklyChart() {
@@ -2470,30 +2763,55 @@ function renderPrivateJobsTable() {
 
 function renderUsersTable() {
   var el = document.getElementById('usersTbl'); if(!el) return;
-  // Merge real signup users + sample users
   var realUsers = JSON.parse(localStorage.getItem('siteUsers') || '[]');
   var sampleUsers = [
-    {name:'Aarav Sharma',email:'aarav@gmail.com',state:'Delhi',plan:'Pro',apps:24,joined:'Jun 10, 2025'},
-    {name:'Priya Singh',email:'priya@gmail.com',state:'Mumbai',plan:'Free',apps:8,joined:'Jun 9, 2025'},
-    {name:'Rohit Kumar',email:'rohit@gmail.com',state:'Bangalore',plan:'Pro',apps:41,joined:'Jun 8, 2025'},
-    {name:'Sunita Devi',email:'sunita@gmail.com',state:'Chennai',plan:'Free',apps:3,joined:'Jun 7, 2025'},
-    {name:'Vikram Patel',email:'vikram@gmail.com',state:'Hyderabad',plan:'Pro',apps:19,joined:'Jun 6, 2025'}
+    {name:'Aarav Sharma',  email:'aarav@gmail.com',  state:'Delhi',     plan:'Pro',  apps:24, joined:'Jun 10, 2025'},
+    {name:'Priya Singh',   email:'priya@gmail.com',  state:'Mumbai',    plan:'Free', apps:8,  joined:'Jun 9, 2025'},
+    {name:'Rohit Kumar',   email:'rohit@gmail.com',  state:'Bangalore', plan:'Pro',  apps:41, joined:'Jun 8, 2025'},
+    {name:'Sunita Devi',   email:'sunita@gmail.com', state:'Chennai',   plan:'Free', apps:3,  joined:'Jun 7, 2025'},
+    {name:'Vikram Patel',  email:'vikram@gmail.com', state:'Hyderabad', plan:'Pro',  apps:19, joined:'Jun 6, 2025'}
   ];
-  var allUsers = realUsers.map(function(u){ return {name:u.name,email:u.email,state:u.state||'—',plan:u.plan||'Free',apps:0,joined:u.joined?new Date(u.joined).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'Just now'}; }).concat(sampleUsers);
-  var el2 = document.getElementById('userCount'); if(el2) el2.textContent = allUsers.length.toLocaleString('en-IN')+' users';
-  el.innerHTML = allUsers.map(function(u){
-    var initials = u.name.split(' ').map(function(n){return n[0];}).join('').toUpperCase().slice(0,2);
-    return '<tr>'
-      +'<td><div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--sf),var(--gd));display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:800;color:#fff;flex-shrink:0">'+initials+'</div><div><div class="tdp">'+u.name+'</div></div></div></td>'
-      +'<td class="tdm">'+u.email+'</td>'
-      +'<td>'+u.state+'</td>'
-      +'<td>'+makeStatusPill(u.plan)+'</td>'
-      +'<td>'+u.apps+'</td>'
-      +'<td>'+u.joined+'</td>'
-      +'<td>'+makeStatusPill('Active')+'</td>'
-      +'<td><button class="abtn ab-g ab-xs" onclick=\"showToast(u.name,u.email,\'info\')\" >View</button></td>'
-      +'</tr>';
-  }).join('');
+  var realMapped = realUsers.map(function(u){
+    return {
+      name:   u.name,
+      email:  u.email,
+      state:  u.state || '—',
+      plan:   u.plan   ? (u.plan.charAt(0).toUpperCase()+u.plan.slice(1)) : 'Free',
+      apps:   0,
+      joined: u.joined ? new Date(u.joined).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}) : 'Just now'
+    };
+  });
+  var allUsers = realMapped.concat(sampleUsers);
+  var el2 = document.getElementById('userCount');
+  if(el2) el2.textContent = allUsers.length.toLocaleString('en-IN') + ' registered users';
+  var tu = document.getElementById('totalUsersCount'); if(tu) tu.textContent = (allUsers.length + 324000).toLocaleString('en-IN');
+  var nu = document.getElementById('newUsersCount');   if(nu) nu.textContent = '+' + realMapped.length;
+  var pu = document.getElementById('proUsersCount');
+  if(pu) pu.textContent = allUsers.filter(function(u){ return u.plan==='Pro'; }).length.toLocaleString('en-IN');
+  el.innerHTML = allUsers.length === 0
+    ? '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--tx3)">No users yet. Share your site to get sign-ups!</td></tr>'
+    : allUsers.map(function(u){
+        var initials = u.name.split(' ').map(function(n){ return n[0]; }).join('').toUpperCase().slice(0,2);
+        var planClass = u.plan==='Pro' ? 'p-o' : u.plan==='Enterprise' ? 'p-v' : 'p-gr';
+        var safeName  = u.name.replace(/['"\\]/g,'');
+        var safeEmail = u.email.replace(/['"\\]/g,'');
+        return '<tr>'
+          + '<td><div style="display:flex;align-items:center;gap:9px">'
+          +   '<div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--sf),var(--gd));display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:800;color:#fff;flex-shrink:0">' + initials + '</div>'
+          +   '<div><div class="tdp" style="white-space:nowrap">' + u.name + '</div></div>'
+          + '</div></td>'
+          + '<td class="tdm" style="color:var(--sk)">' + u.email + '</td>'
+          + '<td>' + u.state + '</td>'
+          + '<td><span class="pill ' + planClass + '">' + u.plan + '</span></td>'
+          + '<td style="text-align:center">' + u.apps + '</td>'
+          + '<td style="white-space:nowrap">' + u.joined + '</td>'
+          + '<td><span class="pill p-g">● Active</span></td>'
+          + '<td>'
+          +   '<button class="abtn ab-g ab-xs" style="margin-right:3px" onclick="showToast(\'' + safeName + '\',\'' + safeEmail + '\',\'info\')">View</button>'
+          +   '<button class="abtn ab-d ab-xs" onclick="showToast(\'Deleted\',\'' + safeName + ' removed\',\'info\')">Del</button>'
+          + '</td>'
+          + '</tr>';
+      }).join('');
 }
 
 function renderEmployersTable() {
