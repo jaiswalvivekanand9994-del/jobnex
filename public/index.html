@@ -11,32 +11,40 @@
 <meta property="og:title" content="JobNex — AI Powered Job Portal India">
 <meta property="og:description" content="JobNex.in — Find 12,000+ Govt & Private Jobs. AI-matched. Fast. Easy.">
 <meta property="og:url" content="https://jobnex.in/">
+<meta property="og:image" content="https://jobnex.in/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:image" content="https://jobnex.in/og-image.png">
+<meta name="twitter:site" content="@JobNexIn">
+<meta name="twitter:creator" content="@JobNexIn">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://jobnex.in/">
 <title>JobNex — AI Powered Job Portal India 🇮🇳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 :root{
-  --sf:#FF6B2B;--sf2:#FF8C55;--sfd:#CC4400;--sfdim:rgba(255,107,43,.12);
-  --nv:#0A1628;--nv2:#122040;--nv3:#1C3461;
+  --sf:#8B5CF6;--sf2:#A78BFA;--sfd:#6D28D9;--sfdim:rgba(139,92,246,.15);
+  --nv:#0D0B1A;--nv2:#130F24;--nv3:#1A1430;
   --em:#10B981;--em2:#34D399;--emdim:rgba(16,185,129,.12);
-  --gd:#F59E0B;--gd2:#FCD34D;--gddim:rgba(245,158,11,.12);
+  --gd:#C4B5FD;--gd2:#DDD6FE;--gddim:rgba(196,181,253,.15);
   --sk:#38BDF8;--sk2:#7DD3FC;--skdim:rgba(56,189,248,.12);
-  --vi:#8B5CF6;--vi2:#A78BFA;--vidim:rgba(139,92,246,.12);
+  --vi:#EC4899;--vi2:#F472B6;--vidim:rgba(236,72,153,.12);
   --ro:#F43F5E;--ro2:#FB7185;--rodim:rgba(244,63,94,.12);
-  --bg:#0D0F14;--bg2:#13161D;--bg3:#1A1E28;--bg4:#222736;
-  --bd:#2A2F3E;--bd2:#363D52;
-  --tx:#F0F2F8;--tx2:#9BA3BC;--tx3:#5C6480;
-  --sbg:#F8F9FF;--scard:#FFFFFF;--stx:#0F172A;
-  --ssub:#475569;--smt:#94A3B8;--sbdr:#E2E8F0;
+  --bg:#0D0B1A;--bg2:#130F24;--bg3:#1A1430;--bg4:#221C3C;
+  --bd:rgba(139,92,246,.15);--bd2:rgba(139,92,246,.22);
+  --tx:#F5F0FF;--tx2:#A89DC0;--tx3:#6B5F85;
+  --sbg:#F5F3FF;--scard:#FFFFFF;--stx:#2E1065;
+  --ssub:#374151;--smt:#6B7280;--sbdr:#DDD6FE;
   --r:10px;--r2:14px;--r3:20px;
   --sh:0 2px 8px rgba(0,0,0,.08);--shm:0 6px 24px rgba(0,0,0,.12);--shl:0 14px 48px rgba(0,0,0,.18);
   --tr:all .2s ease;--trs:all .3s cubic-bezier(.34,1.56,.64,1);
   --sb:240px;--tb:60px;
   --sans:'Plus Jakarta Sans',sans-serif;--disp:'Baloo 2',cursive;--mono:'JetBrains Mono',monospace;
 }
-body.dark-site{--sbg:#0F172A;--scard:#1E293B;--stx:#F1F5F9;--ssub:#94A3B8;--smt:#64748B;--sbdr:#334155}
+body.dark-site{--sbg:#0D0B1A;--scard:#130F24;--stx:#F5F0FF;--ssub:#C4B5FD;--smt:#A78BFA;--sbdr:#1A1430}
 body.hc{
   --sbg:#FFFDE7;--scard:#FFFFFF;--stx:#000000;--ssub:#1A1A1A;
   --sbdr:#000000;--smt:#333333;
@@ -78,12 +86,12 @@ a{text-decoration:none;color:inherit}button{cursor:pointer;border:none;backgroun
 .sicon-btn:hover{background:rgba(255,107,43,.2);color:var(--sf2)}
 .slang-btn{padding:5px 10px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.75);font-size:.72rem;font-weight:700;cursor:pointer;transition:var(--tr)}
 .slang-btn:hover{background:rgba(255,107,43,.2);color:var(--sf2)}
-.scta{padding:8px 18px;background:linear-gradient(135deg,var(--sf),var(--sf2));color:#fff;border-radius:10px;font-weight:700;font-size:.8rem;box-shadow:0 4px 0 var(--sfd);transition:var(--trs)}
+.scta{padding:8px 18px;background:linear-gradient(135deg,var(--sf),var(--em));color:#fff;border-radius:10px;font-weight:700;font-size:.8rem;box-shadow:0 4px 0 var(--sfd);transition:var(--trs)}
 .scta:hover{transform:translateY(-2px)}
 /* Auth buttons */
 .s-login-btn{padding:7px 15px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.85);border-radius:9px;font-weight:600;font-size:.8rem;cursor:pointer;transition:var(--tr);font-family:var(--sans)}
 .s-login-btn:hover{background:rgba(255,255,255,.15);color:#fff}
-.s-signup-btn{padding:7px 15px;background:linear-gradient(135deg,var(--sf),var(--sf2));color:#fff;border-radius:9px;font-weight:700;font-size:.8rem;box-shadow:0 3px 0 var(--sfd);cursor:pointer;transition:var(--trs);font-family:var(--sans)}
+.s-signup-btn{padding:7px 15px;background:linear-gradient(135deg,var(--sf),var(--em));color:#fff;border-radius:9px;font-weight:700;font-size:.8rem;box-shadow:0 3px 0 var(--sfd);cursor:pointer;transition:var(--trs);font-family:var(--sans)}
 .s-signup-btn:hover{transform:translateY(-2px)}
 /* User profile pill in navbar */
 .s-user-pill{display:flex;align-items:center;gap:7px;padding:5px 13px 5px 5px;background:rgba(255,107,43,.15);border:1.5px solid rgba(255,107,43,.35);border-radius:100px;cursor:pointer;transition:var(--tr);position:relative}
@@ -112,7 +120,7 @@ a{text-decoration:none;color:inherit}button{cursor:pointer;border:none;backgroun
 .auth-tab.active{color:#fff;border-bottom:2.5px solid var(--sf);background:rgba(255,107,43,.07)}
 .auth-body{padding:24px}
 .auth-logo{text-align:center;margin-bottom:20px}
-.auth-logo-mark{width:44px;height:44px;border-radius:11px;background:linear-gradient(135deg,var(--sf),var(--gd));display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:1.1rem;font-weight:800;color:#fff;box-shadow:0 4px 14px rgba(255,107,43,.35)}
+.auth-logo-mark{width:44px;height:44px;border-radius:11px;background:linear-gradient(135deg,var(--sf),var(--em));display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:1.1rem;font-weight:800;color:#fff;box-shadow:0 4px 14px rgba(255,107,43,.35)}
 .auth-logo-name{font-family:var(--disp);font-size:1rem;font-weight:800;color:#fff}
 .auth-logo-sub{font-size:.7rem;color:rgba(255,255,255,.4);margin-top:2px}
 .auth-fg{margin-bottom:13px}
@@ -120,7 +128,7 @@ a{text-decoration:none;color:inherit}button{cursor:pointer;border:none;backgroun
 .auth-inp{width:100%;padding:10px 13px;border-radius:var(--r);border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;font-size:.85rem;outline:none;transition:var(--tr);font-family:var(--sans)}
 .auth-inp:focus{border-color:var(--sf);background:rgba(255,107,43,.07);box-shadow:0 0 0 3px rgba(255,107,43,.12)}
 .auth-inp::placeholder{color:rgba(255,255,255,.25)}
-.auth-submit{width:100%;padding:13px;border-radius:11px;background:linear-gradient(135deg,var(--sf),var(--sf2));color:#fff;font-size:.9rem;font-weight:800;cursor:pointer;box-shadow:0 5px 0 var(--sfd);transition:var(--trs);font-family:var(--sans);margin-top:4px;letter-spacing:.02em}
+.auth-submit{width:100%;padding:13px;border-radius:11px;background:linear-gradient(135deg,#8B5CF6,#A78BFA);color:#fff;font-size:.9rem;font-weight:800;cursor:pointer;box-shadow:0 5px 0 #6D28D9;transition:var(--trs);font-family:var(--sans);margin-top:4px;letter-spacing:.02em}
 .auth-submit:hover{transform:translateY(-2px);box-shadow:0 7px 0 var(--sfd)}
 .auth-err{display:none;padding:9px 12px;background:rgba(244,63,94,.15);border:1px solid rgba(244,63,94,.25);border-radius:8px;font-size:.76rem;color:var(--ro2);margin-bottom:12px}
 .auth-divider{display:flex;align-items:center;gap:10px;margin:14px 0}
@@ -136,11 +144,11 @@ a{text-decoration:none;color:inherit}button{cursor:pointer;border:none;backgroun
 #authBox{position:relative}
 .hamburger{display:none;flex-direction:column;gap:4px;padding:8px;cursor:pointer}
 .hamburger span{width:21px;height:2px;background:#fff;border-radius:2px;transition:var(--tr)}
-.mob-nav{position:fixed;top:64px;left:0;right:0;bottom:0;background:rgba(10,22,40,.98);backdrop-filter:blur(20px);z-index:400;display:none;flex-direction:column;padding:14px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.mob-nav{position:fixed;top:64px;left:0;right:0;bottom:0;background:rgba(5,46,22,.98);backdrop-filter:blur(20px);z-index:400;display:none;flex-direction:column;padding:14px;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .mob-nav.open{display:flex}
 .mob-link{padding:13px 14px;border-radius:11px;color:rgba(255,255,255,.75);font-size:.9rem;font-weight:600;display:flex;align-items:center;gap:9px;cursor:pointer;transition:var(--tr);border:1px solid transparent}
 .mob-link:hover{background:rgba(255,107,43,.1);color:var(--sf2);border-color:rgba(255,107,43,.2)}
-.a11y-bar{position:fixed;top:70px;left:14px;z-index:600;display:flex;gap:3px;background:rgba(10,22,40,.92);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:3px 7px;backdrop-filter:blur(12px)}
+.a11y-bar{position:fixed;top:70px;left:14px;z-index:600;display:flex;gap:3px;background:rgba(5,46,22,.92);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:3px 7px;backdrop-filter:blur(12px)}
 .a11y-btn{padding:4px 9px;border-radius:100px;font-size:.65rem;font-weight:700;cursor:pointer;color:rgba(255,255,255,.65);transition:var(--tr)}
 .a11y-btn:hover{background:rgba(255,107,43,.2);color:var(--sf2)}
 
@@ -837,6 +845,9 @@ tbody tr:hover td{background:var(--bg3);color:var(--tx)}
 .sb-ov.show{display:block;opacity:1}
 </style>
 <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"JobNex.in","url":"https://jobnex.in","logo":"https://jobnex.in/logo.png","sameAs":["https://twitter.com/JobNexIn","https://linkedin.com/company/jobnex"],"contactPoint":{"@type":"ContactPoint","email":"support@jobnex.in","contactType":"customer service"}}
+</script>
+<script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebSite","name":"JobNex.in","url":"https://jobnex.in","description":"India AI-Powered Job Portal — 12000+ Govt & Private Jobs","potentialAction":{"@type":"SearchAction","target":"https://jobnex.in/?q={search_term_string}","query-input":"required name=search_term_string"}}
 </script>
 </head>
@@ -845,7 +856,7 @@ tbody tr:hover td{background:var(--bg3);color:var(--tx)}
 <div id="app-root" class="mode-site">
 
 <!-- ============ PUBLIC SITE ============ -->
-<div id="site-root">
+<div id="site-root" role="main">
 
 <div class="a11y-bar">
   <button class="a11y-btn" onclick="changeFS(1)">A+</button>
@@ -854,7 +865,7 @@ tbody tr:hover td{background:var(--bg3);color:var(--tx)}
   <button class="a11y-btn" onclick="toggleHC()" title="High Contrast">◑ HC</button>
 </div>
 
-<nav class="snav" id="siteNav">
+<nav class="snav" role="navigation" aria-label="Main navigation" id="siteNav">
   <div class="slogo"><div class="slogo-mark">🇮🇳</div>Job<span class="slogo-ac">Nex</span><span class="ai-tag">✦ AI</span></div>
   <div class="snav-links">
     <span class="snav-link active" onclick="showPage('home')">🏠 Home</span>
@@ -895,11 +906,11 @@ tbody tr:hover td{background:var(--bg3);color:var(--tx)}
         </div>
       </div>
     </div>
-    <div class="hamburger" id="hamburger" onclick="toggleMobNav()"><span></span><span></span><span></span></div>
+    <div class="hamburger" role="button" aria-label="Open menu" tabindex="0" id="hamburger" onclick="toggleMobNav()"><span></span><span></span><span></span></div>
   </div>
 </nav>
 
-<div class="mob-nav" id="mobNav">
+<div class="mob-nav" role="navigation" aria-label="Mobile navigation" id="mobNav">
   <span class="mob-link" onclick="showPage('home');closeMobNav()">🏠 Home</span>
   <span class="mob-link" onclick="showPage('latest');closeMobNav()">⚡ Latest Jobs</span>
   <span class="mob-link" onclick="showPage('private');closeMobNav()">🏢 Private Jobs</span>
@@ -928,7 +939,7 @@ tbody tr:hover td{background:var(--bg3);color:var(--tx)}
           <span class="t-sf" id="hT2">Dream Job</span>
           <span id="hT3">in <span class="t-gd">भारत</span></span>
         </h1>
-        <p class="hero-sub" id="hSub">Discover <strong>12,000+</strong> Private &amp; Govt job opportunities. AI-matched. Visual. Easy for everyone. 🙏</p>
+        <p class="hero-sub" id="hSub">Discover thousands of Private &amp; Government job opportunities across India. AI-matched. Visual. Easy for everyone. 🙏</p>
         <div class="hero-sw">
           <span style="font-size:1.05rem">🔍</span>
           <input type="text" id="heroInp" placeholder="Search job title, company, location...">
@@ -1470,7 +1481,7 @@ tbody tr:hover td{background:var(--bg3);color:var(--tx)}
 </div>
 
 <!-- AUTH MODAL -->
-<div id="authOv" onclick="if(event.target===this)closeAuth()">
+<div id="authOv" role="dialog" aria-modal="true" aria-label="Authentication" onclick="if(event.target===this)closeAuth()">
   <div id="authBox">
     <div class="auth-close" onclick="closeAuth()">✕</div>
     <div class="auth-tabs">
