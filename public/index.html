@@ -2205,7 +2205,95 @@ tbody tr:hover td{background:var(--bg3);color:var(--tx)}
     <div id="recentSignups" style="display:flex;flex-direction:column;gap:4px;padding-top:4px"></div>
   </div>
 </div>
-  <div class="apage" id="page-weekly-report"><div class="aph"><div><h2>📊 Weekly Report</h2></div><div><button class="abtn ab-g ab-sm" onclick="showToast('Report Downloaded','PDF ready.','ok')">📥 Download PDF</button><button class="abtn ab-g ab-sm" onclick="showToast('Email Sent','Report emailed.','ok')">📧 Email Report</button></div></div><div class="astats"><div class="astat"><div class="asl">Jobs Posted</div><div class="asv">342</div><span class="adelta dup">↑ 24% vs last week</span></div><div class="astat"><div class="asl">Applications</div><div class="asv">34,240</div><span class="adelta dup">↑ 12%</span></div><div class="astat"><div class="asl">New Users</div><div class="asv">8,420</div><span class="adelta dup">↑ 18%</span></div><div class="astat"><div class="asl">Revenue</div><div class="asv">₹1.8L</div><span class="adelta ddn">↓ 3%</span></div></div><div class="acard mt12"><div class="acard-tit">Weekly Performance Chart</div><div class="chart-box"><canvas id="weeklyChart"></canvas></div></div></div>
+  <div class="apage" id="page-weekly-report">
+    <div class="aph">
+      <div>
+        <h2>📈 Weekly Auto-Report</h2>
+        <p>Auto-generated every Monday — <span id="wrDateRange">June 2–8, 2025</span></p>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="abtn ab-g ab-sm" onclick="window.print()">🖨️ Print PDF</button>
+        <button class="abtn ab-p ab-sm" onclick="showToast('Email Sent','Weekly report sent to pappdeaf081@gmail.com','ok')">📧 Email Report</button>
+      </div>
+    </div>
+
+    <!-- Report Card -->
+    <div class="acard" id="weeklyReportCard" style="border:1px solid var(--bd);background:var(--bg2)">
+
+      <!-- Report Header -->
+      <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;border-bottom:1px solid var(--bd);margin-bottom:18px;flex-wrap:wrap;gap:12px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--sf),var(--gd));display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#fff">JN</div>
+          <div>
+            <div style="font-family:var(--disp);font-size:1.05rem;font-weight:800;color:var(--tx)">📊 Weekly Performance Report</div>
+            <div style="font-size:.7rem;color:var(--tx3);margin-top:2px" id="wrSubtitle">June 2–8, 2025 · JobNex.in Admin Panel · Generated automatically every Monday 8:00 AM IST</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span class="pill p-g" style="font-size:.62rem">● Auto Report</span>
+          <span class="pill p-b" style="font-size:.62rem">Week 23</span>
+        </div>
+      </div>
+
+      <!-- 4 Hero Delta Cards -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:18px">
+        <div style="background:linear-gradient(135deg,rgba(255,107,43,.12),rgba(255,107,43,.05));border:1px solid rgba(255,107,43,.25);border-radius:var(--r2);padding:14px;text-align:center">
+          <div style="font-family:var(--disp);font-size:1.5rem;font-weight:800;color:var(--sf)">+1,240</div>
+          <div style="font-size:.7rem;color:var(--tx2);margin-top:3px">New Users</div>
+          <div style="font-size:.62rem;color:var(--em);margin-top:5px">↑ 6.4% vs last week</div>
+        </div>
+        <div style="background:linear-gradient(135deg,rgba(56,189,248,.12),rgba(56,189,248,.05));border:1px solid rgba(56,189,248,.25);border-radius:var(--r2);padding:14px;text-align:center">
+          <div style="font-family:var(--disp);font-size:1.5rem;font-weight:800;color:var(--sk)">+340</div>
+          <div style="font-size:.7rem;color:var(--tx2);margin-top:3px">Jobs Posted</div>
+          <div style="font-size:.62rem;color:var(--em);margin-top:5px">↑ 14% vs last week</div>
+        </div>
+        <div style="background:linear-gradient(135deg,rgba(139,92,246,.12),rgba(139,92,246,.05));border:1px solid rgba(139,92,246,.25);border-radius:var(--r2);padding:14px;text-align:center">
+          <div style="font-family:var(--disp);font-size:1.5rem;font-weight:800;color:var(--vi)">34,240</div>
+          <div style="font-size:.7rem;color:var(--tx2);margin-top:3px">Applications</div>
+          <div style="font-size:.62rem;color:var(--em);margin-top:5px">↑ 8.2% vs last week</div>
+        </div>
+        <div style="background:linear-gradient(135deg,rgba(16,185,129,.12),rgba(16,185,129,.05));border:1px solid rgba(16,185,129,.25);border-radius:var(--r2);padding:14px;text-align:center">
+          <div style="font-family:var(--disp);font-size:1.5rem;font-weight:800;color:var(--em)">₹1.2L</div>
+          <div style="font-size:.7rem;color:var(--tx2);margin-top:3px">Revenue</div>
+          <div style="font-size:.62rem;color:var(--ro2);margin-top:5px">↓ 2.1% vs last week</div>
+        </div>
+        <div style="background:linear-gradient(135deg,rgba(245,158,11,.12),rgba(245,158,11,.05));border:1px solid rgba(245,158,11,.25);border-radius:var(--r2);padding:14px;text-align:center">
+          <div style="font-family:var(--disp);font-size:1.5rem;font-weight:800;color:var(--gd)">₹22,840</div>
+          <div style="font-size:.7rem;color:var(--tx2);margin-top:3px">AdSense</div>
+          <div style="font-size:.62rem;color:var(--em);margin-top:5px">↑ 12.4% vs last week</div>
+        </div>
+      </div>
+
+      <!-- Detailed Stat Rows -->
+      <div class="ag2" style="margin-bottom:18px">
+        <div style="background:var(--bg3);border-radius:var(--r2);padding:14px;border:1px solid var(--bd)">
+          <div style="font-size:.72rem;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">This Week vs Last Week</div>
+          <div id="wrStatRows"></div>
+        </div>
+
+        <!-- Weekly Traffic Chart -->
+        <div>
+          <div style="font-size:.75rem;font-weight:700;color:var(--tx);margin-bottom:9px">📊 Weekly Traffic</div>
+          <div class="chart-box" style="height:160px"><canvas id="weeklyChart"></canvas></div>
+        </div>
+      </div>
+
+      <!-- Key Insights -->
+      <div style="margin-bottom:4px">
+        <div style="font-size:.75rem;font-weight:700;color:var(--tx);margin-bottom:10px">📈 Key Insights &amp; Recommendations</div>
+        <div id="wrInsights" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:9px"></div>
+      </div>
+
+      <!-- Report Footer -->
+      <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <div style="font-size:.65rem;color:var(--tx3)">JobNex.in · Auto-generated report · Next report: <span id="wrNextDate">Monday, Jun 16, 2025</span></div>
+        <div style="display:flex;gap:5px">
+          <button class="abtn ab-g ab-xs" onclick="showToast('Sharing','Report link copied!','ok')">🔗 Share</button>
+          <button class="abtn ab-g ab-xs" onclick="showToast('Archived','Report saved to archives.','ok')">📦 Archive</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="apage" id="page-govt-jobs"><div class="aph"><div><h2>🏛️ Govt Jobs</h2></div><div><button class="abtn ab-p ab-sm" onclick="nav('add-job')">+ Add Govt Job</button></div></div><div class="acard"><div class="atbl"><table><thead><tr><th>Title</th><th>Department</th><th>Vacancies</th><th>Category</th><th>Last Date</th><th>Status</th><th>Actions</th></tr></thead><tbody id="govtJobsTbl"></tbody></table></div></div></div>
   <div class="apage" id="page-private-jobs"><div class="aph"><div><h2>🏢 Private Jobs</h2></div><div><button class="abtn ab-p ab-sm" onclick="nav('add-job')">+ Add Private Job</button></div></div><div class="acard"><div class="atbl"><table><thead><tr><th>Title</th><th>Company</th><th>Salary</th><th>Location</th><th>Applied</th><th>Status</th><th>Actions</th></tr></thead><tbody id="pvtJobsTbl"></tbody></table></div></div></div>
 
@@ -3334,7 +3422,75 @@ function renderAdPlacementMap() {
 function initWeeklyChart() {
   var el = document.getElementById('weeklyChart'); if(!el) return;
   if(el._chart) el._chart.destroy();
-  el._chart = new Chart(el, {type:'bar',data:{labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],datasets:[{label:'Applications',data:[4200,5100,4800,5400,6200,3400,2100],backgroundColor:'rgba(56,189,248,.7)',borderRadius:4},{label:'New Jobs',data:[42,58,51,64,72,38,24],backgroundColor:'rgba(255,107,43,.7)',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#9BA3BC',font:{size:10}}}},scales:{x:{ticks:{color:'#5C6480',font:{size:9}},grid:{color:'rgba(42,47,62,.5)'}},y:{ticks:{color:'#5C6480',font:{size:9}},grid:{color:'rgba(42,47,62,.5)'}}}}});
+  el._chart = new Chart(el, {
+    type:'bar',
+    data:{
+      labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+      datasets:[
+        {label:'Applications',data:[4200,5100,4800,5400,6200,3400,2100],backgroundColor:'rgba(255,107,43,.75)',borderRadius:4},
+        {label:'New Users',data:[840,1020,960,1080,1240,680,420],backgroundColor:'rgba(56,189,248,.65)',borderRadius:4}
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:'#9BA3BC',font:{size:10}}}},
+      scales:{
+        x:{ticks:{color:'#5C6480',font:{size:9}},grid:{color:'rgba(42,47,62,.2)'}},
+        y:{ticks:{color:'#5C6480',font:{size:9}},grid:{color:'rgba(42,47,62,.2)'}}
+      }
+    }
+  });
+
+  // Render stat rows
+  var rows = document.getElementById('wrStatRows');
+  if(rows) {
+    var stats = [
+      {icon:'💼',label:'Jobs Posted',val:'340',prev:'298',delta:'+14%',up:true},
+      {icon:'📄',label:'Applications',val:'34,240',prev:'31,640',delta:'+8.2%',up:true},
+      {icon:'👤',label:'New Users',val:'1,240',prev:'1,166',delta:'+6.4%',up:true},
+      {icon:'💰',label:'Revenue',val:'₹1.2L',prev:'₹1.22L',delta:'-2.1%',up:false},
+      {icon:'💰',label:'AdSense',val:'₹22,840',prev:'₹20,330',delta:'+12.4%',up:true},
+      {icon:'👁️',label:'Page Views',val:'2.4M',prev:'2.03M',delta:'+18.2%',up:true}
+    ];
+    rows.innerHTML = stats.map(function(s){
+      return '<div style="display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--bd)">'
+        +'<div style="display:flex;align-items:center;gap:7px"><span style="font-size:.85rem">'+s.icon+'</span><span style="font-size:.73rem;color:var(--tx2)">'+s.label+'</span></div>'
+        +'<div style="display:flex;align-items:center;gap:10px">'
+        +'<span style="font-size:.73rem;font-weight:700;color:var(--tx)">'+s.val+'</span>'
+        +'<span style="font-size:.65rem;color:'+(s.up?'var(--em)':'var(--ro2)')+'">'+s.delta+'</span>'
+        +'</div></div>';
+    }).join('');
+  }
+
+  // Render insights
+  var ins = document.getElementById('wrInsights');
+  if(ins) {
+    var insights = [
+      {icon:'📈',color:'var(--em)',bg:'rgba(16,185,129,.08)',bd:'rgba(16,185,129,.2)',title:'Traffic Up 18%',text:'SSC CGL notification drove peak traffic on Jun 10. Schedule more content around exam dates.'},
+      {icon:'⚡',color:'var(--sf)',bg:'rgba(255,107,43,.08)',bd:'rgba(255,107,43,.2)',title:'Post More Govt Jobs',text:'Govt job pages have 3× higher engagement. Add 50+ govt listings this week.'},
+      {icon:'🤖',color:'var(--vi)',bg:'rgba(139,92,246,.08)',bd:'rgba(139,92,246,.2)',title:'AI Match Boosting CTR',text:'Users using AI matching applied to 3.2× more jobs. Promote AI match on homepage.'},
+      {icon:'💰',color:'var(--ro2)',bg:'rgba(244,63,94,.08)',bd:'rgba(244,63,94,.2)',title:'Revenue Dip — Action Needed',text:'Revenue down 2.1%. Consider a Pro plan promotion or featured job discount this week.'}
+    ];
+    ins.innerHTML = insights.map(function(i){
+      return '<div style="background:'+i.bg+';border:1px solid '+i.bd+';border-radius:var(--r2);padding:13px">'
+        +'<div style="display:flex;align-items:center;gap:7px;margin-bottom:6px">'
+        +'<span style="font-size:1.1rem">'+i.icon+'</span>'
+        +'<span style="font-size:.75rem;font-weight:700;color:'+i.color+'">'+i.title+'</span>'
+        +'</div>'
+        +'<p style="font-size:.7rem;color:var(--tx2);line-height:1.5;margin:0">'+i.text+'</p>'
+        +'</div>';
+    }).join('');
+  }
+
+  // Set dynamic dates
+  var now = new Date();
+  var monday = new Date(now); monday.setDate(now.getDate() - now.getDay() + 1);
+  var sunday = new Date(monday); sunday.setDate(monday.getDate() + 6);
+  var nextMon = new Date(monday); nextMon.setDate(monday.getDate() + 7);
+  var fmt = function(d){ return d.toLocaleDateString('en-IN',{month:'short',day:'numeric',year:'numeric'}); };
+  var el2 = document.getElementById('wrDateRange'); if(el2) el2.textContent = fmt(monday)+' – '+fmt(sunday);
+  var el3 = document.getElementById('wrSubtitle'); if(el3) el3.textContent = fmt(monday)+' – '+fmt(sunday)+' · JobNex.in Admin Panel · Generated automatically every Monday 8:00 AM IST';
+  var el4 = document.getElementById('wrNextDate'); if(el4) el4.textContent = nextMon.toLocaleDateString('en-IN',{weekday:'long',month:'short',day:'numeric',year:'numeric'});
 }
 
 // ============ ADMIN TABLES ============
