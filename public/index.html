@@ -558,6 +558,10 @@ tbody tr:hover td{background:var(--bg3);color:var(--tx)}
 .asel option{background:var(--bg2)}.ata{min-height:75px;resize:vertical}
 /* Toggle */
 .atg-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--bd)}
+.sett-tab{padding:10px 16px;font-size:.78rem;font-weight:600;cursor:pointer;background:none;border:none;border-bottom:2px solid transparent;color:var(--tx3);font-family:var(--sans);transition:var(--tr);white-space:nowrap}
+.sett-tab:hover{color:var(--tx)}
+.sett-tab.active{color:var(--sf);border-bottom-color:var(--sf);background:var(--sfdim)}
+.sett-pane{animation:fadeIn .2s ease}
 .atg-lbl{font-size:.75rem;color:var(--tx2)}
 .toggle{position:relative;width:34px;height:18px;cursor:pointer;flex-shrink:0}
 .toggle input{opacity:0;width:0;height:0;position:absolute}
@@ -1635,46 +1639,76 @@ tbody tr:hover td{background:var(--bg3);color:var(--tx)}
   <!-- DASHBOARD -->
   <div class="apage active" id="page-dashboard">
     <div class="aph">
-      <div><h2>Dashboard</h2><p>Welcome back, Super Admin 👋</p></div>
+      <div><h2>📊 Dashboard</h2><p>Welcome back, Super Admin 👋 — <span id="dashDate" style="color:var(--tx3)"></span></p></div>
       <div style="display:flex;gap:6px">
         <button class="abtn ab-g ab-sm" onclick="exportCSV()">📊 Export</button>
         <button class="abtn ab-p ab-sm" onclick="openModal('addJobModal')">+ Add Job</button>
       </div>
     </div>
+
+    <!-- 4 Primary Stat Cards -->
     <div class="astats">
-      <div class="astat"><div class="asl">Total Jobs Live</div><div class="asv" id="rt-jobs">12,540</div><span class="adelta dup">↑ 8.2% this week</span><div class="as-ic" style="background:var(--sfdim)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--sf)" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div></div>
-      <div class="astat"><div class="asl">Registered Users</div><div class="asv" id="rt-users">3.2L</div><span class="adelta dup">↑ 1,240 today</span><div class="as-ic" style="background:var(--emdim)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--em)" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div></div>
-      <div class="astat"><div class="asl">Applications Today</div><div class="asv" id="rt-apps">4,892</div><span class="adelta dup">↑ 12.4%</span><div class="as-ic" style="background:var(--skdim)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--sk)" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></div></div>
-      <div class="astat"><div class="asl">Revenue (INR)</div><div class="asv">₹8.4L</div><span class="adelta ddn">↓ 2.1% vs last wk</span><div class="as-ic" style="background:var(--gddim)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gd)" stroke-width="1.8"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div></div>
+      <div class="astat"><div class="asl">Total Jobs Live</div><div class="asv" id="rt-jobs">12,540</div><span class="adelta dup">↑ 8.2% this week</span><div class="as-ic" style="background:var(--sfdim)">💼</div></div>
+      <div class="astat"><div class="asl">Registered Users</div><div class="asv" id="rt-users">3.2L</div><span class="adelta dup">↑ 1,240 today</span><div class="as-ic" style="background:var(--emdim)">👥</div></div>
+      <div class="astat"><div class="asl">Applications Today</div><div class="asv" id="rt-apps">4,892</div><span class="adelta dup">↑ 12.4%</span><div class="as-ic" style="background:var(--skdim)">📝</div></div>
+      <div class="astat"><div class="asl">Revenue This Month</div><div class="asv">₹8.4L</div><span class="adelta dup">↑ 6.8% vs last month</span><div class="as-ic" style="background:var(--gddim)">₹</div></div>
     </div>
-    <div class="astats" style="margin-top:12px">
-      <div class="astat"><div class="asl">AdSense Today</div><div class="asv">₹3,240</div><span class="adelta dup">↑ 14.2%</span><div class="as-ic" style="background:var(--gddim)">💰</div></div>
-      <div class="astat"><div class="asl">Subscriptions</div><div class="asv">1,840</div><span class="adelta dup">↑ 124</span><div class="as-ic" style="background:var(--vidim)">💎</div></div>
-      <div class="astat"><div class="asl">Support Tickets</div><div class="asv">12</div><span class="adelta ddn">Action needed</span><div class="as-ic" style="background:var(--rodim)">🎫</div></div>
-      <div class="astat"><div class="asl">AI Matches Today</div><div class="asv">48,420</div><span class="adelta dup">AI Active</span><div class="as-ic" style="background:var(--vidim)">🤖</div></div>
-    </div>
+
+    <!-- Traffic + Applications Line Chart -->
     <div class="ag64 mt12">
-      <div class="acard"><div class="acard-tit"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--sf)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Traffic &amp; Applications <span>Last 30 days</span></div><div class="chart-box"><canvas id="trafficChart"></canvas></div></div>
-      <div class="acard"><div class="acard-tit">Jobs by Category</div><div class="chart-box" style="height:165px"><canvas id="donutChart"></canvas></div><div id="donutLegend" style="display:flex;flex-direction:column;gap:5px;margin-top:9px"></div></div>
-    </div>
-    <div class="ag2 mt12">
-      <div class="acard"><div class="acard-tit">📋 Recent Jobs <span onclick="nav('jobs')" style="color:var(--sf)">View all →</span></div><div class="atbl"><table><thead><tr><th>Title</th><th>Type</th><th>Status</th><th>Applied</th></tr></thead><tbody id="recentJobsTbl"></tbody></table></div></div>
-      <div class="acard"><div class="acard-tit">🔔 Live Activity</div><div id="actFeed"></div></div>
-    </div>
-    <div class="ag3 mt12">
-      <div class="acard"><div class="acard-tit">📍 Top States</div><div id="topStates"></div></div>
-      <div class="acard"><div class="acard-tit">⏰ Deadlines</div><div id="deadlines"></div></div>
-      <div class="acard"><div class="acard-tit">🤖 AI Matcher<span class="pill p-v" style="font-size:.58rem;margin-left:5px">AI</span></div>
-        <div style="text-align:center;padding:10px 0">
-          <div style="font-family:var(--disp);font-size:1.9rem;font-weight:800;color:var(--vi)">48,420</div>
-          <div style="font-size:.68rem;color:var(--tx3);margin-bottom:11px">Matches today</div>
-          <div style="display:flex;flex-direction:column;gap:7px">
-            <div style="display:flex;justify-content:space-between;font-size:.72rem"><span style="color:var(--tx2)">Avg Score</span><span style="font-weight:700;color:var(--em)">76.4%</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:.72rem"><span style="color:var(--tx2)">Applied via AI</span><span style="font-weight:700;color:var(--sf)">68.2%</span></div>
-            <div style="display:flex;justify-content:space-between;font-size:.72rem"><span style="color:var(--tx2)">Hired via AI</span><span style="font-weight:700;color:var(--sk)">2,840</span></div>
+      <div class="acard">
+        <div class="acard-tit" style="display:flex;align-items:center;justify-content:space-between">
+          <span>📈 Traffic &amp; Applications <span style="font-size:.65rem;color:var(--tx3);font-weight:400">Last 30 days</span></span>
+          <div style="display:flex;gap:10px;font-size:.65rem">
+            <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:3px;border-radius:2px;background:var(--sf);display:inline-block"></span>Traffic</span>
+            <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:3px;border-radius:2px;background:var(--sk);display:inline-block"></span>Applications</span>
           </div>
-          <button class="abtn ab-p" style="width:100%;justify-content:center;margin-top:12px" onclick="showToast('AI Running...','Matching 3.2L candidates...','info')">▶ Run AI Match</button>
         </div>
+        <div class="chart-box" style="height:200px"><canvas id="trafficChart"></canvas></div>
+      </div>
+      <div class="acard">
+        <div class="acard-tit">🍩 Jobs by Category</div>
+        <div class="chart-box" style="height:150px"><canvas id="donutChart"></canvas></div>
+        <div id="donutLegend" style="display:flex;flex-direction:column;gap:4px;margin-top:8px"></div>
+      </div>
+    </div>
+
+    <!-- Recent Jobs Table + Live Activity Feed -->
+    <div class="ag2 mt12">
+      <div class="acard">
+        <div class="acard-tit" style="display:flex;align-items:center;justify-content:space-between">
+          📋 Recent Jobs
+          <span onclick="nav('jobs')" style="color:var(--sf);cursor:pointer;font-size:.7rem">View all →</span>
+        </div>
+        <div class="atbl">
+          <table>
+            <thead><tr><th>Title</th><th>Company</th><th>Type</th><th>Applied</th><th>Status</th></tr></thead>
+            <tbody id="recentJobsTbl"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="acard">
+        <div class="acard-tit" style="display:flex;align-items:center;gap:6px">
+          🔴 Live Activity
+          <span class="pill p-g" style="font-size:.55rem;animation:pulse 2s infinite">● Live</span>
+        </div>
+        <div id="actFeed" style="max-height:240px;overflow-y:auto"></div>
+      </div>
+    </div>
+
+    <!-- Top States + Top Employers + Upcoming Deadlines -->
+    <div class="ag3 mt12">
+      <div class="acard">
+        <div class="acard-tit">📍 Top States by Jobs</div>
+        <div id="topStates"></div>
+      </div>
+      <div class="acard">
+        <div class="acard-tit">🏢 Top Employers</div>
+        <div id="topEmployers"></div>
+      </div>
+      <div class="acard">
+        <div class="acard-tit">⏰ Upcoming Deadlines</div>
+        <div id="deadlines"></div>
       </div>
     </div>
   </div>
@@ -1725,16 +1759,72 @@ tbody tr:hover td{background:var(--bg3);color:var(--tx)}
 
   <!-- ANALYTICS -->
   <div class="apage" id="page-analytics">
-    <div class="aph"><div><h2>📊 Analytics</h2><p>Traffic, applications and revenue insights</p></div><div><select class="asel"><option>Last 30 days</option><option>Last 7 days</option><option>This Year</option></select></div></div>
-    <div class="astats">
-      <div class="astat"><div class="asl">Page Views</div><div class="asv">2.4M</div><span class="adelta dup">↑ 18.3%</span></div>
-      <div class="astat"><div class="asl">Avg Session</div><div class="asv">4m 32s</div><span class="adelta dup">↑ 0:24</span></div>
-      <div class="astat"><div class="asl">Bounce Rate</div><div class="asv">32.4%</div><span class="adelta ddn">↓ 3.1%</span></div>
-      <div class="astat"><div class="asl">Conversion</div><div class="asv">6.8%</div><span class="adelta dup">↑ 1.2%</span></div>
+    <div class="aph">
+      <div><h2>📈 Analytics</h2><p>Traffic, behaviour, revenue and growth insights</p></div>
+      <div style="display:flex;gap:6px">
+        <select class="asel" id="analyticsRange" onchange="initAnalyticsCharts()">
+          <option value="30">Last 30 days</option>
+          <option value="7">Last 7 days</option>
+          <option value="90">Last 3 months</option>
+          <option value="365">This Year</option>
+        </select>
+        <button class="abtn ab-g ab-sm" onclick="exportCSV()">📊 Export</button>
+      </div>
     </div>
+
+    <!-- 8 Metric Cards -->
+    <div class="astats">
+      <div class="astat"><div class="asl">Page Views</div><div class="asv">2.4M</div><span class="adelta dup">↑ 18.3% vs prev</span></div>
+      <div class="astat"><div class="asl">Avg Session Time</div><div class="asv">4m 32s</div><span class="adelta dup">↑ 24s</span></div>
+      <div class="astat"><div class="asl">Bounce Rate</div><div class="asv">32.4%</div><span class="adelta dup">↓ 3.1% (better)</span></div>
+      <div class="astat"><div class="asl">Conversion Rate</div><div class="asv">6.8%</div><span class="adelta dup">↑ 1.2%</span></div>
+    </div>
+    <div class="astats mt12">
+      <div class="astat"><div class="asl">New Users</div><div class="asv">48,240</div><span class="adelta dup">↑ 22.4%</span></div>
+      <div class="astat"><div class="asl">Return Visitors</div><div class="asv">68.4%</div><span class="adelta dup">↑ 4.2%</span></div>
+      <div class="astat"><div class="asl">Job Click Rate</div><div class="asv">24.8%</div><span class="adelta dup">↑ 2.8%</span></div>
+      <div class="astat"><div class="asl">Apply Rate</div><div class="asv">8.4%</div><span class="adelta dup">↑ 0.9%</span></div>
+    </div>
+
+    <!-- Monthly Bar Chart + Revenue Trend -->
     <div class="ag2 mt12">
-      <div class="acard"><div class="acard-tit">Monthly Applications</div><div class="chart-box"><canvas id="appChart"></canvas></div></div>
-      <div class="acard"><div class="acard-tit">Revenue by Month</div><div class="chart-box"><canvas id="revChart"></canvas></div></div>
+      <div class="acard">
+        <div class="acard-tit">📊 Monthly Applications & Users</div>
+        <div class="chart-box" style="height:220px"><canvas id="appChart"></canvas></div>
+      </div>
+      <div class="acard">
+        <div class="acard-tit">💰 Revenue Trend (₹)</div>
+        <div class="chart-box" style="height:220px"><canvas id="revChart"></canvas></div>
+      </div>
+    </div>
+
+    <!-- Traffic Sources Pie + Device Breakdown Donut -->
+    <div class="ag2 mt12">
+      <div class="acard">
+        <div class="acard-tit">🌐 Traffic Sources</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:center">
+          <div class="chart-box" style="height:160px"><canvas id="trafficSrcChart"></canvas></div>
+          <div id="trafficSrcLegend" style="display:flex;flex-direction:column;gap:7px;padding-left:9px"></div>
+        </div>
+      </div>
+      <div class="acard">
+        <div class="acard-tit">📱 Device Breakdown</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:center">
+          <div class="chart-box" style="height:160px"><canvas id="deviceChart"></canvas></div>
+          <div id="deviceLegend" style="display:flex;flex-direction:column;gap:7px;padding-left:9px"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Pages Table -->
+    <div class="acard mt12">
+      <div class="acard-tit">🔝 Top Pages by Traffic</div>
+      <div class="atbl">
+        <table>
+          <thead><tr><th>#</th><th>Page</th><th>Views</th><th>Avg Time</th><th>Bounce</th><th>Conversions</th></tr></thead>
+          <tbody id="topPagesTbl"></tbody>
+        </table>
+      </div>
     </div>
   </div>
 
@@ -1864,7 +1954,164 @@ tbody tr:hover td{background:var(--bg3);color:var(--tx)}
   </div>
   <div class="acard"><div class="acard-tit">All Invoices</div><div class="atbl"><table><thead><tr><th>Invoice #</th><th>Customer</th><th>Amount</th><th>Plan</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody id="invTbl"></tbody></table></div></div>
 </div>
-  <div class="apage" id="page-settings"><div class="aph"><div><h2>⚙️ Settings</h2><p>Site preferences and configuration</p></div></div><div class="ag2"><div class="acard"><div class="acard-tit">Site Information</div><div class="arow"><div><label class="albl">Site Name</label><input type="text" class="ainp" value="JobNex.in"></div></div><div class="arow"><div><label class="albl">Contact Email</label><input type="email" class="ainp" value="support@jobnex.in"></div></div><div class="arow"><div><label class="albl">Google Analytics ID</label><input type="text" class="ainp" placeholder="G-XXXXXXXXXX"></div></div><div class="arow"><div><label class="albl">Razorpay Key ID</label><input type="text" class="ainp" placeholder="rzp_live_xxxxxxxx"></div></div><div class="arow"><div><label class="albl">Twilio SID (WhatsApp)</label><input type="text" class="ainp" placeholder="ACxxxxxxxxxxxxxxxx"></div></div><div class="arow"><div><label class="albl">SMTP Host (Nodemailer)</label><input type="text" class="ainp" placeholder="smtp.gmail.com"></div></div><button class="abtn ab-p" onclick="showToast('Settings Saved','Site config updated.','ok')" style="margin-top:4px">Save Changes</button></div><div class="acard"><div class="acard-tit">Feature Toggles</div><div class="atg-row"><span class="atg-lbl">🤖 AI Job Matching</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div><div class="atg-row"><span class="atg-lbl">📧 Email Notifications</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div><div class="atg-row"><span class="atg-lbl">💬 WhatsApp Alerts</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div><div class="atg-row"><span class="atg-lbl">🔔 Push Notifications</span><label class="toggle"><input type="checkbox"><div class="tg-tr"></div><div class="tg-th"></div></label></div><div class="atg-row"><span class="atg-lbl">💰 Google AdSense</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div><div class="atg-row"><span class="atg-lbl">♿ Accessibility Mode</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div><div class="atg-row"><span class="atg-lbl">🌐 Hindi Language</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div><div class="atg-row"><span class="atg-lbl">🔧 Maintenance Mode</span><label class="toggle"><input type="checkbox"><div class="tg-tr"></div><div class="tg-th"></div></label></div></div></div></div>
+  <div class="apage" id="page-settings">
+    <div class="aph">
+      <div><h2>⚙️ Settings</h2><p>Configure your JobNex.in portal</p></div>
+      <div><button class="abtn ab-p ab-sm" onclick="saveAllSettings()">💾 Save All Changes</button></div>
+    </div>
+
+    <!-- 5 Tabs -->
+    <div style="display:flex;gap:0;border-bottom:1px solid var(--bd);margin-bottom:16px;overflow-x:auto">
+      <button class="sett-tab active" id="stab-general"  onclick="switchSettTab('general')">🌐 General</button>
+      <button class="sett-tab" id="stab-seo"      onclick="switchSettTab('seo')">🔍 SEO</button>
+      <button class="sett-tab" id="stab-email"    onclick="switchSettTab('email')">📧 Email/SMTP</button>
+      <button class="sett-tab" id="stab-security" onclick="switchSettTab('security')">🔒 Security</button>
+      <button class="sett-tab" id="stab-api"      onclick="switchSettTab('api')">🔑 API Keys</button>
+    </div>
+
+    <!-- TAB: General -->
+    <div id="sett-general" class="sett-pane">
+      <div class="ag2">
+        <div class="acard">
+          <div class="acard-tit">Site Information</div>
+          <div class="arow"><div><label class="albl">Site Name</label><input type="text" class="ainp" value="JobNex.in"></div></div>
+          <div class="arow"><div><label class="albl">Tagline</label><input type="text" class="ainp" value="India's AI-Powered Job Portal"></div></div>
+          <div class="arow"><div><label class="albl">Contact Email</label><input type="email" class="ainp" value="support@jobnex.in"></div></div>
+          <div class="arow"><div><label class="albl">Support Phone</label><input type="text" class="ainp" placeholder="+91 98765 43210"></div></div>
+          <div class="arow"><div><label class="albl">Site URL</label><input type="text" class="ainp" value="https://jobnex.in"></div></div>
+          <div class="arow"><div><label class="albl">Default Language</label><select class="asel"><option>English</option><option>Hindi</option><option>Both</option></select></div></div>
+        </div>
+        <div class="acard">
+          <div class="acard-tit">Feature Toggles</div>
+          <div class="atg-row"><span class="atg-lbl">🤖 AI Job Matching</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">📧 Email Notifications</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">💬 WhatsApp Alerts</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">🔔 Push Notifications</span><label class="toggle"><input type="checkbox"><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">💰 Google AdSense</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">♿ Accessibility Bar</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">🌐 Hindi Language Toggle</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">🔧 Maintenance Mode</span><label class="toggle"><input type="checkbox"><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">📱 PwD / Disability Section</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">🎓 Education Section</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: SEO -->
+    <div id="sett-seo" class="sett-pane" style="display:none">
+      <div class="ag2">
+        <div class="acard">
+          <div class="acard-tit">Search Engine Optimisation</div>
+          <div class="arow"><div><label class="albl">Meta Title</label><input type="text" class="ainp" value="JobNex — AI-Powered Job Portal India 🇮🇳"></div></div>
+          <div class="arow"><div><label class="albl">Meta Description</label><textarea class="ata" style="height:70px">JobNex.in — India's Smartest AI Job Portal. 12,000+ Govt &amp; Private Jobs. SSC, UPSC, Railway, Banking, IT Jobs 2025.</textarea></div></div>
+          <div class="arow"><div><label class="albl">Meta Keywords</label><input type="text" class="ainp" value="jobnex, sarkari naukri, govt jobs, ssc cgl 2025, upsc 2025, railway jobs"></div></div>
+          <div class="arow"><div><label class="albl">Canonical URL</label><input type="text" class="ainp" value="https://jobnex.in/"></div></div>
+          <div class="arow"><div><label class="albl">Google Analytics ID</label><input type="text" class="ainp" placeholder="G-XXXXXXXXXX"></div></div>
+          <div class="arow"><div><label class="albl">Google Search Console ID</label><input type="text" class="ainp" placeholder="google-site-verification=XXXXX"></div></div>
+        </div>
+        <div class="acard">
+          <div class="acard-tit">Social / OG Tags</div>
+          <div class="arow"><div><label class="albl">OG Title</label><input type="text" class="ainp" value="JobNex.in — AI-Powered Job Portal India"></div></div>
+          <div class="arow"><div><label class="albl">OG Description</label><input type="text" class="ainp" value="Find 12,000+ Govt & Private Jobs. AI-matched. Fast. Easy."></div></div>
+          <div class="arow"><div><label class="albl">OG Image URL</label><input type="text" class="ainp" placeholder="https://jobnex.in/og-image.png"></div></div>
+          <div class="arow"><div><label class="albl">Twitter Card Type</label><select class="asel"><option>summary_large_image</option><option>summary</option></select></div></div>
+          <div class="atg-row"><span class="atg-lbl">Auto-generate sitemap.xml</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">Enable robots.txt</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">JSON-LD Structured Data</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: Email/SMTP -->
+    <div id="sett-email" class="sett-pane" style="display:none">
+      <div class="ag2">
+        <div class="acard">
+          <div class="acard-tit">SMTP Configuration</div>
+          <div class="arow"><div><label class="albl">SMTP Host</label><input type="text" class="ainp" placeholder="smtp.gmail.com"></div></div>
+          <div class="arow c2"><div><label class="albl">SMTP Port</label><input type="number" class="ainp" placeholder="587"></div><div><label class="albl">Encryption</label><select class="asel"><option>TLS (STARTTLS)</option><option>SSL</option><option>None</option></select></div></div>
+          <div class="arow"><div><label class="albl">SMTP Username</label><input type="email" class="ainp" placeholder="your@gmail.com"></div></div>
+          <div class="arow"><div><label class="albl">SMTP Password / App Password</label><input type="password" class="ainp" placeholder="••••••••••••"></div></div>
+          <div class="arow"><div><label class="albl">From Name</label><input type="text" class="ainp" value="JobNex.in"></div></div>
+          <div class="arow"><div><label class="albl">From Email</label><input type="email" class="ainp" value="noreply@jobnex.in"></div></div>
+          <button class="abtn ab-g ab-sm" style="margin-top:4px" onclick="showToast('Test Sent','Check your inbox.','ok')">📤 Send Test Email</button>
+        </div>
+        <div class="acard">
+          <div class="acard-tit">Email Triggers</div>
+          <div class="atg-row"><span class="atg-lbl">✉️ Welcome Email on Signup</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">🔔 New Job Alert Digest</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">📝 Application Received</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">✅ Shortlisted Notification</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">⏰ Deadline Reminder (3 days)</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">💎 Plan Upgrade Confirmation</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">📊 Weekly Admin Report</span><label class="toggle"><input type="checkbox"><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: Security -->
+    <div id="sett-security" class="sett-pane" style="display:none">
+      <div class="ag2">
+        <div class="acard">
+          <div class="acard-tit">Access &amp; Authentication</div>
+          <div class="arow"><div><label class="albl">Admin Email</label><input type="email" class="ainp" value="pappdeaf081@gmail.com"></div></div>
+          <div class="arow"><div><label class="albl">New Admin Password</label><input type="password" class="ainp" placeholder="Min 8 chars"></div></div>
+          <div class="arow"><div><label class="albl">Confirm Password</label><input type="password" class="ainp" placeholder="Repeat password"></div></div>
+          <div class="arow"><div><label class="albl">JWT Session Expiry</label><select class="asel"><option>7 days</option><option>1 day</option><option>30 days</option><option>Never</option></select></div></div>
+          <button class="abtn ab-p ab-sm" style="margin-top:4px" onclick="showToast('Password Updated','Admin password changed.','ok')">🔒 Update Password</button>
+        </div>
+        <div class="acard">
+          <div class="acard-tit">Security Settings</div>
+          <div class="atg-row"><span class="atg-lbl">🔒 Force HTTPS</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">🛡️ Rate Limiting (100/15min)</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">🤖 Block Bot Signups</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">📧 Email Verification Required</span><label class="toggle"><input type="checkbox"><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">🌍 Block VPN / Proxy</span><label class="toggle"><input type="checkbox"><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">📋 Admin Login Log</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div style="margin-top:12px;padding:10px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--bd)">
+            <div style="font-size:.68rem;color:var(--tx3);margin-bottom:5px">Last 3 logins:</div>
+            <div style="font-size:.7rem;color:var(--tx2);line-height:1.8">
+              ✅ Today 7:33 PM — Lucknow, UP<br>
+              ✅ Yesterday 2:14 PM — Lucknow, UP<br>
+              ✅ Jun 10 10:22 AM — Lucknow, UP
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: API Keys -->
+    <div id="sett-api" class="sett-pane" style="display:none">
+      <div class="ag2">
+        <div class="acard">
+          <div class="acard-tit">Payment — Razorpay</div>
+          <div class="arow"><div><label class="albl">Razorpay Key ID</label><input type="text" class="ainp" placeholder="rzp_live_xxxxxxxxxxxxxxxx"></div></div>
+          <div class="arow"><div><label class="albl">Razorpay Key Secret</label><input type="password" class="ainp" placeholder="••••••••••••••••"></div></div>
+          <div class="atg-row"><span class="atg-lbl">Live Mode (vs Test)</span><label class="toggle"><input type="checkbox"><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+        </div>
+        <div class="acard">
+          <div class="acard-tit">WhatsApp — Twilio</div>
+          <div class="arow"><div><label class="albl">Account SID</label><input type="text" class="ainp" placeholder="ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"></div></div>
+          <div class="arow"><div><label class="albl">Auth Token</label><input type="password" class="ainp" placeholder="••••••••••••••••"></div></div>
+          <div class="arow"><div><label class="albl">WhatsApp From Number</label><input type="text" class="ainp" placeholder="whatsapp:+14155238886"></div></div>
+        </div>
+        <div class="acard">
+          <div class="acard-tit">AI — Anthropic (Claude)</div>
+          <div class="arow"><div><label class="albl">API Key</label><input type="password" class="ainp" placeholder="sk-ant-xxxxxxxxxxxxxxxx"></div></div>
+          <div class="arow"><div><label class="albl">Model</label><select class="asel"><option>claude-sonnet-4-6</option><option>claude-haiku-4-5</option></select></div></div>
+          <div class="atg-row"><span class="atg-lbl">AI Job Matching Active</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+        </div>
+        <div class="acard">
+          <div class="acard-tit">Analytics &amp; Ads</div>
+          <div class="arow"><div><label class="albl">Google Analytics ID</label><input type="text" class="ainp" placeholder="G-XXXXXXXXXX"></div></div>
+          <div class="arow"><div><label class="albl">AdSense Publisher ID</label><input type="text" class="ainp" placeholder="ca-pub-XXXXXXXXXXXXXXXX"></div></div>
+          <div class="arow"><div><label class="albl">Firebase Push Key</label><input type="password" class="ainp" placeholder="AAAA..."></div></div>
+        </div>
+      </div>
+      <div style="margin-top:12px;padding:12px;background:rgba(244,63,94,.07);border:1px solid rgba(244,63,94,.2);border-radius:var(--r2);font-size:.72rem;color:var(--ro)">
+        ⚠️ Keep API keys secret. Never share them. They give full access to paid services.
+      </div>
+    </div>
+  </div>
 
   <!-- ALL REMAINING ADMIN STUB PAGES -->
   <div class="apage" id="page-news">
@@ -1887,7 +2134,37 @@ tbody tr:hover td{background:var(--bg3);color:var(--tx)}
   </div>
   <div class="acard"><div class="acard-tit">All Courses</div><div class="atbl"><table><thead><tr><th>Course</th><th>Level</th><th>Students</th><th>Rating</th><th>Completion</th><th>Status</th><th>Actions</th></tr></thead><tbody id="eduTbl"></tbody></table></div></div>
 </div>
-  <div class="apage" id="page-categories"><div class="aph"><div><h2>🗂️ Categories</h2></div><div><button class="abtn ab-p ab-sm">+ Add</button></div></div><div class="acard"><div id="catAdminList"></div></div></div>
+  <div class="apage" id="page-categories">
+    <div class="aph">
+      <div><h2>🗂️ Categories</h2><p>Manage job categories and counts</p></div>
+      <div><button class="abtn ab-p ab-sm" onclick="addNewCategory()">+ Add Category</button></div>
+    </div>
+    <!-- Add/Edit Form -->
+    <div class="acard" id="catForm" style="display:none;margin-bottom:12px;border:1.5px solid var(--sf)">
+      <div class="acard-tit" id="catFormTitle">➕ Add New Category</div>
+      <div class="arow c2">
+        <div><label class="albl">Category Name</label><input type="text" class="ainp" id="catNameInp" placeholder="e.g. Defence, Teaching..."></div>
+        <div><label class="albl">Icon / Emoji</label><input type="text" class="ainp" id="catIconInp" placeholder="🛡️" style="font-size:1.1rem"></div>
+      </div>
+      <div class="arow c2">
+        <div><label class="albl">Colour (hex)</label><input type="color" class="ainp" id="catColorInp" value="#FF6B2B" style="height:36px;padding:4px"></div>
+        <div><label class="albl">Job Count</label><input type="number" class="ainp" id="catCountInp" placeholder="e.g. 1200"></div>
+      </div>
+      <div style="display:flex;gap:7px;margin-top:4px">
+        <button class="abtn ab-p" onclick="saveCategoryForm()">💾 Save Category</button>
+        <button class="abtn ab-g" onclick="cancelCategoryForm()">Cancel</button>
+      </div>
+    </div>
+    <!-- Stats -->
+    <div class="astats" style="margin-bottom:14px">
+      <div class="astat"><div class="asl">Total Categories</div><div class="asv" id="catTotalCount">12</div></div>
+      <div class="astat"><div class="asl">Total Jobs</div><div class="asv">12,540</div><span class="adelta dup">↑ Active</span></div>
+      <div class="astat"><div class="asl">Most Popular</div><div class="asv">IT / Tech</div><span class="adelta dup">4,200+ jobs</span></div>
+      <div class="astat"><div class="asl">Fastest Growing</div><div class="asv">AI / ML</div><span class="adelta dup">↑ 48%</span></div>
+    </div>
+    <!-- Visual Category Cards -->
+    <div id="catAdminList" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px"></div>
+  </div>
   <div class="apage" id="page-bulk-actions"><div class="aph"><div><h2>🗂️ Bulk Actions</h2></div></div><div class="bulkbar show"><span class="bk-cnt">Select jobs below</span><div style="display:flex;gap:5px;flex-wrap:wrap;margin-left:auto"><button class="abtn ab-g ab-sm" onclick="doBulk('approve')">✅ Approve All</button><button class="abtn ab-g ab-sm" onclick="doBulk('hot')">🔥 Mark Hot</button><button class="abtn ab-g ab-sm" onclick="exportCSV()">📄 Export CSV</button><button class="abtn ab-d ab-sm" onclick="doBulk('delete')">🗑️ Delete</button></div></div><div class="acard mt12"><div class="atbl"><table><thead><tr><th><input type="checkbox" style="accent-color:var(--sf)" onchange="toggleSelAll(this)"></th><th>Job Title</th><th>Company</th><th>Badge</th><th>Status</th></tr></thead><tbody id="bulkTbl"></tbody></table></div></div></div>
   <div class="apage" id="page-email-tpl"><div class="aph"><div><h2>📧 Email Templates</h2><p>Nodemailer integration — 8 automated emails</p></div></div><div class="ag3" id="emailTpls"></div></div>
   <div class="apage" id="page-state-map"><div class="aph"><div><h2>🗺️ State Job Map</h2></div></div><div class="acard"><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:9px" id="stateMapGrid"></div></div></div>
@@ -2328,6 +2605,91 @@ function getViews(id) {
 function trackView(id) { var k='v_'+id, v=Number(localStorage.getItem(k)||100)+1; localStorage.setItem(k,v); }
 
 // ============ DARK MODE / A11Y ============
+// ============ SETTINGS TABS ============
+function switchSettTab(tab) {
+  ['general','seo','email','security','api'].forEach(function(t) {
+    var pane = document.getElementById('sett-'+t);
+    var btn  = document.getElementById('stab-'+t);
+    if(pane) pane.style.display = t===tab ? 'block' : 'none';
+    if(btn)  btn.classList.toggle('active', t===tab);
+  });
+}
+function saveAllSettings() {
+  showToast('Settings Saved','All changes saved successfully.','ok');
+}
+
+// ============ CATEGORIES INLINE EDIT ============
+var catEditId = null;
+function addNewCategory() {
+  catEditId = null;
+  document.getElementById('catFormTitle').textContent = '➕ Add New Category';
+  document.getElementById('catNameInp').value = '';
+  document.getElementById('catIconInp').value = '';
+  document.getElementById('catColorInp').value = '#FF6B2B';
+  document.getElementById('catCountInp').value = '';
+  document.getElementById('catForm').style.display = 'block';
+  document.getElementById('catNameInp').focus();
+}
+function editCategory(id) {
+  catEditId = id;
+  var cats = JSON.parse(localStorage.getItem('adminCats') || 'null') || window._defaultCats;
+  var cat = cats[id];
+  if(!cat) return;
+  document.getElementById('catFormTitle').textContent = '✏️ Edit Category';
+  document.getElementById('catNameInp').value  = cat.name;
+  document.getElementById('catIconInp').value  = cat.icon;
+  document.getElementById('catColorInp').value = cat.color || '#FF6B2B';
+  document.getElementById('catCountInp').value = cat.count ? cat.count.replace(/[^0-9]/g,'') : '';
+  document.getElementById('catForm').style.display = 'block';
+  document.getElementById('catNameInp').focus();
+}
+function cancelCategoryForm() {
+  document.getElementById('catForm').style.display = 'none';
+  catEditId = null;
+}
+function saveCategoryForm() {
+  var name  = document.getElementById('catNameInp').value.trim();
+  var icon  = document.getElementById('catIconInp').value.trim() || '📋';
+  var color = document.getElementById('catColorInp').value;
+  var count = document.getElementById('catCountInp').value.trim();
+  if(!name) { showToast('Error','Category name is required.','info'); return; }
+  var cats = JSON.parse(localStorage.getItem('adminCats') || 'null') || window._defaultCats.slice();
+  if(catEditId !== null) {
+    cats[catEditId] = { name:name, icon:icon, color:color, count:count ? count+'+' : '0' };
+  } else {
+    cats.push({ name:name, icon:icon, color:color, count:count ? count+'+' : '0' });
+  }
+  localStorage.setItem('adminCats', JSON.stringify(cats));
+  cancelCategoryForm();
+  renderAdminCats();
+  showToast('Saved!', name+' updated.', 'ok');
+}
+function deleteCategory(id) {
+  var cats = JSON.parse(localStorage.getItem('adminCats') || 'null') || window._defaultCats.slice();
+  cats.splice(id, 1);
+  localStorage.setItem('adminCats', JSON.stringify(cats));
+  renderAdminCats();
+  showToast('Deleted','Category removed.','info');
+}
+
+// ============ ANALYTICS EXTRAS ============
+function renderTopPages() {
+  var el = document.getElementById('topPagesTbl'); if(!el) return;
+  var pages = [
+    {page:'🏠 Home',views:'840,240',time:'3m 12s',bounce:'28.4%',conv:'8.2%'},
+    {page:'⚡ Job Listings',views:'620,840',time:'5m 44s',bounce:'18.2%',conv:'14.8%'},
+    {page:'💼 Job Detail',views:'480,420',time:'6m 22s',bounce:'12.4%',conv:'22.4%'},
+    {page:'🏛️ Govt Jobs',views:'340,120',time:'4m 52s',bounce:'22.8%',conv:'11.2%'},
+    {page:'📰 News',views:'224,840',time:'2m 44s',bounce:'42.4%',conv:'4.8%'},
+    {page:'🎓 Education',views:'148,240',time:'7m 12s',bounce:'16.8%',conv:'18.2%'},
+    {page:'💎 Pricing',views:'84,420',time:'2m 28s',bounce:'48.2%',conv:'32.4%'},
+    {page:'🤖 AI Resume',views:'64,840',time:'8m 44s',bounce:'14.2%',conv:'42.8%'}
+  ];
+  el.innerHTML = pages.map(function(p,i){
+    return '<tr><td style="color:var(--tx3)">'+(i+1)+'</td><td class="tdp">'+p.page+'</td><td>'+p.views+'</td><td>'+p.time+'</td><td>'+p.bounce+'</td><td style="color:var(--em);font-weight:700">'+p.conv+'</td></tr>';
+  }).join('');
+}
+
 function toggleDark() { document.body.classList.toggle('dark-site'); showToast('Theme','Dark mode toggled.','info'); }
 function toggleHC() { document.body.classList.toggle('hc'); showToast('Accessibility','High contrast toggled.','info'); }
 function changeFS(d) { var r = parseFloat(getComputedStyle(document.documentElement).fontSize)||16; document.documentElement.style.fontSize = Math.min(Math.max(r+d*2,12),24)+'px'; showToast('Font size','Adjusted font size.','info'); }
@@ -2556,6 +2918,7 @@ function nav(pageId) {
   if(pageId==='dashboard') initAdminDashboard();
   if(pageId==='analytics') initAnalyticsCharts();
   if(pageId==='adsense') initAdsChart();
+  if(pageId==='analytics') { initAnalyticsCharts(); renderTopPages(); }
   if(pageId==='weekly-report') initWeeklyChart();
   if(pageId==='live-monitor') startLiveMonitor();
   if(pageId==='jobs') renderAllJobsTable();
@@ -2589,11 +2952,13 @@ function initAdminDashboard() {
   renderRecentJobs();
   renderActivityFeed();
   renderTopStates();
+  renderTopEmployers();
   renderDeadlines();
   renderNotifications();
   initTrafficChart();
   initDonutChart();
   startRealtimeTicker();
+  initDashDate();
   // Update user stats from real signup data
   var realUsers = JSON.parse(localStorage.getItem('siteUsers') || '[]');
   var totalU = realUsers.length + 324580;
@@ -2638,6 +3003,37 @@ function renderActivityFeed() {
       +'<div style="width:24px;height:24px;border-radius:50%;background:'+a.c+'22;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0">'+a.icon+'</div>'
       +'<div><div style="font-size:.72rem;color:var(--tx2)">'+a.txt+'</div><div style="font-size:.62rem;color:var(--tx3);margin-top:2px">'+a.time+'</div></div></div>';
   }).join('');
+}
+
+function renderTopEmployers() {
+  var el = document.getElementById('topEmployers'); if(!el) return;
+  var emps = [
+    {name:'TechMahindra',type:'IT',jobs:48,color:'#FF6B2B'},
+    {name:'Infosys',type:'IT',jobs:36,color:'#8B5CF6'},
+    {name:'IBPS',type:'Banking',jobs:12,color:'#0A3D62'},
+    {name:'Railway Board',type:'Govt',jobs:35,color:'#0EA5E9'},
+    {name:'Flipkart',type:'E-Commerce',jobs:28,color:'#F59E0B'},
+    {name:'UPSC',type:'Civil Services',jobs:8,color:'#F43F5E'}
+  ];
+  // Add real signup employers
+  var realUsers = JSON.parse(localStorage.getItem('siteUsers') || '[]');
+  el.innerHTML = emps.map(function(e,i){
+    var badge = i===0?'🥇':i===1?'🥈':i===2?'🥉':''+(i+1);
+    return '<div style="display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:1px solid var(--bd)">'
+      +'<span style="font-size:.9rem;width:22px;text-align:center">'+badge+'</span>'
+      +'<div style="width:28px;height:28px;border-radius:7px;background:'+e.color+'22;display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:800;color:'+e.color+';flex-shrink:0">'+e.name[0]+'</div>'
+      +'<div style="flex:1;min-width:0"><div style="font-size:.74rem;font-weight:700;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+e.name+'</div>'
+      +'<div style="font-size:.62rem;color:var(--tx3)">'+e.type+'</div></div>'
+      +'<span style="font-size:.72rem;font-weight:700;color:var(--sf)">'+e.jobs+' jobs</span>'
+      +'</div>';
+  }).join('');
+}
+
+// Dashboard date
+function initDashDate() {
+  var el = document.getElementById('dashDate'); if(!el) return;
+  var now = new Date();
+  el.textContent = now.toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 }
 
 function renderTopStates() {
@@ -2693,10 +3089,46 @@ function initDonutChart() {
 }
 
 function initAnalyticsCharts() {
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var range  = parseInt((document.getElementById('analyticsRange')||{value:'30'}).value)||30;
+  var labels = range<=7 ? ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] : range<=30 ? months.slice(6) : months;
+
+  // Monthly Applications + Users Bar Chart
   var el1 = document.getElementById('appChart');
-  if(el1) { if(el1._chart) el1._chart.destroy(); el1._chart = new Chart(el1,{type:'bar',data:{labels:['Jan','Feb','Mar','Apr','May','Jun'],datasets:[{label:'Applications',data:[28000,34000,31000,38000,42000,48000],backgroundColor:'rgba(255,107,43,.7)',borderRadius:5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#9BA3BC',font:{size:10}}}},scales:{x:{ticks:{color:'#5C6480',font:{size:9}},grid:{color:'rgba(42,47,62,.5)'}},y:{ticks:{color:'#5C6480',font:{size:9}},grid:{color:'rgba(42,47,62,.5)'}}}}});}
+  if(el1) { if(el1._chart) el1._chart.destroy();
+    el1._chart = new Chart(el1,{type:'bar',data:{labels:labels,datasets:[
+      {label:'Applications',data:labels.map(function(_,i){return 28000+i*4200+Math.random()*2000|0;}),backgroundColor:'rgba(255,107,43,.75)',borderRadius:4},
+      {label:'New Users',data:labels.map(function(_,i){return 8400+i*1800+Math.random()*800|0;}),backgroundColor:'rgba(56,189,248,.65)',borderRadius:4}
+    ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#9BA3BC',font:{size:10}}}},scales:{x:{ticks:{color:'#5C6480',font:{size:9}},grid:{color:'rgba(42,47,62,.2)'}},y:{ticks:{color:'#5C6480',font:{size:9}},grid:{color:'rgba(42,47,62,.2)'}}}}}); }
+
+  // Revenue Trend Line Chart
   var el2 = document.getElementById('revChart');
-  if(el2) { if(el2._chart) el2._chart.destroy(); el2._chart = new Chart(el2,{type:'line',data:{labels:['Jan','Feb','Mar','Apr','May','Jun'],datasets:[{label:'Revenue (₹L)',data:[4.2,5.1,4.8,6.2,7.1,8.4],borderColor:'#10B981',backgroundColor:'rgba(16,185,129,.1)',tension:.4,fill:true}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#9BA3BC',font:{size:10}}}},scales:{x:{ticks:{color:'#5C6480',font:{size:9}},grid:{color:'rgba(42,47,62,.5)'}},y:{ticks:{color:'#5C6480',font:{size:9}},grid:{color:'rgba(42,47,62,.5)'}}}}});}
+  if(el2) { if(el2._chart) el2._chart.destroy();
+    el2._chart = new Chart(el2,{type:'line',data:{labels:labels,datasets:[
+      {label:'Revenue (₹L)',data:labels.map(function(_,i){return +(4.2+i*0.72+(Math.random()*.4)).toFixed(1);}),borderColor:'#10B981',backgroundColor:'rgba(16,185,129,.1)',tension:.45,fill:true,pointBackgroundColor:'#10B981',pointRadius:3}
+    ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'#9BA3BC',font:{size:10}}},tooltip:{callbacks:{label:function(c){return ' ₹'+c.parsed.y+'L';}}}},scales:{x:{ticks:{color:'#5C6480',font:{size:9}},grid:{color:'rgba(42,47,62,.2)'}},y:{ticks:{color:'#5C6480',font:{size:9},callback:function(v){return '₹'+v+'L';}},grid:{color:'rgba(42,47,62,.2)'}}}}});  }
+
+  // Traffic Sources Pie
+  var el3 = document.getElementById('trafficSrcChart');
+  if(el3) { if(el3._chart) el3._chart.destroy();
+    var srcLabels = ['Organic Search','Direct','Social Media','Referral','Email'];
+    var srcData   = [54, 22, 12, 8, 4];
+    var srcColors = ['#FF6B2B','#38BDF8','#8B5CF6','#10B981','#F59E0B'];
+    el3._chart = new Chart(el3,{type:'pie',data:{labels:srcLabels,datasets:[{data:srcData,backgroundColor:srcColors,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
+    var leg3 = document.getElementById('trafficSrcLegend');
+    if(leg3) leg3.innerHTML = srcLabels.map(function(l,i){return '<div style="display:flex;align-items:center;gap:6px"><div style="width:9px;height:9px;border-radius:50%;background:'+srcColors[i]+';flex-shrink:0"></div><span style="font-size:.68rem;color:var(--tx2);flex:1">'+l+'</span><span style="font-size:.68rem;font-weight:700;color:var(--tx)">'+srcData[i]+'%</span></div>';}).join(''); }
+
+  // Device Breakdown Donut
+  var el4 = document.getElementById('deviceChart');
+  if(el4) { if(el4._chart) el4._chart.destroy();
+    var devLabels = ['Mobile','Desktop','Tablet'];
+    var devData   = [68, 24, 8];
+    var devColors = ['#FF6B2B','#38BDF8','#8B5CF6'];
+    el4._chart = new Chart(el4,{type:'doughnut',data:{labels:devLabels,datasets:[{data:devData,backgroundColor:devColors,borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},cutout:'65%'}});
+    var leg4 = document.getElementById('deviceLegend');
+    if(leg4) leg4.innerHTML = devLabels.map(function(l,i){return '<div style="display:flex;align-items:center;gap:6px"><div style="width:9px;height:9px;border-radius:50%;background:'+devColors[i]+';flex-shrink:0"></div><span style="font-size:.68rem;color:var(--tx2);flex:1">'+l+'</span><span style="font-size:.68rem;font-weight:700;color:var(--tx)">'+devData[i]+'%</span></div>';}).join(''); }
+
+  renderTopPages();
 }
 
 function initAdsChart() {
@@ -3174,8 +3606,46 @@ function renderCalendar() {
 
 function renderAdminCats() {
   var el = document.getElementById('catAdminList'); if(!el) return;
-  el.innerHTML = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:9px">'+CATS.map(function(c){ return '<div style="padding:13px;background:var(--bg3);border-radius:var(--r);border:1px solid var(--bd);display:flex;align-items:center;gap:9px"><span style="font-size:1.3rem">'+c.icon+'</span><div><div style="font-size:.75rem;font-weight:700;color:var(--tx)">'+c.name+'</div><div style="font-size:.65rem;color:var(--tx3)">'+c.count+' jobs</div></div><button class="abtn ab-g ab-xs" style="margin-left:auto" onclick="showToast(\'Editing '+c.name+'\',\'\',\'info\')">Edit</button></div>'; }).join('')+'</div>';
+  var defaultCats = [
+    {name:'IT / Technology',icon:'💻',color:'#8B5CF6',count:'4,200+'},
+    {name:'Banking / Finance',icon:'🏦',color:'#0A3D62',count:'2,840+'},
+    {name:'Railways',icon:'🚂',color:'#0EA5E9',count:'1,920+'},
+    {name:'SSC / Central Govt',icon:'🏛️',color:'#00B96B',count:'3,480+'},
+    {name:'UPSC / Civil Services',icon:'📜',color:'#F43F5E',count:'840+'},
+    {name:'Defence / Army',icon:'🛡️',color:'#16A34A',count:'620+'},
+    {name:'Teaching / Education',icon:'📚',color:'#F59E0B',count:'1,240+'},
+    {name:'Medical / Health',icon:'🏥',color:'#EC4899',count:'920+'},
+    {name:'Engineering',icon:'⚙️',color:'#FF6B2B',count:'2,120+'},
+    {name:'Media / Journalism',icon:'📰',color:'#64748B',count:'380+'},
+    {name:'Management / HR',icon:'👔',color:'#8B5CF6',count:'740+'},
+    {name:'Agriculture / Rural',icon:'🌾',color:'#65A30D',count:'560+'}
+  ];
+  window._defaultCats = defaultCats;
+  var cats = JSON.parse(localStorage.getItem('adminCats') || 'null') || defaultCats;
+  var tc = document.getElementById('catTotalCount');
+  if(tc) tc.textContent = cats.length;
+  el.innerHTML = cats.map(function(cat,i){
+    var pct = Math.min(100, Math.round(parseInt((cat.count||'0').replace(/[^0-9]/g,'')) / 50));
+    return '<div style="background:var(--bg2);border:1px solid var(--bd);border-radius:var(--r2);padding:14px;position:relative;overflow:hidden">'
+      +'<div style="position:absolute;top:0;left:0;right:0;height:3px;background:'+(cat.color||'var(--sf)')+';opacity:.6"></div>'
+      +'<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:9px">'
+      +'<div style="display:flex;align-items:center;gap:8px">'
+      +'<div style="width:34px;height:34px;border-radius:9px;background:'+(cat.color||'var(--sf)')+'22;display:flex;align-items:center;justify-content:center;font-size:1.1rem">'+cat.icon+'</div>'
+      +'<div><div style="font-size:.78rem;font-weight:700;color:var(--tx)">'+cat.name+'</div>'
+      +'<div style="font-family:var(--disp);font-size:.9rem;font-weight:800;color:'+(cat.color||'var(--sf)')+'">'+cat.count+'</div></div>'
+      +'</div>'
+      +'<div style="display:flex;gap:4px">'
+      +'<button class="abtn ab-g ab-xs" onclick="editCategory('+i+')" title="Edit">✏️</button>'
+      +'<button class="abtn ab-d ab-xs" onclick="deleteCategory('+i+')" title="Delete">🗑️</button>'
+      +'</div></div>'
+      +'<div style="height:4px;background:var(--bg3);border-radius:2px;overflow:hidden">'
+      +'<div style="height:100%;background:'+(cat.color||'var(--sf)')+';border-radius:2px;width:'+pct+'%;opacity:.7"></div>'
+      +'</div>'
+      +'<div style="font-size:.62rem;color:var(--tx3);margin-top:4px">Jobs listing progress</div>'
+      +'</div>';
+  }).join('');
 }
+
 
 function renderPushCampaigns() {
   var el = document.getElementById('pushCamps'); if(!el) return;
