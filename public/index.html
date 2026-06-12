@@ -963,6 +963,7 @@ footer {
     <span class="nav-link" data-page="education" onclick="showPage('education')">🎓 Learn</span>
     <span class="nav-link" onclick="openAIMatch()" style="background:linear-gradient(135deg,rgba(139,92,246,.15),rgba(139,92,246,.08));border:1px solid rgba(139,92,246,.3);border-radius:8px;padding:4px 10px;color:#8B5CF6">🤖 AI Match</span>
     <span class="nav-link" data-page="contact" onclick="showPage('contact')">✉️ Contact</span>
+    <span class="nav-link" onclick="openAdminPanel()" style="background:linear-gradient(135deg,rgba(255,107,0,.15),rgba(255,107,0,.08));border:1px solid rgba(255,107,0,.3);border-radius:8px;padding:4px 10px;color:var(--saffron)">⚙️ Admin</span>
   </div>
 
   <button class="nav-cta" onclick="showPage('latest')">🔍 Find Jobs</button>
@@ -2352,6 +2353,386 @@ function showToast(icon, msg) {
 document.addEventListener('DOMContentLoaded', function() {
   updateAuthUI();
   refreshAllBookmarks();
+});
+</script>
+<!-- ═══════════════════════════════════════
+     PUSH NOTIFICATIONS BANNER
+═══════════════════════════════════════ -->
+<div id="pushBanner" style="display:none;position:fixed;bottom:80px;right:20px;z-index:4000;background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:16px 18px;box-shadow:0 8px 32px rgba(10,22,40,.15);max-width:300px;animation:slideUp .3s ease">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+    <div style="font-weight:700;font-size:.85rem;color:var(--navy)">🔔 Enable Job Alerts</div>
+    <button onclick="closePushBanner()" style="background:none;border:none;color:#94a3b8;cursor:pointer;font-size:.9rem;padding:0 0 0 8px">✕</button>
+  </div>
+  <div style="font-size:.76rem;color:#64748b;margin-bottom:12px;line-height:1.5">Get instant notifications when new jobs matching your profile are posted!</div>
+  <button onclick="enablePushNotifications()" style="width:100%;padding:9px;border-radius:10px;background:linear-gradient(135deg,var(--saffron),var(--saffron-light));color:#fff;font-weight:700;font-size:.8rem;cursor:pointer;border:none;font-family:inherit;box-shadow:0 3px 0 var(--saffron-dark)">🔔 Enable Notifications</button>
+  <button onclick="closePushBanner()" style="width:100%;padding:7px;border-radius:10px;background:none;color:#94a3b8;font-size:.76rem;cursor:pointer;border:none;margin-top:5px;font-family:inherit">Maybe later</button>
+</div>
+
+<!-- ═══════════════════════════════════════
+     ADMIN PANEL OVERLAY
+═══════════════════════════════════════ -->
+<div id="adminOverlay" style="display:none;position:fixed;inset:0;z-index:6000;background:var(--off-white)">
+  <!-- Admin Navbar -->
+  <div style="height:56px;background:var(--navy);display:flex;align-items:center;padding:0 20px;gap:14px;position:sticky;top:0;z-index:100">
+    <div style="display:flex;align-items:center;gap:8px;font-family:'Baloo 2',cursive;font-weight:800;color:#fff;font-size:1rem">
+      <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--saffron),var(--gold));display:flex;align-items:center;justify-content:center;font-size:.8rem">🇮🇳</div>
+      JobsIndia <span style="color:var(--saffron)">Admin</span>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:8px">
+      <span id="adminDateTime" style="font-size:.72rem;color:rgba(255,255,255,.5)"></span>
+      <button onclick="sendTestNotification()" style="padding:6px 12px;border-radius:8px;background:rgba(255,107,0,.2);border:1px solid rgba(255,107,0,.3);color:var(--saffron);font-size:.72rem;font-weight:700;cursor:pointer;font-family:inherit">🔔 Test Notification</button>
+      <button onclick="closeAdminPanel()" style="padding:6px 14px;border-radius:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:.76rem;cursor:pointer;font-family:inherit">✕ Close</button>
+    </div>
+  </div>
+  <!-- Admin Content -->
+  <div style="max-width:1200px;margin:0 auto;padding:24px 20px;overflow-y:auto;height:calc(100vh - 56px)">
+    <!-- Admin Login (shown if not logged in as admin) -->
+    <div id="adminLogin" style="max-width:380px;margin:40px auto">
+      <div style="background:#fff;border-radius:20px;padding:32px;box-shadow:0 8px 32px rgba(10,22,40,.1);text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:12px">🔐</div>
+        <div style="font-family:'Baloo 2',cursive;font-size:1.2rem;font-weight:800;color:var(--navy);margin-bottom:4px">Admin Login</div>
+        <div style="font-size:.78rem;color:#64748b;margin-bottom:20px">Enter your admin credentials</div>
+        <input type="email" id="adminEmail" placeholder="admin@jobsindia.ai" value="pappdeaf081@gmail.com" style="width:100%;padding:10px 13px;border-radius:10px;border:1.5px solid #e2e8f0;font-size:.85rem;outline:none;font-family:inherit;margin-bottom:10px;text-align:left">
+        <input type="password" id="adminPass" placeholder="Password" value="pappdeaf081" style="width:100%;padding:10px 13px;border-radius:10px;border:1.5px solid #e2e8f0;font-size:.85rem;outline:none;font-family:inherit;margin-bottom:14px;text-align:left" onkeydown="if(event.key==='Enter')doAdminLogin()">
+        <div id="adminLoginErr" style="display:none;color:#dc2626;font-size:.76rem;margin-bottom:10px"></div>
+        <button onclick="doAdminLogin()" style="width:100%;padding:12px;border-radius:12px;background:linear-gradient(135deg,var(--saffron),var(--saffron-light));color:#fff;font-weight:800;font-size:.9rem;cursor:pointer;border:none;box-shadow:0 4px 0 var(--saffron-dark);font-family:inherit">Login to Admin →</button>
+      </div>
+    </div>
+    <!-- Admin Dashboard (shown after login) -->
+    <div id="adminDashboard" style="display:none">
+      <!-- Stat Cards -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:22px">
+        <div style="background:#fff;border-radius:16px;padding:18px;box-shadow:0 2px 12px rgba(10,22,40,.07);border-left:4px solid var(--saffron)">
+          <div style="font-size:.68rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Total Jobs</div>
+          <div id="adminStatJobs" style="font-family:'Baloo 2',cursive;font-size:2rem;font-weight:800;color:var(--navy)">—</div>
+          <div style="font-size:.7rem;color:var(--emerald);margin-top:4px">↑ 8.2% this week</div>
+        </div>
+        <div style="background:#fff;border-radius:16px;padding:18px;box-shadow:0 2px 12px rgba(10,22,40,.07);border-left:4px solid var(--emerald)">
+          <div style="font-size:.68rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Registered Users</div>
+          <div id="adminStatUsers" style="font-family:'Baloo 2',cursive;font-size:2rem;font-weight:800;color:var(--navy)">—</div>
+          <div style="font-size:.7rem;color:var(--emerald);margin-top:4px">↑ Growing daily</div>
+        </div>
+        <div style="background:#fff;border-radius:16px;padding:18px;box-shadow:0 2px 12px rgba(10,22,40,.07);border-left:4px solid var(--sky)">
+          <div style="font-size:.68rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Applications</div>
+          <div id="adminStatApps" style="font-family:'Baloo 2',cursive;font-size:2rem;font-weight:800;color:var(--navy)">—</div>
+          <div style="font-size:.7rem;color:var(--emerald);margin-top:4px">↑ 12.4% today</div>
+        </div>
+        <div style="background:#fff;border-radius:16px;padding:18px;box-shadow:0 2px 12px rgba(10,22,40,.07);border-left:4px solid var(--purple)">
+          <div style="font-size:.68rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Saved Jobs</div>
+          <div id="adminStatSaved" style="font-family:'Baloo 2',cursive;font-size:2rem;font-weight:800;color:var(--navy)">—</div>
+          <div style="font-size:.7rem;color:var(--emerald);margin-top:4px">Bookmarks total</div>
+        </div>
+        <div style="background:#fff;border-radius:16px;padding:18px;box-shadow:0 2px 12px rgba(10,22,40,.07);border-left:4px solid var(--gold)">
+          <div style="font-size:.68rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Notifications Sent</div>
+          <div id="adminStatNotifs" style="font-family:'Baloo 2',cursive;font-size:2rem;font-weight:800;color:var(--navy)">—</div>
+          <div style="font-size:.7rem;color:var(--emerald);margin-top:4px">Push + in-app</div>
+        </div>
+        <div style="background:#fff;border-radius:16px;padding:18px;box-shadow:0 2px 12px rgba(10,22,40,.07);border-left:4px solid var(--rose)">
+          <div style="font-size:.68rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Govt Jobs</div>
+          <div id="adminStatGovt" style="font-family:'Baloo 2',cursive;font-size:2rem;font-weight:800;color:var(--navy)">—</div>
+          <div style="font-size:.7rem;color:#64748b;margin-top:4px">Active listings</div>
+        </div>
+      </div>
+
+      <!-- Users Table -->
+      <div style="background:#fff;border-radius:16px;padding:20px;box-shadow:0 2px 12px rgba(10,22,40,.07);margin-bottom:18px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div style="font-family:'Baloo 2',cursive;font-weight:800;font-size:1rem;color:var(--navy)">👥 Registered Users</div>
+          <button onclick="exportUsersCSV()" style="padding:6px 13px;border-radius:8px;background:var(--gray-100);border:1px solid var(--gray-200);font-size:.72rem;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text-sub)">📊 Export CSV</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table style="width:100%;border-collapse:collapse;font-size:.78rem">
+            <thead><tr style="background:var(--gray-100)">
+              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--gray-200)">#</th>
+              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--gray-200)">Name</th>
+              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--gray-200)">Email</th>
+              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--gray-200)">Plan</th>
+              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--gray-200)">Joined</th>
+              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--gray-200)">Actions</th>
+            </tr></thead>
+            <tbody id="adminUsersTable"></tbody>
+          </table>
+        </div>
+        <div id="adminNoUsers" style="text-align:center;padding:24px;color:#94a3b8;font-size:.82rem">No users registered yet. Share your site to get sign-ups!</div>
+      </div>
+
+      <!-- Applications Table -->
+      <div style="background:#fff;border-radius:16px;padding:20px;box-shadow:0 2px 12px rgba(10,22,40,.07);margin-bottom:18px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div style="font-family:'Baloo 2',cursive;font-weight:800;font-size:1rem;color:var(--navy)">📝 Job Applications</div>
+          <span id="adminAppCount" style="font-size:.72rem;color:#64748b"></span>
+        </div>
+        <div style="overflow-x:auto">
+          <table style="width:100%;border-collapse:collapse;font-size:.78rem">
+            <thead><tr style="background:var(--gray-100)">
+              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Applicant</th>
+              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Email</th>
+              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Job</th>
+              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Date</th>
+              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Status</th>
+            </tr></thead>
+            <tbody id="adminAppsTable"></tbody>
+          </table>
+        </div>
+        <div id="adminNoApps" style="text-align:center;padding:24px;color:#94a3b8;font-size:.82rem">No applications yet.</div>
+      </div>
+
+      <!-- Push Notifications Panel -->
+      <div style="background:#fff;border-radius:16px;padding:20px;box-shadow:0 2px 12px rgba(10,22,40,.07);margin-bottom:18px">
+        <div style="font-family:'Baloo 2',cursive;font-weight:800;font-size:1rem;color:var(--navy);margin-bottom:14px">🔔 Send Push Notification</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+          <div><label style="display:block;font-size:.68rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">Title</label><input type="text" id="pushTitle" placeholder="e.g. New Jobs Posted!" style="width:100%;padding:9px 12px;border-radius:9px;border:1.5px solid #e2e8f0;font-size:.82rem;outline:none;font-family:inherit"></div>
+          <div><label style="display:block;font-size:.68rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">Category</label><select id="pushCategory" style="width:100%;padding:9px 12px;border-radius:9px;border:1.5px solid #e2e8f0;font-size:.82rem;outline:none;font-family:inherit;background:#fff"><option>All Users</option><option>Govt Job Seekers</option><option>IT Jobs</option><option>Banking Jobs</option><option>Freshers</option></select></div>
+        </div>
+        <div style="margin-bottom:12px"><label style="display:block;font-size:.68rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">Message</label><textarea id="pushMessage" placeholder="50 new SSC CGL posts added! Apply before June 30." rows="2" style="width:100%;padding:9px 12px;border-radius:9px;border:1.5px solid #e2e8f0;font-size:.82rem;outline:none;font-family:inherit;resize:vertical"></textarea></div>
+        <div style="display:flex;gap:8px">
+          <button onclick="sendPushNotification()" style="padding:9px 20px;border-radius:10px;background:linear-gradient(135deg,var(--saffron),var(--saffron-light));color:#fff;font-weight:700;font-size:.82rem;cursor:pointer;border:none;box-shadow:0 3px 0 var(--saffron-dark);font-family:inherit">📤 Send Now</button>
+          <button onclick="scheduleNotification()" style="padding:9px 20px;border-radius:10px;background:var(--gray-100);color:var(--text-sub);font-weight:600;font-size:.82rem;cursor:pointer;border:1px solid var(--gray-200);font-family:inherit">⏰ Schedule</button>
+        </div>
+        <div id="pushLog" style="margin-top:14px;max-height:160px;overflow-y:auto"></div>
+      </div>
+
+      <!-- Jobs Overview -->
+      <div style="background:#fff;border-radius:16px;padding:20px;box-shadow:0 2px 12px rgba(10,22,40,.07)">
+        <div style="font-family:'Baloo 2',cursive;font-weight:800;font-size:1rem;color:var(--navy);margin-bottom:14px">💼 Jobs Overview</div>
+        <div style="overflow-x:auto">
+          <table style="width:100%;border-collapse:collapse;font-size:.78rem">
+            <thead><tr style="background:var(--gray-100)">
+              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Job Title</th>
+              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Company</th>
+              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Type</th>
+              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Last Date</th>
+              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Status</th>
+            </tr></thead>
+            <tbody id="adminJobsTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// ADMIN PANEL
+// ═══════════════════════════════════════════════════════════════
+var adminLoggedIn = false;
+
+function openAdminPanel() {
+  document.getElementById('adminOverlay').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+  updateAdminDateTime();
+  setInterval(updateAdminDateTime, 1000);
+  if(adminLoggedIn) showAdminDashboard();
+}
+function closeAdminPanel() {
+  document.getElementById('adminOverlay').style.display = 'none';
+  document.body.style.overflow = '';
+}
+function updateAdminDateTime() {
+  var el = document.getElementById('adminDateTime');
+  if(el) el.textContent = new Date().toLocaleString('en-IN', {day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+}
+function doAdminLogin() {
+  var email = document.getElementById('adminEmail').value.trim();
+  var pass  = document.getElementById('adminPass').value;
+  var err   = document.getElementById('adminLoginErr');
+  if(email === 'pappdeaf081@gmail.com' && pass === 'pappdeaf081') {
+    adminLoggedIn = true;
+    showAdminDashboard();
+  } else {
+    err.textContent = 'Invalid credentials. Use pappdeaf081@gmail.com / pappdeaf081';
+    err.style.display = 'block';
+  }
+}
+function showAdminDashboard() {
+  document.getElementById('adminLogin').style.display     = 'none';
+  document.getElementById('adminDashboard').style.display = 'block';
+  populateAdminStats();
+  populateAdminUsers();
+  populateAdminApps();
+  populateAdminJobs();
+}
+function populateAdminStats() {
+  var users = JSON.parse(localStorage.getItem('jiUsers') || '[]');
+  var apps  = JSON.parse(localStorage.getItem('jiApps')  || '[]');
+  var saved = JSON.parse(localStorage.getItem('jiSaved') || '[]');
+  var notifs= JSON.parse(localStorage.getItem('jiNotifs')|| '[]');
+  var govtJobs = (typeof jobsData !== 'undefined') ? jobsData.filter(function(j){ return j.type==='govt'; }).length : 0;
+  document.getElementById('adminStatJobs').textContent  = typeof jobsData !== 'undefined' ? jobsData.length : '—';
+  document.getElementById('adminStatUsers').textContent = users.length;
+  document.getElementById('adminStatApps').textContent  = apps.length;
+  document.getElementById('adminStatSaved').textContent = saved.length;
+  document.getElementById('adminStatNotifs').textContent= notifs.length;
+  document.getElementById('adminStatGovt').textContent  = govtJobs;
+}
+function populateAdminUsers() {
+  var users = JSON.parse(localStorage.getItem('jiUsers') || '[]');
+  var tbody = document.getElementById('adminUsersTable');
+  var noMsg = document.getElementById('adminNoUsers');
+  if(users.length === 0) { tbody.innerHTML=''; noMsg.style.display='block'; return; }
+  noMsg.style.display = 'none';
+  tbody.innerHTML = users.map(function(u, i) {
+    var d = u.joined ? new Date(u.joined).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}) : '—';
+    return '<tr style="border-bottom:1px solid #f1f5f9">'
+      +'<td style="padding:10px 12px;color:#94a3b8">'+(i+1)+'</td>'
+      +'<td style="padding:10px 12px;font-weight:600;color:var(--navy)">'+u.name+'</td>'
+      +'<td style="padding:10px 12px;color:#64748b">'+u.email+'</td>'
+      +'<td style="padding:10px 12px"><span style="font-size:.65rem;padding:3px 9px;border-radius:100px;background:rgba(255,107,0,.1);color:var(--saffron);font-weight:700">'+u.plan+'</span></td>'
+      +'<td style="padding:10px 12px;color:#94a3b8;font-size:.76rem">'+d+'</td>'
+      +'<td style="padding:10px 12px"><button onclick="deleteUser(\''+u.email+'\')" style="padding:4px 10px;border-radius:7px;background:rgba(244,63,94,.1);border:1px solid rgba(244,63,94,.2);color:#F43F5E;font-size:.7rem;cursor:pointer;font-family:inherit">Del</button></td>'
+      +'</tr>';
+  }).join('');
+}
+function deleteUser(email) {
+  if(!confirm('Delete user '+email+'?')) return;
+  var users = JSON.parse(localStorage.getItem('jiUsers') || '[]').filter(function(u){ return u.email !== email; });
+  localStorage.setItem('jiUsers', JSON.stringify(users));
+  populateAdminUsers();
+  populateAdminStats();
+  showToast('🗑️', 'User deleted');
+}
+function populateAdminApps() {
+  var apps = JSON.parse(localStorage.getItem('jiApps') || '[]');
+  var tbody = document.getElementById('adminAppsTable');
+  var noMsg = document.getElementById('adminNoApps');
+  var count = document.getElementById('adminAppCount');
+  if(count) count.textContent = apps.length + ' total';
+  if(apps.length === 0) { tbody.innerHTML=''; noMsg.style.display='block'; return; }
+  noMsg.style.display = 'none';
+  tbody.innerHTML = apps.slice().reverse().map(function(a) {
+    var job = (typeof jobsData !== 'undefined') ? jobsData.find(function(j){ return j.id===a.jobId; }) : null;
+    var d = a.date ? new Date(a.date).toLocaleDateString('en-IN',{day:'2-digit',month:'short'}) : '—';
+    return '<tr style="border-bottom:1px solid #f1f5f9">'
+      +'<td style="padding:10px 12px;font-weight:600;color:var(--navy)">'+a.name+'</td>'
+      +'<td style="padding:10px 12px;color:#64748b">'+a.email+'</td>'
+      +'<td style="padding:10px 12px;color:var(--text-sub)">'+(job ? job.title : 'Job #'+a.jobId)+'</td>'
+      +'<td style="padding:10px 12px;color:#94a3b8;font-size:.76rem">'+d+'</td>'
+      +'<td style="padding:10px 12px"><span style="font-size:.65rem;padding:3px 9px;border-radius:100px;background:rgba(0,185,107,.1);color:var(--emerald);font-weight:700">Pending</span></td>'
+      +'</tr>';
+  }).join('');
+}
+function populateAdminJobs() {
+  if(typeof jobsData === 'undefined') return;
+  var tbody = document.getElementById('adminJobsTable');
+  tbody.innerHTML = jobsData.slice(0, 10).map(function(j) {
+    var isExpired = new Date(j.lastDate) < new Date();
+    return '<tr style="border-bottom:1px solid #f1f5f9">'
+      +'<td style="padding:10px 12px;font-weight:600;color:var(--navy)">'+j.title+'</td>'
+      +'<td style="padding:10px 12px;color:#64748b">'+j.company+'</td>'
+      +'<td style="padding:10px 12px"><span style="font-size:.65rem;padding:3px 9px;border-radius:100px;background:'+(j.type==='govt'?'rgba(10,61,98,.1)':'rgba(255,107,0,.1)')+';color:'+(j.type==='govt'?'#0A3D62':'var(--saffron)')+';font-weight:700">'+(j.type==='govt'?'Govt':'Private')+'</span></td>'
+      +'<td style="padding:10px 12px;color:#94a3b8;font-size:.76rem">'+j.lastDate+'</td>'
+      +'<td style="padding:10px 12px"><span style="font-size:.65rem;padding:3px 9px;border-radius:100px;background:'+(isExpired?'rgba(244,63,94,.1)':'rgba(0,185,107,.1)')+';color:'+(isExpired?'#F43F5E':'var(--emerald)')+';font-weight:700">'+(isExpired?'Expired':'Active')+'</span></td>'
+      +'</tr>';
+  }).join('');
+}
+function exportUsersCSV() {
+  var users = JSON.parse(localStorage.getItem('jiUsers') || '[]');
+  if(!users.length) { showToast('📊', 'No users to export yet!'); return; }
+  var csv = 'Name,Email,Plan,Joined\n' + users.map(function(u){ return u.name+','+u.email+','+u.plan+','+(u.joined?new Date(u.joined).toLocaleDateString():''); }).join('\n');
+  var blob = new Blob([csv], {type:'text/csv'});
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'jobsindia-users.csv'; a.click();
+  showToast('📊', 'Users exported as CSV!');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PUSH NOTIFICATIONS
+// ═══════════════════════════════════════════════════════════════
+var notifLog = JSON.parse(localStorage.getItem('jiNotifs') || '[]');
+
+function showPushBanner() {
+  var dismissed = localStorage.getItem('jiPushDismissed');
+  if(!dismissed) {
+    setTimeout(function(){ document.getElementById('pushBanner').style.display = 'block'; }, 5000);
+  }
+}
+function closePushBanner() {
+  document.getElementById('pushBanner').style.display = 'none';
+  localStorage.setItem('jiPushDismissed', '1');
+}
+function enablePushNotifications() {
+  if('Notification' in window) {
+    Notification.requestPermission().then(function(perm) {
+      if(perm === 'granted') {
+        localStorage.setItem('jiPushEnabled', '1');
+        closePushBanner();
+        new Notification('🇮🇳 JobsIndia AI', { body:'Job alerts enabled! You\'ll get notified for new openings.', icon:'/favicon.ico' });
+        showToast('🔔', 'Push notifications enabled!');
+      } else {
+        showToast('⚠️', 'Please allow notifications in browser settings');
+        closePushBanner();
+      }
+    });
+  } else {
+    showToast('ℹ️', 'In-app notifications enabled!');
+    localStorage.setItem('jiPushEnabled', '1');
+    closePushBanner();
+  }
+}
+function sendPushNotification() {
+  var title = document.getElementById('pushTitle').value.trim();
+  var msg   = document.getElementById('pushMessage').value.trim();
+  var cat   = document.getElementById('pushCategory').value;
+  if(!title || !msg) { showToast('⚠️', 'Please fill in title and message'); return; }
+  // Save to log
+  var entry = { title:title, message:msg, category:cat, time:new Date().toISOString(), sent:true };
+  notifLog.unshift(entry);
+  localStorage.setItem('jiNotifs', JSON.stringify(notifLog));
+  // Show browser notification if enabled
+  if(localStorage.getItem('jiPushEnabled') === '1' && 'Notification' in window && Notification.permission === 'granted') {
+    new Notification('🇮🇳 ' + title, { body:msg });
+  }
+  // Update log UI
+  renderPushLog();
+  populateAdminStats();
+  showToast('📤', 'Notification sent to ' + cat + '!');
+  document.getElementById('pushTitle').value = '';
+  document.getElementById('pushMessage').value = '';
+}
+function sendTestNotification() {
+  if('Notification' in window && Notification.permission === 'granted') {
+    new Notification('🇮🇳 Test — JobsIndia Admin', { body:'Push notifications are working correctly!' });
+    showToast('✅', 'Test notification sent!');
+  } else if('Notification' in window) {
+    Notification.requestPermission().then(function(p){
+      if(p==='granted') { new Notification('🇮🇳 Test', { body:'Working!' }); showToast('✅', 'Test sent!'); }
+    });
+  } else {
+    showToast('ℹ️', 'Browser does not support push notifications');
+  }
+}
+function scheduleNotification() {
+  var title = document.getElementById('pushTitle').value.trim();
+  var msg   = document.getElementById('pushMessage').value.trim();
+  if(!title || !msg) { showToast('⚠️', 'Fill in title and message first'); return; }
+  var mins = prompt('Schedule in how many minutes?', '30');
+  if(!mins || isNaN(mins)) return;
+  showToast('⏰', 'Scheduled for '+mins+' minutes from now!');
+  setTimeout(function(){
+    if(localStorage.getItem('jiPushEnabled') === '1' && 'Notification' in window && Notification.permission === 'granted') {
+      new Notification('🇮🇳 ' + title, { body:msg });
+    }
+    showToast('📤', 'Scheduled notification sent!');
+  }, parseInt(mins) * 60000);
+}
+function renderPushLog() {
+  var el = document.getElementById('pushLog'); if(!el) return;
+  if(!notifLog.length) { el.innerHTML='<div style="font-size:.74rem;color:#94a3b8;text-align:center;padding:10px">No notifications sent yet.</div>'; return; }
+  el.innerHTML = '<div style="font-size:.68rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Recent Notifications</div>' +
+    notifLog.slice(0,5).map(function(n){
+      var d = new Date(n.time).toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+      return '<div style="display:flex;align-items:flex-start;gap:8px;padding:8px;background:var(--gray-100);border-radius:9px;margin-bottom:6px">'
+        +'<span style="font-size:.9rem;flex-shrink:0">📤</span>'
+        +'<div style="flex:1;min-width:0"><div style="font-size:.76rem;font-weight:700;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+n.title+'</div>'
+        +'<div style="font-size:.68rem;color:#64748b;margin-top:1px">'+n.category+' · '+d+'</div></div>'
+        +'</div>';
+    }).join('');
+}
+
+// Show push banner after page load
+document.addEventListener('DOMContentLoaded', function() {
+  showPushBanner();
+  renderPushLog();
 });
 </script>
 </body>
