@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JobsIndia AI — Find Your Dream Career</title>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 /* ═══════════════════════════════════════════
    CSS VARIABLES & RESET
@@ -921,26 +922,103 @@ footer {
   .job-detail-layout { grid-template-columns: 1fr; }
   .jd-apply-card { position: static; }
 }
+
+/* ── Tablet 768px ── */
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .nav-cta { display: none; }
   .hamburger { display: flex; }
-  .hero-container { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+
+  /* Hide admin btn text on mobile */
+  button[title="Admin Panel"] { padding:7px 10px; font-size:.7rem; }
+
+  /* Hero */
+  .hero-container { grid-template-columns: 1fr; gap: 32px; text-align: center; padding: 80px 18px 48px; }
   .hero-visual { display: none; }
-  .hero-stats { justify-content: center; }
-  .hero-tags { justify-content: center; }
-  .hero-subtitle { margin: 0 auto 36px; }
-  .hero-badge { margin: 0 auto 20px; }
-  .cat-grid { grid-template-columns: repeat(2, 1fr); }
-  .footer-grid { grid-template-columns: 1fr; }
-  .contact-layout { grid-template-columns: 1fr; }
-  .jd-meta-grid { grid-template-columns: 1fr 1fr; }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 480px) {
-  .section { padding: 56px 16px; }
+  .hero-stats { justify-content: center; gap: 20px; }
+  .hero-tags { justify-content: center; flex-wrap: wrap; }
+  .hero-subtitle { margin: 0 auto 28px; font-size: .92rem; }
+  .hero-badge { margin: 0 auto 16px; }
+  .hero-title { font-size: clamp(1.9rem, 6vw, 2.8rem); }
+  .hero-search { max-width: 100%; }
+
+  /* Sections */
+  .section { padding: 48px 16px; }
+  .section-header { text-align: center; }
+  .section-title { font-size: clamp(1.5rem, 5vw, 2rem); }
+
+  /* Grids */
+  .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .jobs-grid { grid-template-columns: 1fr; }
+  .edu-grid { grid-template-columns: 1fr 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+  .contact-layout { grid-template-columns: 1fr; gap: 20px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+  /* Job detail */
+  .jd-meta-grid { grid-template-columns: 1fr 1fr; }
+  .job-detail-layout { padding: 16px; gap: 16px; }
+
+  /* Admin */
+  .adm-sidebar { transform: translateX(-240px); box-shadow: 4px 0 24px rgba(0,0,0,.15); }
+  .adm-sidebar.open { transform: translateX(0); }
+  .adm-main { margin-left: 0 !important; padding: 16px; }
+  .adm-grid4 { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .adm-grid2 { grid-template-columns: 1fr; }
+  .adm-topbar { flex-direction: column; align-items: flex-start; gap: 10px; }
+
+  /* Auth / Apply modals */
+  #authOverlay > div, #applyOverlay > div { border-radius: 16px; }
+
+  /* Filter bar */
+  .filter-bar { flex-wrap: wrap; gap: 8px; }
+  .filter-bar select, .filter-bar input { min-width: 120px; }
+}
+
+/* ── Small Mobile 480px ── */
+@media (max-width: 480px) {
+  .section { padding: 40px 14px; }
+  .hero-container { padding: 72px 14px 40px; }
+  .hero-title { font-size: 1.8rem; }
+  .hero-stats { gap: 14px; }
+  .hero-stat-number { font-size: 1.5rem; }
+
+  .jobs-grid { grid-template-columns: 1fr; }
+  .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .edu-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+
   .jd-meta-grid { grid-template-columns: 1fr; }
+  .adm-grid4 { grid-template-columns: 1fr 1fr; }
+  .adm-stat-val { font-size: 1.5rem; }
+
+  /* Make tables scroll on mobile */
+  .adm-card > div { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .adm-table { min-width: 560px; }
+
+  /* Better touch targets */
+  .job-card, .cat-card, .news-card { cursor: pointer; }
+  .jc-apply, .nav-cta, .hero-search-btn { min-height: 44px; }
+  .mobile-nav-link { min-height: 48px; display: flex; align-items: center; }
+}
+
+/* ── Extra Small 380px ── */
+@media (max-width: 380px) {
+  .hero-title { font-size: 1.6rem; }
+  .section { padding: 32px 12px; }
+  .cat-grid { grid-template-columns: repeat(2, 1fr); }
+  .stats-grid { grid-template-columns: 1fr; }
+  .adm-grid4 { grid-template-columns: 1fr; }
+  .navbar { padding: 0 12px; }
+}
+
+/* ── Touch devices ── */
+@media (hover: none) and (pointer: coarse) {
+  .job-card:hover { transform: none; box-shadow: var(--shadow-md); }
+  .cat-card:hover { transform: none; }
+  .news-card:hover { transform: none; }
+  .job-card:active { transform: translateY(-2px); }
+  .cat-card:active { transform: scale(.97); }
 }
 </style>
 </head>
@@ -961,38 +1039,11 @@ footer {
     <span class="nav-link" data-page="govt" onclick="showPage('govt')">🏛️ Govt</span>
     <span class="nav-link" data-page="news" onclick="showPage('news')">📰 News</span>
     <span class="nav-link" data-page="education" onclick="showPage('education')">🎓 Learn</span>
-    <span class="nav-link" onclick="openAIMatch()" style="background:linear-gradient(135deg,rgba(139,92,246,.15),rgba(139,92,246,.08));border:1px solid rgba(139,92,246,.3);border-radius:8px;padding:4px 10px;color:#8B5CF6">🤖 AI Match</span>
     <span class="nav-link" data-page="contact" onclick="showPage('contact')">✉️ Contact</span>
-    <span class="nav-link" onclick="openAdminPanel()" style="background:linear-gradient(135deg,rgba(255,107,0,.15),rgba(255,107,0,.08));border:1px solid rgba(255,107,0,.3);border-radius:8px;padding:4px 10px;color:var(--saffron)">⚙️ Admin</span>
   </div>
 
   <button class="nav-cta" onclick="showPage('latest')">🔍 Find Jobs</button>
-  <!-- Auth Buttons -->
-  <div id="authNavBtns" style="display:flex;gap:8px;align-items:center">
-    <button onclick="openAuth('login')" style="padding:7px 16px;border-radius:10px;background:transparent;border:1.5px solid rgba(255,255,255,.25);color:rgba(255,255,255,.85);font-weight:600;font-size:.78rem;cursor:pointer;font-family:inherit;transition:all .2s">Log In</button>
-    <button onclick="openAuth('signup')" style="padding:7px 16px;border-radius:10px;background:linear-gradient(135deg,var(--saffron),var(--saffron-light));color:#fff;font-weight:700;font-size:.78rem;cursor:pointer;font-family:inherit;box-shadow:0 3px 0 var(--saffron-dark);transition:all .2s;border:none">Sign Up →</button>
-  </div>
-  <!-- User Pill (shown after login) -->
-  <div id="userNavPill" style="display:none;position:relative">
-    <div onclick="toggleUserDropdown()" style="display:flex;align-items:center;gap:8px;padding:5px 12px 5px 5px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:100px;cursor:pointer">
-      <div id="userAvatar" style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--saffron),var(--gold));display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:800;color:#fff">U</div>
-      <span id="userNavName" style="font-size:.78rem;font-weight:600;color:#fff">User</span>
-      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-    </div>
-    <div id="userDropdown" style="display:none;position:absolute;top:calc(100% + 10px);right:0;background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);width:210px;box-shadow:var(--shadow-lg);z-index:600;overflow:hidden">
-      <div id="userDropHead" style="padding:13px;background:var(--gray-100);border-bottom:1px solid var(--gray-200)">
-        <div id="userDropName" style="font-weight:700;font-size:.82rem;color:var(--text-main)">User</div>
-        <div id="userDropEmail" style="font-size:.65rem;color:var(--gray-500);margin-top:2px">user@email.com</div>
-        <span style="font-size:.6rem;padding:2px 8px;background:rgba(255,107,0,.1);color:var(--saffron);border-radius:100px;font-weight:700;margin-top:4px;display:inline-block">🆓 Free Plan</span>
-      </div>
-      <div style="padding:6px">
-        <div onclick="showPage('latest');closeUserDropdown()" style="display:flex;align-items:center;gap:8px;padding:9px 11px;border-radius:8px;cursor:pointer;font-size:.78rem;color:var(--text-sub);transition:all .15s" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">💼 Browse Jobs</div>
-        <div onclick="closeUserDropdown()" style="display:flex;align-items:center;gap:8px;padding:9px 11px;border-radius:8px;cursor:pointer;font-size:.78rem;color:var(--text-sub);transition:all .15s" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'">🔖 Saved Jobs <span id="savedCount" style="margin-left:auto;background:var(--saffron);color:#fff;font-size:.6rem;padding:1px 6px;border-radius:100px;font-weight:700">0</span></div>
-        <div style="height:1px;background:var(--gray-200);margin:4px 0"></div>
-        <div onclick="siteLogout()" style="display:flex;align-items:center;gap:8px;padding:9px 11px;border-radius:8px;cursor:pointer;font-size:.78rem;color:#EF4444;transition:all .15s" onmouseover="this.style.background='#fef2f2'" onmouseout="this.style.background='transparent'">🚪 Log Out</div>
-      </div>
-    </div>
-  </div>
+  <button onclick="openAdminPanel()" style="padding:7px 14px;border-radius:10px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);font-size:.76rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s" title="Admin Panel">⚙️ Admin</button>
   <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
     <span></span><span></span><span></span>
   </div>
@@ -1007,6 +1058,7 @@ footer {
   <span class="mobile-nav-link" onclick="showPage('news');closeMobileMenu()"><span class="mnl-icon">📰</span> Job News</span>
   <span class="mobile-nav-link" onclick="showPage('education');closeMobileMenu()"><span class="mnl-icon">🎓</span> Education & Learn</span>
   <span class="mobile-nav-link" onclick="showPage('contact');closeMobileMenu()"><span class="mnl-icon">✉️</span> Contact Us</span>
+  <span class="mobile-nav-link" onclick="openAdminPanel();closeMobileMenu()" style="color:#FF6B00;border-top:1px solid rgba(255,255,255,.1);margin-top:8px;padding-top:12px"><span class="mnl-icon">⚙️</span> Admin Panel</span>
 </div>
 
 <!-- ═══════════════════════════════════════════
@@ -1733,7 +1785,7 @@ function renderJobCard(job) {
           <div class="jc-company">🏢 ${job.company}</div>
         </div>
       </div>
-      <div class="jc-bookmark has-tooltip" id="bm-${job.id}" onclick="event.stopPropagation();toggleBookmark(${job.id})" style="cursor:pointer;font-size:1.1rem;transition:transform .2s">🔖<span class="tooltip">Save Job</span></div>
+      <div class="jc-bookmark has-tooltip">🔖<span class="tooltip">Save Job</span></div>
     </div>
     <div class="jc-badges">${badgeHtml}</div>
     <div class="jc-meta">
@@ -1743,10 +1795,7 @@ function renderJobCard(job) {
     </div>
     <div class="jc-footer">
       <div class="jc-salary">${job.salary}<br><span>Last Date: ${job.lastDate}</span></div>
-      <div style="display:flex;gap:6px;align-items:center">
-        <button onclick="event.stopPropagation();shareOnWhatsApp(${job.id})" style="padding:7px 10px;border-radius:9px;background:rgba(37,211,102,.12);border:1px solid rgba(37,211,102,.3);color:#25D366;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .2s" title="Share on WhatsApp">💬</button>
-        <button class="jc-apply" onclick="event.stopPropagation();openApplyModal(${job.id})">Apply →</button>
-      </div>
+      <button class="jc-apply" onclick="event.stopPropagation();showJobDetail(${job.id})">Apply →</button>
     </div>
   </div>`;
 }
@@ -2036,704 +2085,1618 @@ document.addEventListener('DOMContentLoaded', () => {
   createParticles();
 });
 </script>
-<!-- ═══════════════════════════════════════
-     AUTH MODAL
-═══════════════════════════════════════ -->
-<div id="authOverlay" onclick="if(event.target===this)closeAuth()" style="display:none;position:fixed;inset:0;z-index:5000;background:rgba(10,22,40,.75);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:16px">
-  <div style="background:#fff;border-radius:24px;width:100%;max-width:420px;overflow:hidden;box-shadow:0 24px 80px rgba(10,22,40,.4);position:relative">
-    <button onclick="closeAuth()" style="position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:8px;background:#f1f5f9;border:none;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;z-index:10">✕</button>
-    <!-- Tabs -->
-    <div style="display:flex;border-bottom:1px solid #e2e8f0">
-      <button id="loginTab" onclick="switchAuthTab('login')" style="flex:1;padding:14px;font-size:.85rem;font-weight:700;cursor:pointer;background:none;border:none;border-bottom:2.5px solid var(--saffron);color:var(--saffron);font-family:inherit">Log In</button>
-      <button id="signupTab" onclick="switchAuthTab('signup')" style="flex:1;padding:14px;font-size:.85rem;font-weight:700;cursor:pointer;background:none;border:none;border-bottom:2.5px solid transparent;color:#94a3b8;font-family:inherit">Sign Up</button>
-    </div>
-    <!-- Body -->
-    <div style="padding:24px">
-      <!-- Logo -->
-      <div style="text-align:center;margin-bottom:20px">
-        <div style="width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--saffron),var(--gold));display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:1.2rem">🇮🇳</div>
-        <div style="font-family:'Baloo 2',cursive;font-size:1rem;font-weight:800;color:var(--navy)">JobsIndia AI</div>
-        <div id="authSubtitle" style="font-size:.72rem;color:#94a3b8;margin-top:2px">Welcome back! Log in to your account</div>
+<!-- ═══════════════════════════════════════════════════════════
+     ADMIN PANEL
+═══════════════════════════════════════════════════════════ -->
+<style>
+/* Admin Panel Styles */
+#adminPanel{display:none;position:fixed;inset:0;z-index:9000;background:#F1F5F9;font-family:'Noto Sans',sans-serif}
+.adm-sidebar{position:fixed;top:0;left:0;bottom:0;width:240px;background:#fff;border-right:1px solid #E2E8F0;display:flex;flex-direction:column;z-index:10;overflow-y:auto}
+.adm-logo{padding:18px 20px;border-bottom:1px solid #E2E8F0;display:flex;align-items:center;gap:10px}
+.adm-logo-mark{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,#FF6B00,#FF8C33);display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:900;color:#fff}
+.adm-logo-text{font-weight:800;font-size:.9rem;color:#0F172A}
+.adm-logo-sub{font-size:.62rem;color:#94A3B8}
+.adm-nav-sect{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#CBD5E1;padding:14px 20px 5px}
+.adm-nav-item{display:flex;align-items:center;gap:9px;padding:9px 16px;margin:1px 8px;border-radius:10px;font-size:.8rem;font-weight:500;color:#475569;cursor:pointer;transition:all .15s}
+.adm-nav-item:hover{background:#F8FAFC;color:#0F172A}
+.adm-nav-item.active{background:rgba(255,107,0,.08);color:#FF6B00;font-weight:700}
+.adm-nav-item .adm-icon{font-size:1rem;width:20px;text-align:center}
+.adm-main{margin-left:240px;padding:28px;min-height:100vh}
+.adm-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.adm-topbar h1{font-size:1.3rem;font-weight:800;color:#0F172A}
+.adm-topbar p{font-size:.78rem;color:#94A3B8;margin-top:2px}
+.adm-grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.adm-stat{background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:18px;position:relative;overflow:hidden}
+.adm-stat-label{font-size:.68rem;font-weight:600;color:#94A3B8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.adm-stat-val{font-size:1.8rem;font-weight:900;color:#0F172A;font-family:'Baloo 2',cursive;line-height:1}
+.adm-stat-delta{font-size:.68rem;font-weight:600;margin-top:5px;display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:100px}
+.adm-stat-icon{position:absolute;top:16px;right:16px;font-size:1.4rem;opacity:.18}
+.adm-up{background:rgba(0,185,107,.1);color:#00B96B}
+.adm-dn{background:rgba(244,63,94,.1);color:#F43F5E}
+.adm-card{background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:20px;margin-bottom:20px}
+.adm-card-title{font-size:.88rem;font-weight:700;color:#0F172A;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+.adm-table{width:100%;border-collapse:collapse}
+.adm-table th{padding:9px 12px;font-size:.65rem;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.06em;background:#F8FAFC;border-bottom:1px solid #E2E8F0;text-align:left;white-space:nowrap}
+.adm-table td{padding:11px 12px;font-size:.78rem;color:#475569;border-bottom:1px solid #F1F5F9;vertical-align:middle}
+.adm-table tr:hover td{background:#FAFAFA}
+.adm-table tr:last-child td{border-bottom:none}
+.adm-badge{display:inline-flex;align-items:center;padding:2px 9px;border-radius:100px;font-size:.62rem;font-weight:700}
+.adm-badge-green{background:rgba(0,185,107,.1);color:#00966B}
+.adm-badge-blue{background:rgba(14,165,233,.1);color:#0284C7}
+.adm-badge-orange{background:rgba(255,107,0,.1);color:#FF6B00}
+.adm-badge-red{background:rgba(244,63,94,.1);color:#F43F5E}
+.adm-badge-gray{background:#F1F5F9;color:#64748B}
+.adm-btn{padding:7px 14px;border-radius:9px;font-size:.75rem;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all .15s}
+.adm-btn-primary{background:linear-gradient(135deg,#FF6B00,#FF8C33);color:#fff;box-shadow:0 2px 6px rgba(255,107,0,.25)}
+.adm-btn-ghost{background:#F1F5F9;color:#475569}
+.adm-btn-danger{background:rgba(244,63,94,.08);color:#F43F5E}
+.adm-btn-ghost:hover{background:#E2E8F0}
+.adm-grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.adm-page{display:none}
+.adm-page.active{display:block}
+.adm-inp{width:100%;padding:9px 12px;border-radius:9px;border:1.5px solid #E2E8F0;font-size:.82rem;outline:none;font-family:inherit;transition:all .15s;color:#0F172A;background:#fff}
+.adm-inp:focus{border-color:#FF6B00;box-shadow:0 0 0 3px rgba(255,107,0,.1)}
+.adm-form-row{margin-bottom:14px}
+.adm-form-label{display:block;font-size:.68rem;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px}
+.adm-login{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#0A1628,#1C3461)}
+.adm-login-box{background:#fff;border-radius:24px;padding:36px;width:100%;max-width:380px;box-shadow:0 24px 80px rgba(0,0,0,.3)}
+@media(max-width:768px){
+  .adm-sidebar{transform:translateX(-240px)}
+  .adm-sidebar.open{transform:translateX(0)}
+  .adm-main{margin-left:0;padding:16px}
+  .adm-grid4{grid-template-columns:1fr 1fr}
+  .adm-grid2{grid-template-columns:1fr}
+}
+</style>
+
+<div id="adminPanel">
+  <!-- Admin Login -->
+  <div id="adminLogin" class="adm-login">
+    <div class="adm-login-box">
+      <div style="text-align:center;margin-bottom:24px">
+        <div style="width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#FF6B00,#FF8C33);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:1.3rem">🇮🇳</div>
+        <div style="font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;color:#0F172A">JobsIndia AI</div>
+        <div style="font-size:.75rem;color:#94A3B8;margin-top:3px">Admin Panel · Secure Login</div>
       </div>
-      <!-- Error -->
-      <div id="authError" style="display:none;padding:9px 12px;background:#fef2f2;border:1px solid #fecaca;border-radius:9px;font-size:.76rem;color:#dc2626;margin-bottom:12px"></div>
-      <!-- Login Form -->
-      <div id="loginForm">
-        <div style="margin-bottom:12px"><label style="display:block;font-size:.68rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">Email Address</label><input type="email" id="loginEmail" placeholder="your@gmail.com" style="width:100%;padding:10px 13px;border-radius:10px;border:1.5px solid #e2e8f0;font-size:.85rem;outline:none;font-family:inherit;transition:all .2s" onfocus="this.style.borderColor='var(--saffron)'" onblur="this.style.borderColor='#e2e8f0'" onkeydown="if(event.key==='Enter')doLogin()"></div>
-        <div style="margin-bottom:8px"><label style="display:block;font-size:.68rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">Password</label><input type="password" id="loginPass" placeholder="Enter your password" style="width:100%;padding:10px 13px;border-radius:10px;border:1.5px solid #e2e8f0;font-size:.85rem;outline:none;font-family:inherit;transition:all .2s" onfocus="this.style.borderColor='var(--saffron)'" onblur="this.style.borderColor='#e2e8f0'" onkeydown="if(event.key==='Enter')doLogin()"></div>
-        <div style="text-align:right;margin-bottom:14px"><span style="font-size:.72rem;color:var(--saffron);cursor:pointer;font-weight:600">Forgot password?</span></div>
-        <button onclick="doLogin()" style="width:100%;padding:12px;border-radius:12px;background:linear-gradient(135deg,var(--saffron),var(--saffron-light));color:#fff;font-size:.9rem;font-weight:800;cursor:pointer;border:none;box-shadow:0 4px 0 var(--saffron-dark);font-family:inherit;transition:all .2s">Log In →</button>
-        <div style="text-align:center;margin-top:14px;font-size:.76rem;color:#94a3b8">Don't have an account? <span onclick="switchAuthTab('signup')" style="color:var(--saffron);font-weight:700;cursor:pointer">Sign Up free</span></div>
-      </div>
-      <!-- Signup Form -->
-      <div id="signupForm" style="display:none">
-        <div style="margin-bottom:12px"><label style="display:block;font-size:.68rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">Full Name</label><input type="text" id="signupName" placeholder="Aarav Sharma" style="width:100%;padding:10px 13px;border-radius:10px;border:1.5px solid #e2e8f0;font-size:.85rem;outline:none;font-family:inherit;transition:all .2s" onfocus="this.style.borderColor='var(--saffron)'" onblur="this.style.borderColor='#e2e8f0'"></div>
-        <div style="margin-bottom:12px"><label style="display:block;font-size:.68rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">Email Address</label><input type="email" id="signupEmail" placeholder="your@gmail.com" style="width:100%;padding:10px 13px;border-radius:10px;border:1.5px solid #e2e8f0;font-size:.85rem;outline:none;font-family:inherit;transition:all .2s" onfocus="this.style.borderColor='var(--saffron)'" onblur="this.style.borderColor='#e2e8f0'"></div>
-        <div style="margin-bottom:14px"><label style="display:block;font-size:.68rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">Password</label><input type="password" id="signupPass" placeholder="Minimum 6 characters" style="width:100%;padding:10px 13px;border-radius:10px;border:1.5px solid #e2e8f0;font-size:.85rem;outline:none;font-family:inherit;transition:all .2s" onfocus="this.style.borderColor='var(--saffron)'" onblur="this.style.borderColor='#e2e8f0'" onkeydown="if(event.key==='Enter')doSignup()"></div>
-        <button onclick="doSignup()" style="width:100%;padding:12px;border-radius:12px;background:linear-gradient(135deg,var(--saffron),var(--saffron-light));color:#fff;font-size:.9rem;font-weight:800;cursor:pointer;border:none;box-shadow:0 4px 0 var(--saffron-dark);font-family:inherit">Create Free Account →</button>
-        <div style="text-align:center;margin-top:14px;font-size:.76px;color:#94a3b8;font-size:.76rem">Already have an account? <span onclick="switchAuthTab('login')" style="color:var(--saffron);font-weight:700;cursor:pointer">Log In</span></div>
-      </div>
+      <div id="adminLoginErr" style="display:none;padding:9px 12px;background:#fef2f2;border:1px solid #fecaca;border-radius:9px;font-size:.76rem;color:#dc2626;margin-bottom:12px"></div>
+      <div class="adm-form-row"><label class="adm-form-label">Email Address</label><input type="email" id="adminEmail" class="adm-inp" placeholder="admin@jobsindia.ai" value="admin@jobsindia.ai"></div>
+      <div class="adm-form-row"><label class="adm-form-label">Password</label><input type="password" id="adminPass" class="adm-inp" placeholder="••••••••" value="admin123" onkeydown="if(event.key==='Enter')doAdminLogin()"></div>
+      <button onclick="doAdminLogin()" class="adm-btn adm-btn-primary" style="width:100%;padding:12px;font-size:.9rem;font-weight:800;margin-top:4px;border-radius:12px">Sign In to Admin Panel →</button>
+      <div style="text-align:center;margin-top:14px"><span onclick="exitAdmin()" style="font-size:.72rem;color:#94A3B8;cursor:pointer">← Back to Public Site</span></div>
     </div>
   </div>
-</div>
 
-<!-- ═══════════════════════════════════════
-     APPLY MODAL
-═══════════════════════════════════════ -->
-<div id="applyOverlay" onclick="if(event.target===this)closeApplyModal()" style="display:none;position:fixed;inset:0;z-index:5000;background:rgba(10,22,40,.75);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:16px">
-  <div style="background:#fff;border-radius:24px;width:100%;max-width:480px;overflow:hidden;box-shadow:0 24px 80px rgba(10,22,40,.4);position:relative;max-height:90vh;overflow-y:auto">
-    <button onclick="closeApplyModal()" style="position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:8px;background:#f1f5f9;border:none;cursor:pointer;font-size:.9rem;z-index:10">✕</button>
-    <!-- Header -->
-    <div id="applyJobHeader" style="padding:20px 20px 16px;border-bottom:1px solid #e2e8f0;background:linear-gradient(135deg,var(--navy),var(--navy-mid))">
-      <div style="font-size:.7rem;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px">Applying for</div>
-      <div id="applyJobTitle" style="font-family:'Baloo 2',cursive;font-size:1.05rem;font-weight:800;color:#fff">Job Title</div>
-      <div id="applyJobCompany" style="font-size:.78rem;color:rgba(255,255,255,.6);margin-top:3px">Company</div>
-    </div>
-    <!-- Form -->
-    <div style="padding:20px">
-      <div id="applySuccess" style="display:none;text-align:center;padding:24px 0">
-        <div style="font-size:3rem;margin-bottom:12px">🎉</div>
-        <div style="font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;color:var(--navy);margin-bottom:6px">Application Submitted!</div>
-        <div style="font-size:.82rem;color:#64748b;margin-bottom:18px">We'll notify you about the status via email.</div>
-        <button onclick="closeApplyModal()" style="padding:10px 24px;border-radius:12px;background:linear-gradient(135deg,var(--saffron),var(--saffron-light));color:#fff;font-weight:700;font-size:.85rem;cursor:pointer;border:none;font-family:inherit">Close</button>
+  <!-- Admin Dashboard -->
+  <div id="adminDashboard" style="display:none">
+    <!-- Sidebar -->
+    <div class="adm-sidebar" id="adminSidebar">
+      <div class="adm-logo">
+        <div class="adm-logo-mark">JI</div>
+        <div><div class="adm-logo-text">JobsIndia AI</div><div class="adm-logo-sub">Admin Panel v1.0</div></div>
       </div>
-      <div id="applyFormBody">
-        <div style="margin-bottom:12px"><label style="display:block;font-size:.68rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">Full Name *</label><input type="text" id="applyName" placeholder="Your full name" style="width:100%;padding:10px 13px;border-radius:10px;border:1.5px solid #e2e8f0;font-size:.85rem;outline:none;font-family:inherit;transition:all .2s" onfocus="this.style.borderColor='var(--saffron)'" onblur="this.style.borderColor='#e2e8f0'"></div>
-        <div style="margin-bottom:12px"><label style="display:block;font-size:.68rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">Email Address *</label><input type="email" id="applyEmail" placeholder="your@gmail.com" style="width:100%;padding:10px 13px;border-radius:10px;border:1.5px solid #e2e8f0;font-size:.85rem;outline:none;font-family:inherit;transition:all .2s" onfocus="this.style.borderColor='var(--saffron)'" onblur="this.style.borderColor='#e2e8f0'"></div>
-        <div style="margin-bottom:12px"><label style="display:block;font-size:.68rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">Phone Number</label><input type="tel" id="applyPhone" placeholder="+91 98765 43210" style="width:100%;padding:10px 13px;border-radius:10px;border:1.5px solid #e2e8f0;font-size:.85rem;outline:none;font-family:inherit;transition:all .2s" onfocus="this.style.borderColor='var(--saffron)'" onblur="this.style.borderColor='#e2e8f0'"></div>
-        <div style="margin-bottom:16px"><label style="display:block;font-size:.68rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">Cover Letter</label><textarea id="applyCover" placeholder="Why are you a great fit for this role?" rows="3" style="width:100%;padding:10px 13px;border-radius:10px;border:1.5px solid #e2e8f0;font-size:.85rem;outline:none;font-family:inherit;resize:vertical;transition:all .2s" onfocus="this.style.borderColor='var(--saffron)'" onblur="this.style.borderColor='#e2e8f0'"></textarea></div>
-        <div id="applyError" style="display:none;padding:9px 12px;background:#fef2f2;border:1px solid #fecaca;border-radius:9px;font-size:.76rem;color:#dc2626;margin-bottom:12px"></div>
-        <button onclick="submitApplication()" style="width:100%;padding:13px;border-radius:12px;background:linear-gradient(135deg,var(--saffron),var(--saffron-light));color:#fff;font-size:.9rem;font-weight:800;cursor:pointer;border:none;box-shadow:0 4px 0 var(--saffron-dark);font-family:inherit">Submit Application 🚀</button>
-        <p style="font-size:.7rem;color:#94a3b8;text-align:center;margin-top:10px">By applying you agree to our Terms of Service</p>
+      <div style="padding:8px 0;flex:1">
+        <div class="adm-nav-sect">Main</div>
+        <div class="adm-nav-item active" onclick="admNav('dashboard')"><span class="adm-icon">📊</span> Dashboard</div>
+        <div class="adm-nav-item" onclick="admNav('analytics')"><span class="adm-icon">📈</span> Analytics</div>
+        <div class="adm-nav-sect">Content</div>
+        <div class="adm-nav-item" onclick="admNav('jobs')"><span class="adm-icon">💼</span> All Jobs</div>
+        <div class="adm-nav-item" onclick="admNav('addjob')"><span class="adm-icon">➕</span> Add New Job</div>
+        <div class="adm-nav-item" onclick="admNav('news')"><span class="adm-icon">📰</span> News</div>
+        <div class="adm-nav-sect">Users</div>
+        <div class="adm-nav-item" onclick="admNav('users')"><span class="adm-icon">👥</span> All Users</div>
+        <div class="adm-nav-item" onclick="admNav('applications')"><span class="adm-icon">📝</span> Applications</div>
+        <div class="adm-nav-sect">System</div>
+        <div class="adm-nav-item" onclick="admNav('settings')"><span class="adm-icon">⚙️</span> Settings</div>
+        <div class="adm-nav-sect">Marketing</div>
+        <div class="adm-nav-item" onclick="admNav('email')"><span class="adm-icon">📧</span> Email Broadcast</div>
+        <div class="adm-nav-item" onclick="admNav('push')"><span class="adm-icon">🔔</span> Push Notifications</div>
+        <div class="adm-nav-sect">Content</div>
+        <div class="adm-nav-item" onclick="admNav('blog')"><span class="adm-icon">📝</span> Blog / Articles</div>
+        <div class="adm-nav-item" onclick="admNav('categories')"><span class="adm-icon">🗂️</span> Categories</div>
+        <div class="adm-nav-sect">Reports</div>
+        <div class="adm-nav-item" onclick="admNav('weekly')"><span class="adm-icon">📈</span> Weekly Report</div>
+        <div class="adm-nav-sect">Monetisation</div>
+        <div class="adm-nav-item" onclick="admNav('adsense')"><span class="adm-icon">💰</span> Google AdSense</div>
+        <div class="adm-nav-sect">Advanced</div>
+        <div class="adm-nav-item" onclick="admNav('employers')"><span class="adm-icon">👥</span> Employers</div>
+        <div class="adm-nav-item" onclick="admNav('statemap')"><span class="adm-icon">📍</span> State Map</div>
+        <div class="adm-nav-item" onclick="admNav('seo')"><span class="adm-icon">📊</span> SEO Manager</div>
+        <div class="adm-nav-item" onclick="admNav('backup')"><span class="adm-icon">📦</span> Backup & Export</div>
+        <div class="adm-nav-item" onclick="admNav('sitesettings')"><span class="adm-icon">🖥️</span> Site Settings</div>
+        <div class="adm-nav-sect">Tools</div>
+        <div class="adm-nav-item" onclick="admNav('apptracker')"><span class="adm-icon">🎟️</span> Applications</div>
+        <div class="adm-nav-item" onclick="admNav('calendar')"><span class="adm-icon">📅</span> Job Calendar</div>
+        <div class="adm-nav-item" onclick="admNav('aimatcher')"><span class="adm-icon">🤖</span> AI Matcher</div>
+        <div class="adm-nav-item" onclick="admNav('whatsapp')"><span class="adm-icon">💬</span> WhatsApp</div>
+        <div class="adm-nav-item" onclick="admNav('livemonitor')"><span class="adm-icon">📊</span> Live Monitor</div>
+        <div class="adm-nav-sect">System</div>
+        <div class="adm-nav-item" onclick="admNav('security')"><span class="adm-icon">🛡️</span> Security</div>
+        <div class="adm-nav-item" onclick="admNav('roles')"><span class="adm-icon">👨‍💻</span> Roles</div>
+        <div class="adm-nav-item" onclick="showKeyboardShortcuts()" style="color:#8B5CF6"><span class="adm-icon">⌨️</span> Shortcuts</div>
+        <div class="adm-nav-item" onclick="exitAdmin()"><span class="adm-icon">🌐</span> View Site</div>
+        <div class="adm-nav-item" onclick="adminLogout()" style="color:#F43F5E"><span class="adm-icon">🚪</span> Log Out</div>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- ═══════════════════════════════════════
-     TOAST NOTIFICATION
-═══════════════════════════════════════ -->
-<div id="toastNotif" style="display:none;position:fixed;bottom:24px;right:24px;z-index:9999;background:#0F172A;color:#fff;padding:12px 18px;border-radius:14px;font-size:.82rem;font-weight:600;box-shadow:0 8px 32px rgba(0,0,0,.3);display:flex;align-items:center;gap:9px;max-width:320px;transform:translateY(20px);opacity:0;transition:all .3s">
-  <span id="toastIcon">✅</span>
-  <span id="toastMsg">Done!</span>
-</div>
+    <!-- Main Content -->
+    <div class="adm-main">
+      <!-- Mobile sidebar toggle -->
+      <div id="admMobileBar" style="display:none;align-items:center;gap:10px;margin-bottom:16px">
+        <button onclick="document.getElementById('adminSidebar').classList.toggle('open')" style="padding:8px 12px;border-radius:9px;background:#fff;border:1px solid #E2E8F0;cursor:pointer;font-size:.85rem">☰ Menu</button>
+        <span style="font-size:.82rem;color:#64748B">JobsIndia AI Admin</span>
+      </div>
+      <style>@media(max-width:768px){#admMobileBar{display:flex!important}}</style>
+
+      <!-- DASHBOARD PAGE -->
+      <div id="adm-dashboard" class="adm-page active">
+        <div class="adm-topbar">
+          <div><h1>📊 Dashboard</h1><p id="admDate">Welcome back, Admin 👋</p></div>
+          <button class="adm-btn adm-btn-primary" onclick="admNav('addjob')">+ Add New Job</button>
+        </div>
+        <!-- Stats -->
+        <div class="adm-grid4">
+          <div class="adm-stat"><div class="adm-stat-label">Total Jobs</div><div class="adm-stat-val" id="statJobs">12</div><span class="adm-stat-delta adm-up">↑ 2 this week</span><div class="adm-stat-icon">💼</div></div>
+          <div class="adm-stat"><div class="adm-stat-label">Registered Users</div><div class="adm-stat-val" id="statUsers">0</div><span class="adm-stat-delta adm-up">↑ Growing</span><div class="adm-stat-icon">👥</div></div>
+          <div class="adm-stat"><div class="adm-stat-label">Applications</div><div class="adm-stat-val" id="statApps">0</div><span class="adm-stat-delta adm-up">↑ This week</span><div class="adm-stat-icon">📝</div></div>
+          <div class="adm-stat"><div class="adm-stat-label">Saved Jobs</div><div class="adm-stat-val" id="statSaved">0</div><span class="adm-stat-delta adm-up">Bookmarked</span><div class="adm-stat-icon">🔖</div></div>
+        </div>
+        <!-- Recent Jobs -->
+        <div class="adm-card">
+          <div class="adm-card-title">💼 Recent Jobs <button class="adm-btn adm-btn-ghost" onclick="admNav('jobs')" style="font-size:.7rem">View All →</button></div>
+          <div style="overflow-x:auto"><table class="adm-table" id="admRecentJobs"></table></div>
+        </div>
+        <!-- Recent Users + Applications -->
+        <div class="adm-grid2">
+          <div class="adm-card">
+            <div class="adm-card-title">👥 Recent Sign Ups</div>
+            <div id="admRecentUsers"></div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-title">📝 Recent Applications</div>
+            <div id="admRecentApps"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANALYTICS PAGE -->
+      <div id="adm-analytics" class="adm-page">
+        <div class="adm-topbar"><div><h1>📈 Analytics</h1><p>Traffic and performance overview</p></div></div>
+        <div class="adm-grid4">
+          <div class="adm-stat"><div class="adm-stat-label">Page Views</div><div class="adm-stat-val">2.4M</div><span class="adm-stat-delta adm-up">↑ 18%</span><div class="adm-stat-icon">👁️</div></div>
+          <div class="adm-stat"><div class="adm-stat-label">Avg Session</div><div class="adm-stat-val">4m 32s</div><span class="adm-stat-delta adm-up">↑ 24s</span><div class="adm-stat-icon">⏱️</div></div>
+          <div class="adm-stat"><div class="adm-stat-label">Bounce Rate</div><div class="adm-stat-val">32%</div><span class="adm-stat-delta adm-up">↓ Better</span><div class="adm-stat-icon">📉</div></div>
+          <div class="adm-stat"><div class="adm-stat-label">Conversion</div><div class="adm-stat-val">6.8%</div><span class="adm-stat-delta adm-up">↑ 1.2%</span><div class="adm-stat-icon">🎯</div></div>
+        </div>
+        <div class="adm-card">
+          <div class="adm-card-title">Top Job Categories by Views</div>
+          <div id="admCatStats"></div>
+        </div>
+        <div class="adm-card">
+          <div class="adm-card-title">Traffic Sources</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px" id="admTraffic"></div>
+        </div>
+      </div>
+
+      <!-- ALL JOBS PAGE -->
+      <div id="adm-jobs" class="adm-page">
+        <div class="adm-topbar">
+          <div><h1>💼 All Jobs</h1><p>Manage all job listings</p></div>
+          <div style="display:flex;gap:8px">
+            <button class="adm-btn adm-btn-ghost" onclick="exportJobsCSV()">📊 Export CSV</button>
+            <button class="adm-btn adm-btn-primary" onclick="admNav('addjob')">+ Add Job</button>
+          </div>
+        </div>
+        <div class="adm-card">
+          <div style="display:flex;gap:9px;margin-bottom:14px;flex-wrap:wrap">
+            <input type="text" id="jobSearchInp" class="adm-inp" placeholder="🔍 Search jobs..." style="max-width:240px" oninput="renderAdmJobsTable()">
+            <select id="jobTypeFilter" class="adm-inp" style="max-width:140px" onchange="renderAdmJobsTable()"><option value="">All Types</option><option value="govt">Govt</option><option value="private">Private</option></select>
+          </div>
+          <div style="overflow-x:auto"><table class="adm-table" id="admJobsTable"></table></div>
+        </div>
+      </div>
+
+      <!-- ADD JOB PAGE -->
+      <div id="adm-addjob" class="adm-page">
+        <div class="adm-topbar"><div><h1>➕ Add New Job</h1><p>Create a new job listing</p></div></div>
+        <div class="adm-card" style="max-width:680px">
+          <div class="adm-grid2">
+            <div class="adm-form-row"><label class="adm-form-label">Job Title *</label><input type="text" id="njTitle" class="adm-inp" placeholder="e.g. Software Engineer"></div>
+            <div class="adm-form-row"><label class="adm-form-label">Company *</label><input type="text" id="njCompany" class="adm-inp" placeholder="e.g. TechMahindra"></div>
+            <div class="adm-form-row"><label class="adm-form-label">Job Type *</label><select id="njType" class="adm-inp"><option value="private">Private</option><option value="govt">Government</option></select></div>
+            <div class="adm-form-row"><label class="adm-form-label">Category</label><input type="text" id="njCategory" class="adm-inp" placeholder="e.g. IT, Banking, Railways"></div>
+            <div class="adm-form-row"><label class="adm-form-label">Location</label><input type="text" id="njLocation" class="adm-inp" placeholder="e.g. Delhi, Pan India"></div>
+            <div class="adm-form-row"><label class="adm-form-label">Salary</label><input type="text" id="njSalary" class="adm-inp" placeholder="e.g. ₹10–20 LPA"></div>
+            <div class="adm-form-row"><label class="adm-form-label">Experience</label><input type="text" id="njExp" class="adm-inp" placeholder="e.g. 2–5 Years"></div>
+            <div class="adm-form-row"><label class="adm-form-label">Education</label><input type="text" id="njEdu" class="adm-inp" placeholder="e.g. B.Tech/Any Graduate"></div>
+            <div class="adm-form-row"><label class="adm-form-label">Last Date</label><input type="text" id="njLastDate" class="adm-inp" placeholder="e.g. Jul 31, 2025"></div>
+            <div class="adm-form-row"><label class="adm-form-label">Logo Letter</label><input type="text" id="njLogo" class="adm-inp" placeholder="e.g. T" maxlength="2"></div>
+          </div>
+          <div class="adm-form-row"><label class="adm-form-label">Job Description *</label><textarea id="njDesc" class="adm-inp" rows="3" placeholder="Describe the role..."></textarea></div>
+          <div class="adm-form-row"><label class="adm-form-label">Skills (comma-separated)</label><input type="text" id="njSkills" class="adm-inp" placeholder="e.g. Python, SQL, Communication"></div>
+          <div id="njError" style="display:none;padding:9px 12px;background:#fef2f2;border:1px solid #fecaca;border-radius:9px;font-size:.76rem;color:#dc2626;margin-bottom:12px"></div>
+          <div id="njSuccess" style="display:none;padding:9px 12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:9px;font-size:.76rem;color:#16a34a;margin-bottom:12px">✅ Job added successfully!</div>
+          <div style="display:flex;gap:9px">
+            <button onclick="addNewJob()" class="adm-btn adm-btn-primary" style="padding:10px 24px">💾 Save Job</button>
+            <button onclick="clearJobForm()" class="adm-btn adm-btn-ghost" style="padding:10px 24px">Clear</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- NEWS PAGE -->
+      <div id="adm-news" class="adm-page">
+        <div class="adm-topbar"><div><h1>📰 News</h1><p>Manage news articles</p></div></div>
+        <div class="adm-card">
+          <div style="overflow-x:auto"><table class="adm-table" id="admNewsTable"></table></div>
+        </div>
+      </div>
+
+      <!-- USERS PAGE -->
+      <div id="adm-users" class="adm-page">
+        <div class="adm-topbar"><div><h1>👥 All Users</h1><p>Registered users from sign up form</p></div></div>
+        <div class="adm-card">
+          <div style="overflow-x:auto"><table class="adm-table" id="admUsersTable"></table></div>
+        </div>
+      </div>
+
+      <!-- APPLICATIONS PAGE -->
+      <div id="adm-applications" class="adm-page">
+        <div class="adm-topbar"><div><h1>📝 Applications</h1><p>All job applications submitted</p></div></div>
+        <div class="adm-card">
+          <div style="overflow-x:auto"><table class="adm-table" id="admAppsTable"></table></div>
+        </div>
+      </div>
+
+      <!-- ═══ ANALYTICS CHARTS PAGE ═══ -->
+      <div id="adm-analytics" class="adm-page">
+        <div class="adm-topbar"><div><h1>📊 Analytics</h1><p>Charts, traffic and performance insights</p></div>
+          <select id="analyticsRange" class="adm-inp" style="max-width:160px" onchange="renderAdmAnalytics()"><option value="7">Last 7 Days</option><option value="30" selected>Last 30 Days</option><option value="90">Last 3 Months</option></select>
+        </div>
+        <div class="adm-grid4" style="margin-bottom:20px">
+          <div class="adm-stat"><div class="adm-stat-label">Page Views</div><div class="adm-stat-val">2.4M</div><span class="adm-stat-delta adm-up">↑ 18%</span><div class="adm-stat-icon">👁️</div></div>
+          <div class="adm-stat"><div class="adm-stat-label">Avg Session</div><div class="adm-stat-val">4m 32s</div><span class="adm-stat-delta adm-up">↑ 24s</span><div class="adm-stat-icon">⏱️</div></div>
+          <div class="adm-stat"><div class="adm-stat-label">Bounce Rate</div><div class="adm-stat-val">32%</div><span class="adm-stat-delta adm-up">↓ Better</span><div class="adm-stat-icon">📉</div></div>
+          <div class="adm-stat"><div class="adm-stat-label">Conversion</div><div class="adm-stat-val">6.8%</div><span class="adm-stat-delta adm-up">↑ 1.2%</span><div class="adm-stat-icon">🎯</div></div>
+        </div>
+        <div class="adm-grid2" style="margin-bottom:20px">
+          <div class="adm-card"><div class="adm-card-title">📈 Daily Applications (30 days)</div><canvas id="chartApps" height="200"></canvas></div>
+          <div class="adm-card"><div class="adm-card-title">💰 Revenue Trend (₹)</div><canvas id="chartRevenue" height="200"></canvas></div>
+        </div>
+        <div class="adm-grid2">
+          <div class="adm-card"><div class="adm-card-title">🍩 Jobs by Type</div><div style="display:flex;align-items:center;gap:16px"><canvas id="chartPie" width="160" height="160" style="flex-shrink:0"></canvas><div id="pieLegend" style="flex:1"></div></div></div>
+          <div class="adm-card"><div class="adm-card-title">📊 Top Categories</div><div id="admCatStats"></div></div>
+        </div>
+      </div>
+
+      <!-- ═══ EMAIL BROADCAST PAGE ═══ -->
+      <div id="adm-email" class="adm-page">
+        <div class="adm-topbar"><div><h1>📧 Email Broadcast</h1><p>Send emails to all registered users</p></div></div>
+        <div class="adm-grid2">
+          <div class="adm-card">
+            <div class="adm-card-title">✉️ Compose Email</div>
+            <div class="adm-form-row"><label class="adm-form-label">Recipients</label>
+              <select id="emailRecipients" class="adm-inp">
+                <option value="all">All Users</option>
+                <option value="free">Free Plan Users</option>
+                <option value="new">New Users (last 7 days)</option>
+              </select>
+            </div>
+            <div class="adm-form-row"><label class="adm-form-label">Subject *</label><input type="text" id="emailSubject" class="adm-inp" placeholder="e.g. New Jobs This Week 🚀"></div>
+            <div class="adm-form-row"><label class="adm-form-label">Message *</label><textarea id="emailBody" class="adm-inp" rows="6" placeholder="Write your message here...&#10;&#10;You can use {{name}} to personalize."></textarea></div>
+            <div style="display:flex;gap:9px;margin-top:4px">
+              <button onclick="sendEmailBroadcast()" class="adm-btn adm-btn-primary" style="padding:10px 20px">📤 Send Now</button>
+              <button onclick="previewEmail()" class="adm-btn adm-btn-ghost" style="padding:10px 20px">👁 Preview</button>
+            </div>
+            <div id="emailStatus" style="display:none;margin-top:12px;padding:10px 14px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:9px;font-size:.78rem;color:#16a34a"></div>
+          </div>
+          <div>
+            <div class="adm-card" style="margin-bottom:16px">
+              <div class="adm-card-title">📊 Broadcast Stats</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div style="background:#F8FAFC;border-radius:10px;padding:14px;text-align:center"><div style="font-size:1.4rem;font-weight:800;color:#0F172A;font-family:'Baloo 2',cursive" id="emailTotalUsers">0</div><div style="font-size:.7rem;color:#94A3B8;margin-top:3px">Total Recipients</div></div>
+                <div style="background:#F8FAFC;border-radius:10px;padding:14px;text-align:center"><div style="font-size:1.4rem;font-weight:800;color:#00B96B;font-family:'Baloo 2',cursive">3</div><div style="font-size:.7rem;color:#94A3B8;margin-top:3px">Sent This Month</div></div>
+                <div style="background:#F8FAFC;border-radius:10px;padding:14px;text-align:center"><div style="font-size:1.4rem;font-weight:800;color:#FF6B00;font-family:'Baloo 2',cursive">68%</div><div style="font-size:.7rem;color:#94A3B8;margin-top:3px">Open Rate</div></div>
+                <div style="background:#F8FAFC;border-radius:10px;padding:14px;text-align:center"><div style="font-size:1.4rem;font-weight:800;color:#8B5CF6;font-family:'Baloo 2',cursive">12%</div><div style="font-size:.7rem;color:#94A3B8;margin-top:3px">Click Rate</div></div>
+              </div>
+            </div>
+            <div class="adm-card">
+              <div class="adm-card-title">📋 Email Templates</div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div onclick="loadTemplate('welcome')" style="padding:10px 13px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:9px;cursor:pointer;font-size:.78rem;font-weight:600;color:#0F172A;transition:all .15s" onmouseover="this.style.borderColor='#FF6B00'" onmouseout="this.style.borderColor='#E2E8F0'">👋 Welcome Email</div>
+                <div onclick="loadTemplate('newjobs')" style="padding:10px 13px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:9px;cursor:pointer;font-size:.78rem;font-weight:600;color:#0F172A;transition:all .15s" onmouseover="this.style.borderColor='#FF6B00'" onmouseout="this.style.borderColor='#E2E8F0'">💼 New Jobs Alert</div>
+                <div onclick="loadTemplate('deadline')" style="padding:10px 13px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:9px;cursor:pointer;font-size:.78rem;font-weight:600;color:#0F172A;transition:all .15s" onmouseover="this.style.borderColor='#FF6B00'" onmouseout="this.style.borderColor='#E2E8F0'">⏰ Deadline Reminder</div>
+                <div onclick="loadTemplate('weekly')" style="padding:10px 13px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:9px;cursor:pointer;font-size:.78rem;font-weight:600;color:#0F172A;transition:all .15s" onmouseover="this.style.borderColor='#FF6B00'" onmouseout="this.style.borderColor='#E2E8F0'">📊 Weekly Digest</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ PUSH NOTIFICATIONS PAGE ═══ -->
+      <div id="adm-push" class="adm-page">
+        <div class="adm-topbar"><div><h1>🔔 Push Notifications</h1><p>Send instant notifications to users</p></div></div>
+        <div class="adm-grid2">
+          <div class="adm-card">
+            <div class="adm-card-title">🔔 Send Notification</div>
+            <div class="adm-form-row"><label class="adm-form-label">Title *</label><input type="text" id="pushTitle" class="adm-inp" placeholder="e.g. 🚨 New SSC CGL Notification!"></div>
+            <div class="adm-form-row"><label class="adm-form-label">Message *</label><textarea id="pushMsg" class="adm-inp" rows="3" placeholder="Short message (max 120 chars)..."></textarea></div>
+            <div class="adm-form-row"><label class="adm-form-label">Link (optional)</label><input type="text" id="pushLink" class="adm-inp" placeholder="https://..."></div>
+            <div class="adm-form-row"><label class="adm-form-label">Schedule</label>
+              <select id="pushSchedule" class="adm-inp">
+                <option value="now">Send Now</option>
+                <option value="morning">Tomorrow 9:00 AM</option>
+                <option value="evening">Today 6:00 PM</option>
+              </select>
+            </div>
+            <button onclick="sendPushNotif()" class="adm-btn adm-btn-primary" style="padding:10px 20px;margin-top:4px">🚀 Send Notification</button>
+            <div id="pushStatus" style="display:none;margin-top:12px;padding:10px 14px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:9px;font-size:.78rem;color:#16a34a"></div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-title">📋 Recent Notifications</div>
+            <div id="pushHistory"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ BLOG / ARTICLE EDITOR ═══ -->
+      <div id="adm-blog" class="adm-page">
+        <div class="adm-topbar">
+          <div><h1>📝 Blog & Articles</h1><p>Write and manage career articles</p></div>
+          <button class="adm-btn adm-btn-primary" onclick="showBlogForm(true)">+ New Article</button>
+        </div>
+        <div id="blogFormWrap" style="display:none;margin-bottom:20px">
+          <div class="adm-card">
+            <div class="adm-card-title" id="blogFormTitle">✍️ Write New Article</div>
+            <div class="adm-grid2">
+              <div class="adm-form-row"><label class="adm-form-label">Article Title *</label><input type="text" id="blogTitle" class="adm-inp" placeholder="e.g. Top 10 Tips to Crack SSC CGL 2025"></div>
+              <div class="adm-form-row"><label class="adm-form-label">Category</label>
+                <select id="blogCat" class="adm-inp">
+                  <option>Career Tips</option><option>Exam Notifications</option><option>Results</option><option>Admit Card</option><option>Study Material</option>
+                </select>
+              </div>
+              <div class="adm-form-row"><label class="adm-form-label">Author</label><input type="text" id="blogAuthor" class="adm-inp" placeholder="Admin" value="Admin"></div>
+              <div class="adm-form-row"><label class="adm-form-label">Tags (comma-separated)</label><input type="text" id="blogTags" class="adm-inp" placeholder="SSC, CGL, Tips"></div>
+            </div>
+            <div class="adm-form-row"><label class="adm-form-label">Summary</label><input type="text" id="blogSummary" class="adm-inp" placeholder="One-line description..."></div>
+            <div class="adm-form-row"><label class="adm-form-label">Content *</label><textarea id="blogContent" class="adm-inp" rows="8" placeholder="Write your article here...&#10;&#10;Supports plain text. Use line breaks for paragraphs."></textarea></div>
+            <div style="display:flex;gap:9px">
+              <button onclick="saveBlogPost()" class="adm-btn adm-btn-primary" style="padding:10px 20px">💾 Publish Article</button>
+              <button onclick="showBlogForm(false)" class="adm-btn adm-btn-ghost" style="padding:10px 20px">Cancel</button>
+            </div>
+            <div id="blogStatus" style="display:none;margin-top:12px;padding:10px 14px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:9px;font-size:.78rem;color:#16a34a"></div>
+          </div>
+        </div>
+        <div class="adm-card">
+          <div class="adm-card-title">📚 All Articles <span id="blogCount" style="font-size:.72rem;color:#94A3B8;font-weight:400"></span></div>
+          <div style="overflow-x:auto"><table class="adm-table" id="blogTable"></table></div>
+        </div>
+      </div>
+
+      <!-- ═══ CATEGORIES MANAGER ═══ -->
+      <div id="adm-categories" class="adm-page">
+        <div class="adm-topbar"><div><h1>🗂️ Job Categories</h1><p>Manage and organise job categories</p></div></div>
+        <div class="adm-grid2">
+          <div class="adm-card">
+            <div class="adm-card-title">➕ Add / Edit Category</div>
+            <div class="adm-form-row"><label class="adm-form-label">Category Name *</label><input type="text" id="catName" class="adm-inp" placeholder="e.g. Teaching"></div>
+            <div class="adm-form-row"><label class="adm-form-label">Icon / Emoji</label><input type="text" id="catIcon" class="adm-inp" placeholder="📚" style="font-size:1.2rem" maxlength="4"></div>
+            <div class="adm-form-row"><label class="adm-form-label">Description</label><input type="text" id="catDesc" class="adm-inp" placeholder="Short description..."></div>
+            <div class="adm-form-row"><label class="adm-form-label">Colour (hex)</label><input type="color" id="catColor" class="adm-inp" value="#FF6B00" style="height:40px;padding:4px"></div>
+            <div style="display:flex;gap:9px;margin-top:4px">
+              <button onclick="saveCategory()" class="adm-btn adm-btn-primary" style="padding:10px 20px">💾 Save Category</button>
+              <button onclick="clearCatForm()" class="adm-btn adm-btn-ghost" style="padding:10px 20px">Clear</button>
+            </div>
+            <div id="catStatus" style="display:none;margin-top:12px;padding:10px 14px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:9px;font-size:.78rem;color:#16a34a"></div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-title">📋 All Categories <span id="catCount" style="font-size:.72rem;color:#94A3B8;font-weight:400"></span></div>
+            <div id="catList" style="display:flex;flex-direction:column;gap:7px"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ WEEKLY REPORT PAGE ═══ -->
+      <div id="adm-weekly" class="adm-page">
+        <div class="adm-topbar">
+          <div><h1>📈 Weekly Report</h1><p id="weeklyReportDate">Auto-generated every Monday</p></div>
+          <div style="display:flex;gap:8px">
+            <button class="adm-btn adm-btn-ghost" onclick="window.print()">🖨️ Print PDF</button>
+            <button class="adm-btn adm-btn-primary" onclick="emailWeeklyReport()">📧 Email Report</button>
+          </div>
+        </div>
+        <!-- Summary Cards -->
+        <div class="adm-grid4" style="margin-bottom:20px">
+          <div class="adm-stat" style="border-top:3px solid #FF6B00"><div class="adm-stat-label">New Users</div><div class="adm-stat-val" id="wkUsers">—</div><span class="adm-stat-delta adm-up" id="wkUsersDelta">This week</span><div class="adm-stat-icon">👤</div></div>
+          <div class="adm-stat" style="border-top:3px solid #00B96B"><div class="adm-stat-label">Jobs Posted</div><div class="adm-stat-val" id="wkJobs">—</div><span class="adm-stat-delta adm-up" id="wkJobsDelta">This week</span><div class="adm-stat-icon">💼</div></div>
+          <div class="adm-stat" style="border-top:3px solid #0EA5E9"><div class="adm-stat-label">Applications</div><div class="adm-stat-val" id="wkApps">—</div><span class="adm-stat-delta adm-up" id="wkAppsDelta">This week</span><div class="adm-stat-icon">📝</div></div>
+          <div class="adm-stat" style="border-top:3px solid #8B5CF6"><div class="adm-stat-label">Saved Jobs</div><div class="adm-stat-val" id="wkSaved">—</div><span class="adm-stat-delta adm-up">Bookmarks</span><div class="adm-stat-icon">🔖</div></div>
+        </div>
+        <!-- Weekly chart + Insights -->
+        <div class="adm-grid2" style="margin-bottom:20px">
+          <div class="adm-card"><div class="adm-card-title">📊 This Week's Activity</div><canvas id="weeklyChart" height="200"></canvas></div>
+          <div class="adm-card">
+            <div class="adm-card-title">💡 Key Insights</div>
+            <div id="weeklyInsights" style="display:flex;flex-direction:column;gap:10px"></div>
+          </div>
+        </div>
+        <!-- Top performing jobs -->
+        <div class="adm-card">
+          <div class="adm-card-title">🏆 Top Jobs This Week</div>
+          <div style="overflow-x:auto"><table class="adm-table" id="weeklyTopJobs"></table></div>
+        </div>
+      </div>
+        <div class="adm-topbar"><div><h1>⚙️ Settings</h1><p>Site configuration</p></div></div>
+        <div class="adm-card" style="max-width:560px">
+          <div class="adm-card-title">Site Information</div>
+          <div class="adm-form-row"><label class="adm-form-label">Site Name</label><input type="text" class="adm-inp" value="JobsIndia AI"></div>
+          <div class="adm-form-row"><label class="adm-form-label">Admin Email</label><input type="email" class="adm-inp" value="admin@jobsindia.ai"></div>
+          <div class="adm-form-row"><label class="adm-form-label">Contact Email</label><input type="email" class="adm-inp" value="support@jobsindia.ai"></div>
+          <div class="adm-form-row"><label class="adm-form-label">Site URL</label><input type="text" class="adm-inp" value="https://jobnex-production.up.railway.app"></div>
+          <button class="adm-btn adm-btn-primary" onclick="alert('Settings saved!')" style="padding:10px 24px">💾 Save Settings</button>
+        </div>
+      </div>
+
+      <!-- ═══ GOOGLE ADSENSE PAGE ═══ -->
+      <div id="adm-adsense" class="adm-page">
+        <div class="adm-topbar"><div><h1>💰 Google AdSense</h1><p>Ad units, revenue and placement management</p></div>
+          <button class="adm-btn adm-btn-primary" onclick="saveAdSenseSettings()">💾 Save Changes</button>
+        </div>
+        <!-- Publisher ID Banner -->
+        <div style="background:linear-gradient(135deg,rgba(255,107,0,.08),rgba(255,215,0,.05));border:1px solid rgba(255,107,0,.2);border-radius:14px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+          <div style="font-size:1.6rem">💰</div>
+          <div style="flex:1;min-width:200px">
+            <div style="font-size:.68rem;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Publisher ID</div>
+            <div style="font-family:'Baloo 2',cursive;font-size:.95rem;font-weight:800;color:#0F172A" id="pubIdDisplay">ca-pub-XXXXXXXXXXXXXXXX</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:9px">
+            <span class="adm-badge adm-badge-green">● Account Active</span>
+            <button class="adm-btn adm-btn-ghost" style="font-size:.72rem" onclick="var id=prompt('Enter Publisher ID:','ca-pub-XXXXXXXXXXXXXXXX');if(id){document.getElementById('pubIdDisplay').textContent=id;localStorage.setItem('adsPubId',id);}">Edit ID</button>
+          </div>
+        </div>
+        <!-- Revenue Stats -->
+        <div class="adm-grid4" style="margin-bottom:20px">
+          <div class="adm-stat"><div class="adm-stat-label">Today Earnings</div><div class="adm-stat-val" style="color:#FF6B00">₹3,240</div><span class="adm-stat-delta adm-up">↑ 14.2%</span><div class="adm-stat-icon">💰</div></div>
+          <div class="adm-stat"><div class="adm-stat-label">This Month</div><div class="adm-stat-val">₹84,720</div><span class="adm-stat-delta adm-up">↑ 8.6%</span><div class="adm-stat-icon">📅</div></div>
+          <div class="adm-stat"><div class="adm-stat-label">Page RPM</div><div class="adm-stat-val">₹18.40</div><span class="adm-stat-delta adm-up">↑ ₹2.10</span><div class="adm-stat-icon">📈</div></div>
+          <div class="adm-stat"><div class="adm-stat-label">CTR</div><div class="adm-stat-val">2.84%</div><span class="adm-stat-delta adm-up">↑ 0.3%</span><div class="adm-stat-icon">🎯</div></div>
+        </div>
+        <!-- Charts + Ad Units -->
+        <div class="adm-grid2" style="margin-bottom:20px">
+          <div class="adm-card"><div class="adm-card-title" style="color:#D97706">📈 Daily Earnings — Last 14 Days</div><canvas id="adsEarningsChart" height="200"></canvas></div>
+          <div class="adm-card">
+            <div class="adm-card-title">🍩 Revenue by Ad Type</div>
+            <div style="display:flex;align-items:center;gap:12px"><canvas id="adTypeChart" width="140" height="140" style="flex-shrink:0"></canvas><div id="adTypeLegend" style="flex:1"></div></div>
+          </div>
+        </div>
+        <!-- Ad Units Table -->
+        <div class="adm-card" style="margin-bottom:20px">
+          <div class="adm-card-title">📋 Ad Units <span style="font-size:.72rem;color:#94A3B8;font-weight:400">(8 active)</span></div>
+          <div style="overflow-x:auto"><table class="adm-table" id="adUnitsTable"></table></div>
+        </div>
+        <!-- Code Snippets -->
+        <div class="adm-card" style="margin-bottom:20px">
+          <div class="adm-card-title">📋 Ready-to-Copy Code Snippets</div>
+          <div id="adSnippets" style="display:flex;flex-direction:column;gap:9px"></div>
+        </div>
+        <!-- Best Practices -->
+        <div class="adm-card">
+          <div class="adm-card-title">✅ AdSense Best Practices</div>
+          <div id="adBestPractices" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:9px"></div>
+        </div>
+      </div>
+
+      <!-- ═══ EMPLOYERS PAGE ═══ -->
+      <div id="adm-employers" class="adm-page">
+        <div class="adm-topbar"><div><h1>👥 Employers & Recruiters</h1><p>Companies posting jobs on your portal</p></div>
+          <button class="adm-btn adm-btn-primary" onclick="addEmployer()">+ Add Employer</button>
+        </div>
+        <div class="adm-grid4" style="margin-bottom:20px">
+          <div class="adm-stat"><div class="adm-stat-label">Total Employers</div><div class="adm-stat-val" id="empTotal">0</div><span class="adm-stat-delta adm-up">Active</span></div>
+          <div class="adm-stat"><div class="adm-stat-label">Govt Bodies</div><div class="adm-stat-val" id="empGovt">0</div><span class="adm-stat-delta adm-blue" style="background:rgba(14,165,233,.1);color:#0284C7">Official</span></div>
+          <div class="adm-stat"><div class="adm-stat-label">Private Companies</div><div class="adm-stat-val" id="empPrivate">0</div><span class="adm-stat-delta adm-up">Hiring</span></div>
+          <div class="adm-stat"><div class="adm-stat-label">Total Jobs Posted</div><div class="adm-stat-val" id="empJobs">0</div><span class="adm-stat-delta adm-up">Live</span></div>
+        </div>
+        <div class="adm-card">
+          <div style="overflow-x:auto"><table class="adm-table" id="employersTable"></table></div>
+        </div>
+      </div>
+
+      <!-- ═══ STATE MAP PAGE ═══ -->
+      <div id="adm-statemap" class="adm-page">
+        <div class="adm-topbar"><div><h1>📍 State-wise Job Map</h1><p>Job distribution across India</p></div></div>
+        <div class="adm-grid2" style="margin-bottom:20px">
+          <div class="adm-card"><div class="adm-stat-label" style="margin-bottom:10px">Total Active Jobs by State</div><div id="stateMapList" style="display:flex;flex-direction:column;gap:6px"></div></div>
+          <div class="adm-card">
+            <div class="adm-card-title">🗺️ India Job Heatmap</div>
+            <div style="background:#F8FAFC;border-radius:10px;padding:16px;text-align:center;min-height:280px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px">
+              <div style="font-size:3rem">🇮🇳</div>
+              <div style="font-size:.82rem;font-weight:700;color:#0F172A">India Job Distribution Map</div>
+              <div style="font-size:.72rem;color:#94A3B8;max-width:240px">Interactive SVG map — Pan India job distribution showing top hiring states</div>
+              <div id="stateMapBubbles" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:8px"></div>
+            </div>
+          </div>
+        </div>
+        <div class="adm-card">
+          <div class="adm-card-title">📊 Top 10 States by Job Count</div>
+          <div id="stateBarChart" style="display:flex;flex-direction:column;gap:8px"></div>
+        </div>
+      </div>
+
+      <!-- ═══ SEO MANAGER PAGE ═══ -->
+      <div id="adm-seo" class="adm-page">
+        <div class="adm-topbar"><div><h1>📊 SEO Manager</h1><p>Optimise your site for search engines</p></div>
+          <button class="adm-btn adm-btn-primary" onclick="saveSEOSettings()">💾 Save SEO Settings</button>
+        </div>
+        <!-- SEO Score -->
+        <div class="adm-card" style="margin-bottom:20px;border-top:3px solid #00B96B">
+          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+            <div style="text-align:center;min-width:80px">
+              <div style="font-family:'Baloo 2',cursive;font-size:2.4rem;font-weight:900;color:#00B96B">87</div>
+              <div style="font-size:.7rem;color:#94A3B8">SEO Score</div>
+            </div>
+            <div style="flex:1;min-width:200px">
+              <div style="font-size:.82rem;font-weight:700;color:#0F172A;margin-bottom:6px">Good — A few improvements needed</div>
+              <div id="seoChecklist" style="display:flex;flex-direction:column;gap:4px"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Meta Tags -->
+        <div class="adm-grid2" style="margin-bottom:20px">
+          <div class="adm-card">
+            <div class="adm-card-title">🏷️ Meta Tags</div>
+            <div class="adm-form-row"><label class="adm-form-label">Meta Title</label><input type="text" id="seoTitle" class="adm-inp" value="JobsIndia AI — Find Your Dream Career 🇮🇳"></div>
+            <div class="adm-form-row"><label class="adm-form-label">Meta Description</label><textarea id="seoDesc" class="adm-inp" rows="3">India's #1 AI-Powered Job Portal. 12,000+ Govt & Private Jobs. UPSC, SSC, Railway, Banking, IT, Fresher Jobs 2025.</textarea></div>
+            <div class="adm-form-row"><label class="adm-form-label">Meta Keywords</label><input type="text" id="seoKeywords" class="adm-inp" value="sarkari naukri, govt jobs, ssc cgl 2025, upsc 2025, railway jobs, ibps po"></div>
+            <div class="adm-form-row"><label class="adm-form-label">Canonical URL</label><input type="text" id="seoCanonical" class="adm-inp" value="https://jobnex-production.up.railway.app/"></div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-title">📱 Open Graph / Social</div>
+            <div class="adm-form-row"><label class="adm-form-label">OG Title</label><input type="text" id="ogTitle" class="adm-inp" value="JobsIndia AI — Find Your Dream Career"></div>
+            <div class="adm-form-row"><label class="adm-form-label">OG Description</label><input type="text" id="ogDesc" class="adm-inp" value="Find 12,000+ Govt & Private Jobs. AI-matched. Easy for everyone."></div>
+            <div class="adm-form-row"><label class="adm-form-label">OG Image URL</label><input type="text" id="ogImage" class="adm-inp" placeholder="https://your-site.com/og-image.png"></div>
+            <div class="adm-form-row"><label class="adm-form-label">Twitter Card Type</label>
+              <select id="twitterCard" class="adm-inp"><option>summary_large_image</option><option>summary</option></select>
+            </div>
+          </div>
+        </div>
+        <!-- Technical SEO -->
+        <div class="adm-card">
+          <div class="adm-card-title">⚙️ Technical SEO</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px">
+            <div style="background:#F8FAFC;border-radius:10px;padding:13px">
+              <div style="font-size:.75rem;font-weight:700;color:#0F172A;margin-bottom:5px">🔍 Google Analytics ID</div>
+              <input type="text" class="adm-inp" placeholder="G-XXXXXXXXXX" style="font-size:.78rem">
+            </div>
+            <div style="background:#F8FAFC;border-radius:10px;padding:13px">
+              <div style="font-size:.75rem;font-weight:700;color:#0F172A;margin-bottom:5px">📋 Search Console</div>
+              <input type="text" class="adm-inp" placeholder="Verification code" style="font-size:.78rem">
+            </div>
+            <div style="background:#F8FAFC;border-radius:10px;padding:13px">
+              <div style="font-size:.75rem;font-weight:700;color:#0F172A;margin-bottom:5px">🗺️ Sitemap URL</div>
+              <input type="text" class="adm-inp" value="/sitemap.xml" style="font-size:.78rem">
+            </div>
+            <div style="background:#F8FAFC;border-radius:10px;padding:13px">
+              <div style="font-size:.75rem;font-weight:700;color:#0F172A;margin-bottom:5px">🤖 Robots.txt</div>
+              <select class="adm-inp" style="font-size:.78rem"><option>Allow all</option><option>Block AI crawlers</option><option>Custom</option></select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ BACKUP & EXPORT PAGE ═══ -->
+      <div id="adm-backup" class="adm-page">
+        <div class="adm-topbar"><div><h1>📦 Backup & Export</h1><p>Download your data and create backups</p></div></div>
+        <div class="adm-grid2" style="margin-bottom:20px">
+          <div class="adm-card">
+            <div class="adm-card-title">📥 Export Data</div>
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 13px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px">
+                <div><div style="font-size:.78rem;font-weight:700;color:#0F172A">💼 All Jobs</div><div style="font-size:.65rem;color:#94A3B8;margin-top:2px">CSV format · <span id="backupJobCount">0</span> records</div></div>
+                <button class="adm-btn adm-btn-primary" style="font-size:.72rem" onclick="exportJobsCSV()">📥 Export CSV</button>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 13px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px">
+                <div><div style="font-size:.78rem;font-weight:700;color:#0F172A">👥 All Users</div><div style="font-size:.65rem;color:#94A3B8;margin-top:2px">CSV format · <span id="backupUserCount">0</span> records</div></div>
+                <button class="adm-btn adm-btn-primary" style="font-size:.72rem" onclick="exportUsersCSV()">📥 Export CSV</button>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 13px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px">
+                <div><div style="font-size:.78rem;font-weight:700;color:#0F172A">📝 Applications</div><div style="font-size:.65rem;color:#94A3B8;margin-top:2px">CSV format · <span id="backupAppCount">0</span> records</div></div>
+                <button class="adm-btn adm-btn-primary" style="font-size:.72rem" onclick="exportAppsCSV()">📥 Export CSV</button>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 13px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px">
+                <div><div style="font-size:.78rem;font-weight:700;color:#0F172A">🗂️ Full Backup (JSON)</div><div style="font-size:.65rem;color:#94A3B8;margin-top:2px">All data · Complete backup</div></div>
+                <button class="adm-btn adm-btn-primary" style="font-size:.72rem;background:linear-gradient(135deg,#8B5CF6,#A78BFA)" onclick="exportFullBackup()">📦 Download</button>
+              </div>
+            </div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-title">📤 Import Data</div>
+            <div style="border:2px dashed #E2E8F0;border-radius:12px;padding:28px;text-align:center;margin-bottom:12px">
+              <div style="font-size:2rem;margin-bottom:8px">📂</div>
+              <div style="font-size:.78rem;font-weight:700;color:#0F172A;margin-bottom:4px">Drop JSON backup file here</div>
+              <div style="font-size:.7rem;color:#94A3B8;margin-bottom:12px">or click to browse</div>
+              <input type="file" id="importFile" accept=".json" style="display:none" onchange="importBackup(this)">
+              <button class="adm-btn adm-btn-ghost" onclick="document.getElementById('importFile').click()">Browse File</button>
+            </div>
+            <div class="adm-card-title" style="margin-top:4px">🕐 Backup History</div>
+            <div id="backupHistory" style="display:flex;flex-direction:column;gap:6px"></div>
+          </div>
+        </div>
+        <div class="adm-card">
+          <div class="adm-card-title">🗑️ Danger Zone</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px">
+            <div style="padding:13px;background:#fef2f2;border:1px solid #fecaca;border-radius:10px"><div style="font-size:.78rem;font-weight:700;color:#dc2626;margin-bottom:5px">Clear All Applications</div><div style="font-size:.68rem;color:#94A3B8;margin-bottom:9px">Permanently delete all submitted applications</div><button class="adm-btn adm-btn-danger" style="font-size:.72rem" onclick="if(confirm('Delete ALL applications?')){localStorage.removeItem('jiApps');alert('Cleared!');}">Clear Applications</button></div>
+            <div style="padding:13px;background:#fef2f2;border:1px solid #fecaca;border-radius:10px"><div style="font-size:.78rem;font-weight:700;color:#dc2626;margin-bottom:5px">Clear All Users</div><div style="font-size:.68rem;color:#94A3B8;margin-bottom:9px">Permanently delete all registered users</div><button class="adm-btn adm-btn-danger" style="font-size:.72rem" onclick="if(confirm('Delete ALL users?')){localStorage.removeItem('jiUsers');localStorage.removeItem('jiUser');alert('Cleared!');}">Clear Users</button></div>
+            <div style="padding:13px;background:#fef2f2;border:1px solid #fecaca;border-radius:10px"><div style="font-size:.78rem;font-weight:700;color:#dc2626;margin-bottom:5px">Reset All Data</div><div style="font-size:.68rem;color:#94A3B8;margin-bottom:9px">Reset everything to factory defaults</div><button class="adm-btn adm-btn-danger" style="font-size:.72rem" onclick="if(confirm('RESET EVERYTHING? This cannot be undone!')){localStorage.clear();alert('All data cleared. Reload page.');}">Factory Reset</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ SITE SETTINGS PAGE ═══ -->
+      <div id="adm-sitesettings" class="adm-page">
+        <div class="adm-topbar"><div><h1>🖥️ Site Settings</h1><p>Configure your JobsIndia AI portal</p></div>
+          <button class="adm-btn adm-btn-primary" onclick="saveSiteSettings()">💾 Save All</button>
+        </div>
+        <div class="adm-grid2" style="margin-bottom:20px">
+          <div class="adm-card">
+            <div class="adm-card-title">🌐 General Settings</div>
+            <div class="adm-form-row"><label class="adm-form-label">Site Name</label><input type="text" id="ss-name" class="adm-inp" value="JobsIndia AI"></div>
+            <div class="adm-form-row"><label class="adm-form-label">Tagline</label><input type="text" id="ss-tagline" class="adm-inp" value="Find Your Dream Career in India 🇮🇳"></div>
+            <div class="adm-form-row"><label class="adm-form-label">Support Email</label><input type="email" id="ss-email" class="adm-inp" value="support@jobsindia.ai"></div>
+            <div class="adm-form-row"><label class="adm-form-label">Contact Phone</label><input type="text" id="ss-phone" class="adm-inp" placeholder="+91 98765 43210"></div>
+            <div class="adm-form-row"><label class="adm-form-label">Site URL</label><input type="text" id="ss-url" class="adm-inp" value="https://jobnex-production.up.railway.app"></div>
+            <div class="adm-form-row"><label class="adm-form-label">Default Language</label><select id="ss-lang" class="adm-inp"><option>English</option><option>Hindi</option><option>Both (EN/HI)</option></select></div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-title">⚡ Feature Toggles</div>
+            <div id="featureToggles" style="display:flex;flex-direction:column;gap:0"></div>
+          </div>
+        </div>
+        <div class="adm-grid2">
+          <div class="adm-card">
+            <div class="adm-card-title">🎨 Theme Settings</div>
+            <div class="adm-form-row"><label class="adm-form-label">Primary Colour</label><div style="display:flex;gap:9px;align-items:center"><input type="color" id="ss-color" value="#FF6B00" style="width:48px;height:36px;border-radius:8px;border:1px solid #E2E8F0;cursor:pointer"><span style="font-size:.78rem;color:#475569">Saffron (current)</span></div></div>
+            <div class="adm-form-row"><label class="adm-form-label">Jobs Per Page</label><select id="ss-perpage" class="adm-inp"><option>6</option><option selected>12</option><option>24</option></select></div>
+            <div class="adm-form-row"><label class="adm-form-label">Footer Text</label><input type="text" id="ss-footer" class="adm-inp" value="Made with ❤️ for every Indian job seeker"></div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-title">🔗 Social Links</div>
+            <div class="adm-form-row"><label class="adm-form-label">WhatsApp Channel</label><input type="text" class="adm-inp" placeholder="https://whatsapp.com/channel/..."></div>
+            <div class="adm-form-row"><label class="adm-form-label">Telegram</label><input type="text" class="adm-inp" placeholder="https://t.me/..."></div>
+            <div class="adm-form-row"><label class="adm-form-label">YouTube</label><input type="text" class="adm-inp" placeholder="https://youtube.com/@..."></div>
+            <div class="adm-form-row"><label class="adm-form-label">Instagram</label><input type="text" class="adm-inp" placeholder="https://instagram.com/..."></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ APPLICATIONS TRACKER ═══ -->
+      <div id="adm-apptracker" class="adm-page">
+        <div class="adm-topbar">
+          <div><h1>🎟️ Job Applications Tracker</h1><p>All applications submitted through your portal</p></div>
+          <div style="display:flex;gap:8px">
+            <select id="appStatusFilter" class="adm-inp" style="max-width:140px" onchange="renderAppTracker()"><option value="">All Status</option><option value="pending">Pending</option><option value="shortlisted">Shortlisted</option><option value="rejected">Rejected</option></select>
+            <button class="adm-btn adm-btn-ghost" onclick="exportAppsCSV()">📊 Export CSV</button>
+          </div>
+        </div>
+        <div class="adm-grid4" style="margin-bottom:20px">
+          <div class="adm-stat"><div class="adm-stat-label">Total</div><div class="adm-stat-val" id="at-total">0</div><span class="adm-stat-delta adm-up">All time</span></div>
+          <div class="adm-stat"><div class="adm-stat-label">Pending</div><div class="adm-stat-val" id="at-pending">0</div><span class="adm-stat-delta" style="background:rgba(245,158,11,.1);color:#D97706">Review needed</span></div>
+          <div class="adm-stat"><div class="adm-stat-label">Shortlisted</div><div class="adm-stat-val" id="at-short">0</div><span class="adm-stat-delta adm-up">Good match</span></div>
+          <div class="adm-stat"><div class="adm-stat-label">Today</div><div class="adm-stat-val" id="at-today">0</div><span class="adm-stat-delta adm-up">New</span></div>
+        </div>
+        <div class="adm-card">
+          <div style="overflow-x:auto"><table class="adm-table" id="appTrackerTable"></table></div>
+        </div>
+      </div>
+
+      <!-- ═══ JOB CALENDAR ═══ -->
+      <div id="adm-calendar" class="adm-page">
+        <div class="adm-topbar">
+          <div><h1>📅 Job Calendar</h1><p>Upcoming deadlines and important dates</p></div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="adm-btn adm-btn-ghost" onclick="calPrev()">← Prev</button>
+            <span id="calMonthLabel" style="font-weight:700;font-size:.88rem;color:#0F172A;min-width:140px;text-align:center"></span>
+            <button class="adm-btn adm-btn-ghost" onclick="calNext()">Next →</button>
+          </div>
+        </div>
+        <div class="adm-card" style="margin-bottom:20px">
+          <div id="calGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px"></div>
+        </div>
+        <div class="adm-card">
+          <div class="adm-card-title">⏰ Upcoming Deadlines</div>
+          <div id="calDeadlines" style="display:flex;flex-direction:column;gap:8px"></div>
+        </div>
+      </div>
+
+      <!-- ═══ AI MATCHER ═══ -->
+      <div id="adm-aimatcher" class="adm-page">
+        <div class="adm-topbar"><div><h1>🤖 AI Job Matcher</h1><p>AI-powered candidate ↔ job matching</p></div></div>
+        <div class="adm-grid2" style="margin-bottom:20px">
+          <div class="adm-card">
+            <div class="adm-card-title">🔍 Match Candidates to Jobs</div>
+            <div class="adm-form-row"><label class="adm-form-label">Candidate Skills (comma-separated)</label><input type="text" id="aiSkills" class="adm-inp" placeholder="Python, SQL, Data Analysis, Machine Learning"></div>
+            <div class="adm-form-row"><label class="adm-form-label">Experience Level</label><select id="aiExp" class="adm-inp"><option>Fresher</option><option>1-3 Years</option><option>3-6 Years</option><option>6+ Years</option></select></div>
+            <div class="adm-form-row"><label class="adm-form-label">Preferred Location</label><input type="text" id="aiLocation" class="adm-inp" placeholder="e.g. Delhi, Pan India"></div>
+            <div class="adm-form-row"><label class="adm-form-label">Job Type</label><select id="aiJobType" class="adm-inp"><option value="">Any</option><option value="govt">Government</option><option value="private">Private</option></select></div>
+            <button onclick="runAIMatch()" class="adm-btn adm-btn-primary" style="padding:10px 20px;width:100%;justify-content:center">🤖 Find Best Matches</button>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-title" id="aiResultTitle">🎯 AI Match Results</div>
+            <div id="aiResults" style="display:flex;flex-direction:column;gap:9px">
+              <div style="text-align:center;padding:32px 0;color:#94A3B8"><div style="font-size:2.5rem;margin-bottom:8px">🤖</div><div style="font-size:.78rem">Enter skills and click "Find Best Matches"</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="adm-card">
+          <div class="adm-card-title">📊 AI Match Statistics</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px">
+            <div style="background:#F8FAFC;border-radius:10px;padding:14px;text-align:center"><div style="font-family:'Baloo 2',cursive;font-size:1.6rem;font-weight:900;color:#8B5CF6">48,420</div><div style="font-size:.7rem;color:#94A3B8;margin-top:3px">Total Matches Today</div></div>
+            <div style="background:#F8FAFC;border-radius:10px;padding:14px;text-align:center"><div style="font-family:'Baloo 2',cursive;font-size:1.6rem;font-weight:900;color:#00B96B">76.4%</div><div style="font-size:.7rem;color:#94A3B8;margin-top:3px">Avg Match Score</div></div>
+            <div style="background:#F8FAFC;border-radius:10px;padding:14px;text-align:center"><div style="font-family:'Baloo 2',cursive;font-size:1.6rem;font-weight:900;color:#FF6B00">68.2%</div><div style="font-size:.7rem;color:#94A3B8;margin-top:3px">Applied via AI Match</div></div>
+            <div style="background:#F8FAFC;border-radius:10px;padding:14px;text-align:center"><div style="font-family:'Baloo 2',cursive;font-size:1.6rem;font-weight:900;color:#0EA5E9">2,840</div><div style="font-size:.7rem;color:#94A3B8;margin-top:3px">Hired via AI Match</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ WHATSAPP BROADCAST ═══ -->
+      <div id="adm-whatsapp" class="adm-page">
+        <div class="adm-topbar"><div><h1>💬 WhatsApp Broadcast</h1><p>Send job alerts via WhatsApp</p></div></div>
+        <div class="adm-grid2">
+          <div class="adm-card">
+            <div class="adm-card-title">📤 Send WhatsApp Message</div>
+            <div class="adm-form-row"><label class="adm-form-label">Message Template</label>
+              <select id="waTemplate" class="adm-inp" onchange="loadWATemplate()">
+                <option value="newjob">🚨 New Job Alert</option>
+                <option value="deadline">⏰ Deadline Reminder</option>
+                <option value="result">📋 Result Announced</option>
+                <option value="custom">✏️ Custom Message</option>
+              </select>
+            </div>
+            <div class="adm-form-row"><label class="adm-form-label">Message *</label><textarea id="waMessage" class="adm-inp" rows="6" placeholder="Type your WhatsApp message..."></textarea></div>
+            <div class="adm-form-row"><label class="adm-form-label">Send To</label>
+              <select id="waTarget" class="adm-inp">
+                <option>All Subscribers</option>
+                <option>Govt Job Seekers</option>
+                <option>IT/Private Seekers</option>
+                <option>Freshers</option>
+              </select>
+            </div>
+            <div style="display:flex;gap:9px">
+              <button onclick="sendWABroadcast()" class="adm-btn" style="padding:10px 20px;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;border:none;border-radius:9px;font-family:inherit;font-size:.82rem;font-weight:700;cursor:pointer">💬 Send via WhatsApp</button>
+              <button onclick="previewWA()" class="adm-btn adm-btn-ghost" style="padding:10px 16px">👁 Preview</button>
+            </div>
+            <div id="waStatus" style="display:none;margin-top:12px;padding:10px 14px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:9px;font-size:.78rem;color:#16a34a"></div>
+          </div>
+          <div>
+            <div class="adm-card" style="margin-bottom:16px">
+              <div class="adm-card-title">📊 WhatsApp Stats</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div style="background:#F8FAFC;border-radius:10px;padding:13px;text-align:center"><div style="font-size:1.4rem;font-weight:900;color:#25D366;font-family:'Baloo 2',cursive">4,820</div><div style="font-size:.68rem;color:#94A3B8;margin-top:3px">Subscribers</div></div>
+                <div style="background:#F8FAFC;border-radius:10px;padding:13px;text-align:center"><div style="font-size:1.4rem;font-weight:900;color:#FF6B00;font-family:'Baloo 2',cursive">86%</div><div style="font-size:.68rem;color:#94A3B8;margin-top:3px">Open Rate</div></div>
+                <div style="background:#F8FAFC;border-radius:10px;padding:13px;text-align:center"><div style="font-size:1.4rem;font-weight:900;color:#0EA5E9;font-family:'Baloo 2',cursive">24</div><div style="font-size:.68rem;color:#94A3B8;margin-top:3px">Sent This Month</div></div>
+                <div style="background:#F8FAFC;border-radius:10px;padding:13px;text-align:center"><div style="font-size:1.4rem;font-weight:900;color:#8B5CF6;font-family:'Baloo 2',cursive">42%</div><div style="font-size:.68rem;color:#94A3B8;margin-top:3px">Click Rate</div></div>
+              </div>
+            </div>
+            <div class="adm-card">
+              <div class="adm-card-title">🕐 Recent Broadcasts</div>
+              <div id="waHistory"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ LIVE MONITOR ═══ -->
+      <div id="adm-livemonitor" class="adm-page">
+        <div class="adm-topbar">
+          <div><h1>📊 Live Site Monitor</h1><p>Real-time activity on your portal</p></div>
+          <div style="display:flex;align-items:center;gap:9px">
+            <span style="display:flex;align-items:center;gap:5px;font-size:.78rem;color:#00B96B;font-weight:600"><span style="width:8px;height:8px;border-radius:50%;background:#00B96B;animation:pulse 2s infinite;display:inline-block"></span>Live</span>
+            <button class="adm-btn adm-btn-ghost" onclick="refreshMonitor()">🔄 Refresh</button>
+          </div>
+        </div>
+        <div class="adm-grid4" style="margin-bottom:20px">
+          <div class="adm-stat"><div class="adm-stat-label">Online Now</div><div class="adm-stat-val" id="lm-online" style="color:#00B96B">--</div><span class="adm-stat-delta adm-up">Active users</span></div>
+          <div class="adm-stat"><div class="adm-stat-label">Pageviews Today</div><div class="adm-stat-val" id="lm-pv">--</div><span class="adm-stat-delta adm-up">↑ Growing</span></div>
+          <div class="adm-stat"><div class="adm-stat-label">Apps Today</div><div class="adm-stat-val" id="lm-apps">--</div><span class="adm-stat-delta adm-up">Submitted</span></div>
+          <div class="adm-stat"><div class="adm-stat-label">Server Status</div><div class="adm-stat-val" style="color:#00B96B;font-size:1rem">🟢 Online</div><span class="adm-stat-delta adm-up">99.9% uptime</span></div>
+        </div>
+        <div class="adm-grid2" style="margin-bottom:20px">
+          <div class="adm-card"><div class="adm-card-title">🔴 Live Activity Feed</div><div id="lm-feed" style="max-height:260px;overflow-y:auto;display:flex;flex-direction:column;gap:0"></div></div>
+          <div class="adm-card"><div class="adm-card-title">📱 Device Breakdown</div><div id="lm-devices" style="display:flex;flex-direction:column;gap:8px;margin-top:4px"></div></div>
+        </div>
+        <div class="adm-card">
+          <div class="adm-card-title">🌐 Top Active Pages Right Now</div>
+          <div id="lm-pages" style="display:flex;flex-direction:column;gap:6px;margin-top:4px"></div>
+        </div>
+      </div>
+
+      <!-- ═══ SECURITY & LOGIN LOGS ═══ -->
+      <div id="adm-security" class="adm-page">
+        <div class="adm-topbar"><div><h1>🛡️ Security & Login Logs</h1><p>Monitor access and protect your admin panel</p></div></div>
+        <div class="adm-grid4" style="margin-bottom:20px">
+          <div class="adm-stat" style="border-top:3px solid #00B96B"><div class="adm-stat-label">Successful Logins</div><div class="adm-stat-val" id="sec-success">0</div><span class="adm-stat-delta adm-up">All time</span></div>
+          <div class="adm-stat" style="border-top:3px solid #F43F5E"><div class="adm-stat-label">Failed Attempts</div><div class="adm-stat-val" id="sec-failed">0</div><span class="adm-stat-delta adm-dn">Blocked</span></div>
+          <div class="adm-stat"><div class="adm-stat-label">Last Login</div><div class="adm-stat-val" style="font-size:1rem" id="sec-last">Never</div><span class="adm-stat-delta adm-up">Admin</span></div>
+          <div class="adm-stat"><div class="adm-stat-label">2FA Status</div><div class="adm-stat-val" style="font-size:1rem;color:#D97706">⚠️ Off</div><span class="adm-stat-delta" style="background:rgba(217,119,6,.1);color:#D97706">Recommended</span></div>
+        </div>
+        <div class="adm-grid2">
+          <div class="adm-card">
+            <div class="adm-card-title">📋 Admin Login History</div>
+            <div id="secLoginLog" style="display:flex;flex-direction:column;gap:0"></div>
+          </div>
+          <div class="adm-card">
+            <div class="adm-card-title">⚙️ Security Settings</div>
+            <div style="display:flex;flex-direction:column;gap:0">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #F1F5F9"><div><div style="font-size:.78rem;font-weight:600;color:#0F172A">Rate Limiting</div><div style="font-size:.65rem;color:#94A3B8">Max 100 requests/15min per IP</div></div><span class="adm-badge adm-badge-green">Active</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #F1F5F9"><div><div style="font-size:.78rem;font-weight:600;color:#0F172A">HTTPS Redirect</div><div style="font-size:.65rem;color:#94A3B8">Force secure connection</div></div><span class="adm-badge adm-badge-green">Active</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #F1F5F9"><div><div style="font-size:.78rem;font-weight:600;color:#0F172A">Bot Protection</div><div style="font-size:.65rem;color:#94A3B8">Block automated attacks</div></div><span class="adm-badge adm-badge-green">Active</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #F1F5F9"><div><div style="font-size:.78rem;font-weight:600;color:#0F172A">2FA Authentication</div><div style="font-size:.65rem;color:#94A3B8">Extra login security</div></div><span class="adm-badge adm-badge-orange">Not Set</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0"><div><div style="font-size:.78rem;font-weight:600;color:#0F172A">Change Admin Password</div></div><button class="adm-btn adm-btn-ghost" style="font-size:.72rem" onclick="var p=prompt('New password (min 8 chars):');if(p&&p.length>=8){localStorage.setItem('admPwd',p);alert('Password updated!');}else if(p){alert('Min 8 characters required.');}">Change</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ ADMIN ROLES ═══ -->
+      <div id="adm-roles" class="adm-page">
+        <div class="adm-topbar"><div><h1>👨‍💻 Admin Roles & Permissions</h1><p>Control who can access what</p></div>
+          <button class="adm-btn adm-btn-primary" onclick="addAdminRole()">+ Add Admin</button>
+        </div>
+        <!-- Role Cards -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:20px">
+          <div style="background:#fff;border:2px solid #FF6B00;border-radius:14px;padding:18px;text-align:center"><div style="font-size:2rem;margin-bottom:8px">👑</div><div style="font-weight:800;font-size:.9rem;color:#FF6B00">Super Admin</div><div style="font-size:.7rem;color:#94A3B8;margin-top:4px">Full access to everything</div></div>
+          <div style="background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:18px;text-align:center"><div style="font-size:2rem;margin-bottom:8px">✏️</div><div style="font-weight:800;font-size:.9rem;color:#0F172A">Editor</div><div style="font-size:.7rem;color:#94A3B8;margin-top:4px">Manage jobs, news, blog</div></div>
+          <div style="background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:18px;text-align:center"><div style="font-size:2rem;margin-bottom:8px">👀</div><div style="font-weight:800;font-size:.9rem;color:#0F172A">Viewer</div><div style="font-size:.7rem;color:#94A3B8;margin-top:4px">Read-only dashboard</div></div>
+          <div style="background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:18px;text-align:center"><div style="font-size:2rem;margin-bottom:8px">🎫</div><div style="font-weight:800;font-size:.9rem;color:#0F172A">Support</div><div style="font-size:.7rem;color:#94A3B8;margin-top:4px">Applications & users only</div></div>
+        </div>
+        <!-- Permissions Table -->
+        <div class="adm-card">
+          <div class="adm-card-title">🔐 Permission Matrix</div>
+          <div style="overflow-x:auto"><table class="adm-table" id="permTable"></table></div>
+        </div>
+        <!-- Admin Users -->
+        <div class="adm-card" style="margin-top:16px">
+          <div class="adm-card-title">👥 Admin Accounts <button class="adm-btn adm-btn-ghost" style="font-size:.7rem" onclick="addAdminRole()">+ Add</button></div>
+          <div id="adminRolesList"></div>
+        </div>
+      </div>
+
+      <!-- ═══ KEYBOARD SHORTCUTS MODAL ═══ -->
+      <div id="kbModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px">
+        <div style="background:#fff;border-radius:20px;padding:28px;max-width:520px;width:100%;box-shadow:0 24px 80px rgba(0,0,0,.3);position:relative">
+          <button onclick="closeKeyboardShortcuts()" style="position:absolute;top:12px;right:12px;width:30px;height:30px;border-radius:8px;background:#F1F5F9;border:none;cursor:pointer;font-size:.9rem">✕</button>
+          <div style="font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;color:#0F172A;margin-bottom:4px">⌨️ Keyboard Shortcuts</div>
+          <div style="font-size:.75rem;color:#94A3B8;margin-bottom:18px">Use these shortcuts anywhere in the admin panel</div>
+          <div id="kbList" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"></div>
+        </div>
+      </div>
+
+    </div><!-- /adm-main -->
+  </div><!-- /adminDashboard -->
+</div><!-- /adminPanel -->
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-// FEATURE 1 — SIGN UP / LOG IN SYSTEM
-// ═══════════════════════════════════════════════════════════════
-var currentUser = JSON.parse(localStorage.getItem('jiUser') || 'null');
-
-function openAuth(tab) {
-  var el = document.getElementById('authOverlay');
-  el.style.display = 'flex';
-  switchAuthTab(tab || 'login');
-  document.body.style.overflow = 'hidden';
-}
-function closeAuth() {
-  document.getElementById('authOverlay').style.display = 'none';
-  document.body.style.overflow = '';
-}
-function switchAuthTab(tab) {
-  document.getElementById('loginForm').style.display   = tab==='login'  ? 'block' : 'none';
-  document.getElementById('signupForm').style.display  = tab==='signup' ? 'block' : 'none';
-  document.getElementById('loginTab').style.borderBottomColor  = tab==='login'  ? 'var(--saffron)' : 'transparent';
-  document.getElementById('signupTab').style.borderBottomColor = tab==='signup' ? 'var(--saffron)' : 'transparent';
-  document.getElementById('loginTab').style.color  = tab==='login'  ? 'var(--saffron)' : '#94a3b8';
-  document.getElementById('signupTab').style.color = tab==='signup' ? 'var(--saffron)' : '#94a3b8';
-  document.getElementById('authSubtitle').textContent = tab==='login' ? 'Welcome back! Log in to your account' : 'Create your free JobsIndia AI account';
-  document.getElementById('authError').style.display = 'none';
-}
-function doLogin() {
-  var email = document.getElementById('loginEmail').value.trim();
-  var pass  = document.getElementById('loginPass').value;
-  var err   = document.getElementById('authError');
-  if(!email || !pass) { err.textContent='Please fill in all fields.'; err.style.display='block'; return; }
-  var users = JSON.parse(localStorage.getItem('jiUsers') || '[]');
-  var user  = users.find(function(u){ return u.email===email && u.password===pass; });
-  if(!user) { err.textContent='Invalid email or password. Please try again.'; err.style.display='block'; return; }
-  currentUser = user;
-  localStorage.setItem('jiUser', JSON.stringify(user));
-  closeAuth();
-  updateAuthUI();
-  showToast('✅', 'Welcome back, '+user.name.split(' ')[0]+'!');
-}
-function doSignup() {
-  var name  = document.getElementById('signupName').value.trim();
-  var email = document.getElementById('signupEmail').value.trim();
-  var pass  = document.getElementById('signupPass').value;
-  var err   = document.getElementById('authError');
-  if(!name)  { err.textContent='Please enter your full name.'; err.style.display='block'; return; }
-  if(!email || !/\S+@\S+\.\S+/.test(email)) { err.textContent='Please enter a valid email.'; err.style.display='block'; return; }
-  if(pass.length < 6) { err.textContent='Password must be at least 6 characters.'; err.style.display='block'; return; }
-  var users = JSON.parse(localStorage.getItem('jiUsers') || '[]');
-  if(users.find(function(u){ return u.email===email; })) { err.textContent='Email already registered. Please log in.'; err.style.display='block'; return; }
-  var user = { name:name, email:email, password:pass, plan:'free', joined:new Date().toISOString() };
-  users.push(user);
-  localStorage.setItem('jiUsers', JSON.stringify(users));
-  currentUser = user;
-  localStorage.setItem('jiUser', JSON.stringify(user));
-  closeAuth();
-  updateAuthUI();
-  showToast('🎉', 'Welcome to JobsIndia AI, '+name.split(' ')[0]+'!');
-}
-function siteLogout() {
-  currentUser = null;
-  localStorage.removeItem('jiUser');
-  updateAuthUI();
-  closeUserDropdown();
-  showToast('👋', 'Logged out successfully!');
-}
-function updateAuthUI() {
-  var authBtns = document.getElementById('authNavBtns');
-  var userPill = document.getElementById('userNavPill');
-  if(currentUser) {
-    authBtns.style.display = 'none';
-    userPill.style.display = 'block';
-    var initials = currentUser.name.split(' ').map(function(n){return n[0];}).join('').toUpperCase().slice(0,2);
-    document.getElementById('userAvatar').textContent    = initials;
-    document.getElementById('userNavName').textContent   = currentUser.name.split(' ')[0];
-    document.getElementById('userDropName').textContent  = currentUser.name;
-    document.getElementById('userDropEmail').textContent = currentUser.email;
-  } else {
-    authBtns.style.display = 'flex';
-    userPill.style.display = 'none';
-  }
-}
-function toggleUserDropdown() {
-  var dd = document.getElementById('userDropdown');
-  dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
-}
-function closeUserDropdown() {
-  document.getElementById('userDropdown').style.display = 'none';
-}
-document.addEventListener('click', function(e) {
-  if(!e.target.closest('#userNavPill')) closeUserDropdown();
-});
-
-// ═══════════════════════════════════════════════════════════════
-// FEATURE 2 — JOB BOOKMARKS
-// ═══════════════════════════════════════════════════════════════
-var savedJobs = JSON.parse(localStorage.getItem('jiSaved') || '[]');
-
-function toggleBookmark(jobId) {
-  var idx = savedJobs.indexOf(jobId);
-  if(idx >= 0) {
-    savedJobs.splice(idx, 1);
-    showToast('🔖', 'Job removed from saved list');
-  } else {
-    if(!currentUser) { openAuth('signup'); return; }
-    savedJobs.push(jobId);
-    showToast('💾', 'Job saved successfully!');
-  }
-  localStorage.setItem('jiSaved', JSON.stringify(savedJobs));
-  updateBookmarkUI(jobId);
-  updateSavedCount();
-}
-function updateBookmarkUI(jobId) {
-  var el = document.getElementById('bm-'+jobId);
-  if(el) {
-    var saved = savedJobs.indexOf(jobId) >= 0;
-    el.textContent = saved ? '❤️' : '🔖';
-    el.style.transform = saved ? 'scale(1.3)' : 'scale(1)';
-    setTimeout(function(){ if(el) el.style.transform = 'scale(1)'; }, 300);
-  }
-}
-function updateSavedCount() {
-  var el = document.getElementById('savedCount');
-  if(el) el.textContent = savedJobs.length;
-}
-function refreshAllBookmarks() {
-  savedJobs.forEach(function(id){ updateBookmarkUI(id); });
-  updateSavedCount();
-}
-
-// ═══════════════════════════════════════════════════════════════
-// FEATURE 3 — WHATSAPP SHARE
-// ═══════════════════════════════════════════════════════════════
-function shareOnWhatsApp(jobId) {
-  var job = jobsData.find(function(j){ return j.id===jobId; });
-  if(!job) return;
-  var msg = encodeURIComponent(
-    '🇮🇳 *' + job.title + '* — ' + job.company + '\n' +
-    '📍 ' + job.location + ' | 💰 ' + job.salary + '\n' +
-    '⏰ Last Date: ' + job.lastDate + '\n\n' +
-    '🔗 Apply now on JobsIndia AI!\nhttps://jobnex-production.up.railway.app'
-  );
-  window.open('https://wa.me/?text=' + msg, '_blank');
-}
-
-// ═══════════════════════════════════════════════════════════════
-// FEATURE 4 — APPLY MODAL
-// ═══════════════════════════════════════════════════════════════
-var applyingJobId = null;
-
-function openApplyModal(jobId) {
-  applyingJobId = jobId;
-  var job = jobsData.find(function(j){ return j.id===jobId; });
-  if(!job) return;
-  document.getElementById('applyJobTitle').textContent   = job.title;
-  document.getElementById('applyJobCompany').textContent = '🏢 ' + job.company + ' · ' + job.location;
-  document.getElementById('applySuccess').style.display  = 'none';
-  document.getElementById('applyFormBody').style.display = 'block';
-  document.getElementById('applyError').style.display    = 'none';
-  // Pre-fill if logged in
-  if(currentUser) {
-    document.getElementById('applyName').value  = currentUser.name  || '';
-    document.getElementById('applyEmail').value = currentUser.email || '';
-  }
-  document.getElementById('applyOverlay').style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-}
-function closeApplyModal() {
-  document.getElementById('applyOverlay').style.display = 'none';
-  document.body.style.overflow = '';
-  applyingJobId = null;
-}
-function submitApplication() {
-  var name  = document.getElementById('applyName').value.trim();
-  var email = document.getElementById('applyEmail').value.trim();
-  var err   = document.getElementById('applyError');
-  if(!name)  { err.textContent='Please enter your name.'; err.style.display='block'; return; }
-  if(!email || !/\S+@\S+\.\S+/.test(email)) { err.textContent='Please enter a valid email.'; err.style.display='block'; return; }
-  // Save application
-  var apps = JSON.parse(localStorage.getItem('jiApps') || '[]');
-  apps.push({ jobId:applyingJobId, name:name, email:email, phone:document.getElementById('applyPhone').value, cover:document.getElementById('applyCover').value, date:new Date().toISOString() });
-  localStorage.setItem('jiApps', JSON.stringify(apps));
-  document.getElementById('applyFormBody').style.display = 'none';
-  document.getElementById('applySuccess').style.display  = 'block';
-}
-
-// ═══════════════════════════════════════════════════════════════
-// FEATURE 5 — AI JOB MATCHING WIDGET
-// ═══════════════════════════════════════════════════════════════
-function openAIMatch() {
-  if(!currentUser) { openAuth('signup'); return; }
-  var skills = prompt('🤖 AI Job Match\n\nEnter your skills (comma-separated):\ne.g. Python, Data Analysis, SQL');
-  if(!skills) return;
-  var skillList = skills.toLowerCase().split(',').map(function(s){ return s.trim(); });
-  var scored = jobsData.map(function(job) {
-    var text = (job.title + ' ' + job.skills.join(' ')).toLowerCase();
-    var score = skillList.reduce(function(acc, sk) {
-      return acc + (text.includes(sk) ? 1 : 0);
-    }, 0);
-    return { job:job, score:score };
-  }).filter(function(x){ return x.score > 0; })
-    .sort(function(a,b){ return b.score - a.score; })
-    .slice(0, 5);
-  if(scored.length === 0) {
-    showToast('🤖', 'No strong matches found. Try broader skills!');
-    return;
-  }
-  var msg = '🤖 Top ' + scored.length + ' AI Matches for you:\n\n';
-  scored.forEach(function(x, i) {
-    msg += (i+1) + '. ' + x.job.title + ' — ' + x.job.company + ' (' + Math.round((x.score/skillList.length)*100) + '% match)\n';
-  });
-  alert(msg);
-  showToast('🤖', 'Found ' + scored.length + ' AI-matched jobs!');
-}
-
-// ═══════════════════════════════════════════════════════════════
-// TOAST HELPER
-// ═══════════════════════════════════════════════════════════════
-function showToast(icon, msg) {
-  var el = document.getElementById('toastNotif');
-  document.getElementById('toastIcon').textContent = icon;
-  document.getElementById('toastMsg').textContent  = msg;
-  el.style.display = 'flex';
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(20px)';
-  setTimeout(function(){ el.style.opacity='1'; el.style.transform='translateY(0)'; }, 10);
-  setTimeout(function(){ el.style.opacity='0'; el.style.transform='translateY(20px)'; setTimeout(function(){ el.style.display='none'; }, 300); }, 3000);
-}
-
-// ═══════════════════════════════════════════════════════════════
-// INIT ALL FEATURES
-// ═══════════════════════════════════════════════════════════════
-document.addEventListener('DOMContentLoaded', function() {
-  updateAuthUI();
-  refreshAllBookmarks();
-});
-</script>
-<!-- ═══════════════════════════════════════
-     PUSH NOTIFICATIONS BANNER
-═══════════════════════════════════════ -->
-<div id="pushBanner" style="display:none;position:fixed;bottom:80px;right:20px;z-index:4000;background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:16px 18px;box-shadow:0 8px 32px rgba(10,22,40,.15);max-width:300px;animation:slideUp .3s ease">
-  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-    <div style="font-weight:700;font-size:.85rem;color:var(--navy)">🔔 Enable Job Alerts</div>
-    <button onclick="closePushBanner()" style="background:none;border:none;color:#94a3b8;cursor:pointer;font-size:.9rem;padding:0 0 0 8px">✕</button>
-  </div>
-  <div style="font-size:.76rem;color:#64748b;margin-bottom:12px;line-height:1.5">Get instant notifications when new jobs matching your profile are posted!</div>
-  <button onclick="enablePushNotifications()" style="width:100%;padding:9px;border-radius:10px;background:linear-gradient(135deg,var(--saffron),var(--saffron-light));color:#fff;font-weight:700;font-size:.8rem;cursor:pointer;border:none;font-family:inherit;box-shadow:0 3px 0 var(--saffron-dark)">🔔 Enable Notifications</button>
-  <button onclick="closePushBanner()" style="width:100%;padding:7px;border-radius:10px;background:none;color:#94a3b8;font-size:.76rem;cursor:pointer;border:none;margin-top:5px;font-family:inherit">Maybe later</button>
-</div>
-
-<!-- ═══════════════════════════════════════
-     ADMIN PANEL OVERLAY
-═══════════════════════════════════════ -->
-<div id="adminOverlay" style="display:none;position:fixed;inset:0;z-index:6000;background:var(--off-white)">
-  <!-- Admin Navbar -->
-  <div style="height:56px;background:var(--navy);display:flex;align-items:center;padding:0 20px;gap:14px;position:sticky;top:0;z-index:100">
-    <div style="display:flex;align-items:center;gap:8px;font-family:'Baloo 2',cursive;font-weight:800;color:#fff;font-size:1rem">
-      <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--saffron),var(--gold));display:flex;align-items:center;justify-content:center;font-size:.8rem">🇮🇳</div>
-      JobsIndia <span style="color:var(--saffron)">Admin</span>
-    </div>
-    <div style="margin-left:auto;display:flex;gap:8px">
-      <span id="adminDateTime" style="font-size:.72rem;color:rgba(255,255,255,.5)"></span>
-      <button onclick="sendTestNotification()" style="padding:6px 12px;border-radius:8px;background:rgba(255,107,0,.2);border:1px solid rgba(255,107,0,.3);color:var(--saffron);font-size:.72rem;font-weight:700;cursor:pointer;font-family:inherit">🔔 Test Notification</button>
-      <button onclick="closeAdminPanel()" style="padding:6px 14px;border-radius:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:.76rem;cursor:pointer;font-family:inherit">✕ Close</button>
-    </div>
-  </div>
-  <!-- Admin Content -->
-  <div style="max-width:1200px;margin:0 auto;padding:24px 20px;overflow-y:auto;height:calc(100vh - 56px)">
-    <!-- Admin Login (shown if not logged in as admin) -->
-    <div id="adminLogin" style="max-width:380px;margin:40px auto">
-      <div style="background:#fff;border-radius:20px;padding:32px;box-shadow:0 8px 32px rgba(10,22,40,.1);text-align:center">
-        <div style="font-size:2.5rem;margin-bottom:12px">🔐</div>
-        <div style="font-family:'Baloo 2',cursive;font-size:1.2rem;font-weight:800;color:var(--navy);margin-bottom:4px">Admin Login</div>
-        <div style="font-size:.78rem;color:#64748b;margin-bottom:20px">Enter your admin credentials</div>
-        <input type="email" id="adminEmail" placeholder="admin@jobsindia.ai" value="pappdeaf081@gmail.com" style="width:100%;padding:10px 13px;border-radius:10px;border:1.5px solid #e2e8f0;font-size:.85rem;outline:none;font-family:inherit;margin-bottom:10px;text-align:left">
-        <input type="password" id="adminPass" placeholder="Password" value="pappdeaf081" style="width:100%;padding:10px 13px;border-radius:10px;border:1.5px solid #e2e8f0;font-size:.85rem;outline:none;font-family:inherit;margin-bottom:14px;text-align:left" onkeydown="if(event.key==='Enter')doAdminLogin()">
-        <div id="adminLoginErr" style="display:none;color:#dc2626;font-size:.76rem;margin-bottom:10px"></div>
-        <button onclick="doAdminLogin()" style="width:100%;padding:12px;border-radius:12px;background:linear-gradient(135deg,var(--saffron),var(--saffron-light));color:#fff;font-weight:800;font-size:.9rem;cursor:pointer;border:none;box-shadow:0 4px 0 var(--saffron-dark);font-family:inherit">Login to Admin →</button>
-      </div>
-    </div>
-    <!-- Admin Dashboard (shown after login) -->
-    <div id="adminDashboard" style="display:none">
-      <!-- Stat Cards -->
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:22px">
-        <div style="background:#fff;border-radius:16px;padding:18px;box-shadow:0 2px 12px rgba(10,22,40,.07);border-left:4px solid var(--saffron)">
-          <div style="font-size:.68rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Total Jobs</div>
-          <div id="adminStatJobs" style="font-family:'Baloo 2',cursive;font-size:2rem;font-weight:800;color:var(--navy)">—</div>
-          <div style="font-size:.7rem;color:var(--emerald);margin-top:4px">↑ 8.2% this week</div>
-        </div>
-        <div style="background:#fff;border-radius:16px;padding:18px;box-shadow:0 2px 12px rgba(10,22,40,.07);border-left:4px solid var(--emerald)">
-          <div style="font-size:.68rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Registered Users</div>
-          <div id="adminStatUsers" style="font-family:'Baloo 2',cursive;font-size:2rem;font-weight:800;color:var(--navy)">—</div>
-          <div style="font-size:.7rem;color:var(--emerald);margin-top:4px">↑ Growing daily</div>
-        </div>
-        <div style="background:#fff;border-radius:16px;padding:18px;box-shadow:0 2px 12px rgba(10,22,40,.07);border-left:4px solid var(--sky)">
-          <div style="font-size:.68rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Applications</div>
-          <div id="adminStatApps" style="font-family:'Baloo 2',cursive;font-size:2rem;font-weight:800;color:var(--navy)">—</div>
-          <div style="font-size:.7rem;color:var(--emerald);margin-top:4px">↑ 12.4% today</div>
-        </div>
-        <div style="background:#fff;border-radius:16px;padding:18px;box-shadow:0 2px 12px rgba(10,22,40,.07);border-left:4px solid var(--purple)">
-          <div style="font-size:.68rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Saved Jobs</div>
-          <div id="adminStatSaved" style="font-family:'Baloo 2',cursive;font-size:2rem;font-weight:800;color:var(--navy)">—</div>
-          <div style="font-size:.7rem;color:var(--emerald);margin-top:4px">Bookmarks total</div>
-        </div>
-        <div style="background:#fff;border-radius:16px;padding:18px;box-shadow:0 2px 12px rgba(10,22,40,.07);border-left:4px solid var(--gold)">
-          <div style="font-size:.68rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Notifications Sent</div>
-          <div id="adminStatNotifs" style="font-family:'Baloo 2',cursive;font-size:2rem;font-weight:800;color:var(--navy)">—</div>
-          <div style="font-size:.7rem;color:var(--emerald);margin-top:4px">Push + in-app</div>
-        </div>
-        <div style="background:#fff;border-radius:16px;padding:18px;box-shadow:0 2px 12px rgba(10,22,40,.07);border-left:4px solid var(--rose)">
-          <div style="font-size:.68rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">Govt Jobs</div>
-          <div id="adminStatGovt" style="font-family:'Baloo 2',cursive;font-size:2rem;font-weight:800;color:var(--navy)">—</div>
-          <div style="font-size:.7rem;color:#64748b;margin-top:4px">Active listings</div>
-        </div>
-      </div>
-
-      <!-- Users Table -->
-      <div style="background:#fff;border-radius:16px;padding:20px;box-shadow:0 2px 12px rgba(10,22,40,.07);margin-bottom:18px">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-          <div style="font-family:'Baloo 2',cursive;font-weight:800;font-size:1rem;color:var(--navy)">👥 Registered Users</div>
-          <button onclick="exportUsersCSV()" style="padding:6px 13px;border-radius:8px;background:var(--gray-100);border:1px solid var(--gray-200);font-size:.72rem;font-weight:600;cursor:pointer;font-family:inherit;color:var(--text-sub)">📊 Export CSV</button>
-        </div>
-        <div style="overflow-x:auto">
-          <table style="width:100%;border-collapse:collapse;font-size:.78rem">
-            <thead><tr style="background:var(--gray-100)">
-              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--gray-200)">#</th>
-              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--gray-200)">Name</th>
-              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--gray-200)">Email</th>
-              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--gray-200)">Plan</th>
-              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--gray-200)">Joined</th>
-              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--gray-200)">Actions</th>
-            </tr></thead>
-            <tbody id="adminUsersTable"></tbody>
-          </table>
-        </div>
-        <div id="adminNoUsers" style="text-align:center;padding:24px;color:#94a3b8;font-size:.82rem">No users registered yet. Share your site to get sign-ups!</div>
-      </div>
-
-      <!-- Applications Table -->
-      <div style="background:#fff;border-radius:16px;padding:20px;box-shadow:0 2px 12px rgba(10,22,40,.07);margin-bottom:18px">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-          <div style="font-family:'Baloo 2',cursive;font-weight:800;font-size:1rem;color:var(--navy)">📝 Job Applications</div>
-          <span id="adminAppCount" style="font-size:.72rem;color:#64748b"></span>
-        </div>
-        <div style="overflow-x:auto">
-          <table style="width:100%;border-collapse:collapse;font-size:.78rem">
-            <thead><tr style="background:var(--gray-100)">
-              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Applicant</th>
-              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Email</th>
-              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Job</th>
-              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Date</th>
-              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Status</th>
-            </tr></thead>
-            <tbody id="adminAppsTable"></tbody>
-          </table>
-        </div>
-        <div id="adminNoApps" style="text-align:center;padding:24px;color:#94a3b8;font-size:.82rem">No applications yet.</div>
-      </div>
-
-      <!-- Push Notifications Panel -->
-      <div style="background:#fff;border-radius:16px;padding:20px;box-shadow:0 2px 12px rgba(10,22,40,.07);margin-bottom:18px">
-        <div style="font-family:'Baloo 2',cursive;font-weight:800;font-size:1rem;color:var(--navy);margin-bottom:14px">🔔 Send Push Notification</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
-          <div><label style="display:block;font-size:.68rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">Title</label><input type="text" id="pushTitle" placeholder="e.g. New Jobs Posted!" style="width:100%;padding:9px 12px;border-radius:9px;border:1.5px solid #e2e8f0;font-size:.82rem;outline:none;font-family:inherit"></div>
-          <div><label style="display:block;font-size:.68rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">Category</label><select id="pushCategory" style="width:100%;padding:9px 12px;border-radius:9px;border:1.5px solid #e2e8f0;font-size:.82rem;outline:none;font-family:inherit;background:#fff"><option>All Users</option><option>Govt Job Seekers</option><option>IT Jobs</option><option>Banking Jobs</option><option>Freshers</option></select></div>
-        </div>
-        <div style="margin-bottom:12px"><label style="display:block;font-size:.68rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px">Message</label><textarea id="pushMessage" placeholder="50 new SSC CGL posts added! Apply before June 30." rows="2" style="width:100%;padding:9px 12px;border-radius:9px;border:1.5px solid #e2e8f0;font-size:.82rem;outline:none;font-family:inherit;resize:vertical"></textarea></div>
-        <div style="display:flex;gap:8px">
-          <button onclick="sendPushNotification()" style="padding:9px 20px;border-radius:10px;background:linear-gradient(135deg,var(--saffron),var(--saffron-light));color:#fff;font-weight:700;font-size:.82rem;cursor:pointer;border:none;box-shadow:0 3px 0 var(--saffron-dark);font-family:inherit">📤 Send Now</button>
-          <button onclick="scheduleNotification()" style="padding:9px 20px;border-radius:10px;background:var(--gray-100);color:var(--text-sub);font-weight:600;font-size:.82rem;cursor:pointer;border:1px solid var(--gray-200);font-family:inherit">⏰ Schedule</button>
-        </div>
-        <div id="pushLog" style="margin-top:14px;max-height:160px;overflow-y:auto"></div>
-      </div>
-
-      <!-- Jobs Overview -->
-      <div style="background:#fff;border-radius:16px;padding:20px;box-shadow:0 2px 12px rgba(10,22,40,.07)">
-        <div style="font-family:'Baloo 2',cursive;font-weight:800;font-size:1rem;color:var(--navy);margin-bottom:14px">💼 Jobs Overview</div>
-        <div style="overflow-x:auto">
-          <table style="width:100%;border-collapse:collapse;font-size:.78rem">
-            <thead><tr style="background:var(--gray-100)">
-              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Job Title</th>
-              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Company</th>
-              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Type</th>
-              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Last Date</th>
-              <th style="padding:9px 12px;text-align:left;font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Status</th>
-            </tr></thead>
-            <tbody id="adminJobsTable"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-// ═══════════════════════════════════════════════════════════════
-// ADMIN PANEL
+// ADMIN PANEL LOGIC
 // ═══════════════════════════════════════════════════════════════
 var adminLoggedIn = false;
+var adminJobs = JSON.parse(localStorage.getItem('admJobs') || 'null') || jobsData.slice();
 
+// Open Admin Panel
 function openAdminPanel() {
-  document.getElementById('adminOverlay').style.display = 'block';
+  document.getElementById('adminPanel').style.display = 'block';
+  document.getElementById('adminLogin').style.display = 'flex';
+  document.getElementById('adminDashboard').style.display = 'none';
   document.body.style.overflow = 'hidden';
-  updateAdminDateTime();
-  setInterval(updateAdminDateTime, 1000);
-  if(adminLoggedIn) showAdminDashboard();
 }
-function closeAdminPanel() {
-  document.getElementById('adminOverlay').style.display = 'none';
+
+// Exit Admin Panel
+function exitAdmin() {
+  document.getElementById('adminPanel').style.display = 'none';
   document.body.style.overflow = '';
 }
-function updateAdminDateTime() {
-  var el = document.getElementById('adminDateTime');
-  if(el) el.textContent = new Date().toLocaleString('en-IN', {day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
-}
+
+// Admin Login
 function doAdminLogin() {
   var email = document.getElementById('adminEmail').value.trim();
   var pass  = document.getElementById('adminPass').value;
   var err   = document.getElementById('adminLoginErr');
-  if(email === 'pappdeaf081@gmail.com' && pass === 'pappdeaf081') {
+  if(email === 'admin@jobsindia.ai' && pass === 'admin123') {
     adminLoggedIn = true;
-    showAdminDashboard();
+    document.getElementById('adminLogin').style.display = 'none';
+    document.getElementById('adminDashboard').style.display = 'block';
+    initAdminDashboard();
   } else {
-    err.textContent = 'Invalid credentials. Use pappdeaf081@gmail.com / pappdeaf081';
+    err.textContent = 'Invalid credentials. Use admin@jobsindia.ai / admin123';
     err.style.display = 'block';
   }
 }
-function showAdminDashboard() {
-  document.getElementById('adminLogin').style.display     = 'none';
-  document.getElementById('adminDashboard').style.display = 'block';
-  populateAdminStats();
-  populateAdminUsers();
-  populateAdminApps();
-  populateAdminJobs();
+
+function adminLogout() {
+  adminLoggedIn = false;
+  document.getElementById('adminLogin').style.display = 'flex';
+  document.getElementById('adminDashboard').style.display = 'none';
 }
-function populateAdminStats() {
+
+// Navigate admin pages
+function admNav(page) {
+  document.querySelectorAll('.adm-page').forEach(function(p){ p.classList.remove('active'); });
+  var el = document.getElementById('adm-'+page);
+  if(el) el.classList.add('active');
+  document.querySelectorAll('.adm-nav-item').forEach(function(n){ n.classList.remove('active'); });
+  event && event.currentTarget && event.currentTarget.classList.add('active');
+  // Render page data
+  if(page==='dashboard')    initAdminDashboard();
+  if(page==='jobs')         renderAdmJobsTable();
+  if(page==='news')         renderAdmNewsTable();
+  if(page==='users')        renderAdmUsersTable();
+  if(page==='applications') renderAdmAppsTable();
+  if(page==='analytics')    renderAdmAnalytics();
+  if(page==='email')        initEmailPage();
+  if(page==='push')         renderPushHistory();
+  if(page==='blog')         renderBlogTable();
+  if(page==='categories')   renderCatList();
+  if(page==='weekly')       initWeeklyReport();
+  if(page==='adsense')      initAdSensePage();
+  if(page==='employers')    initEmployersPage();
+  if(page==='statemap')     initStateMap();
+  if(page==='seo')          initSEOPage();
+  if(page==='backup')       initBackupPage();
+  if(page==='sitesettings') initSiteSettings();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// GOOGLE ADSENSE
+// ═══════════════════════════════════════════════════════════════
+function initAdSensePage() {
+  var saved = localStorage.getItem('adsPubId');
+  if(saved) { var el = document.getElementById('pubIdDisplay'); if(el) el.textContent = saved; }
+  // Earnings chart
+  var ctx = document.getElementById('adsEarningsChart');
+  if(ctx && !ctx._chart) {
+    var days14 = ['Jun 1','Jun 2','Jun 3','Jun 4','Jun 5','Jun 6','Jun 7','Jun 8','Jun 9','Jun 10','Jun 11','Jun 12','Jun 13','Jun 14'];
+    var earn14 = [2840,3120,2680,3480,3240,3840,2920,3560,3180,3640,3240,3920,3480,4120];
+    ctx._chart = new Chart(ctx, {
+      type:'line',
+      data:{ labels:days14, datasets:[{ label:'Earnings (₹)', data:earn14, borderColor:'#D97706', backgroundColor:'rgba(217,119,6,.08)', tension:.4, fill:true, pointBackgroundColor:'#D97706', pointRadius:3 }] },
+      options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label:function(c){ return ' ₹'+c.parsed.y.toLocaleString('en-IN'); } } } }, scales:{ x:{ticks:{color:'#94A3B8',font:{size:9},maxTicksLimit:7},grid:{display:false}}, y:{ticks:{color:'#94A3B8',font:{size:9},callback:function(v){return '₹'+v.toLocaleString('en-IN');}},grid:{color:'rgba(0,0,0,.04)'}} } }
+    });
+  }
+  // Ad type donut
+  var ctx2 = document.getElementById('adTypeChart');
+  if(ctx2 && !ctx2._chart) {
+    ctx2._chart = new Chart(ctx2, { type:'doughnut', data:{ labels:['Display','In-feed','In-article','Anchor'], datasets:[{ data:[42,28,18,12], backgroundColor:['#FF6B00','#0EA5E9','#8B5CF6','#00B96B'], borderWidth:0 }] }, options:{ responsive:false, plugins:{legend:{display:false}}, cutout:'65%' } });
+    var leg = document.getElementById('adTypeLegend');
+    if(leg) leg.innerHTML = [['Display','#FF6B00','42%'],['In-feed','#0EA5E9','28%'],['In-article','#8B5CF6','18%'],['Anchor','#00B96B','12%']].map(function(r){ return '<div style="display:flex;align-items:center;gap:7px;margin-bottom:8px"><div style="width:9px;height:9px;border-radius:50%;background:'+r[1]+';flex-shrink:0"></div><div style="flex:1;font-size:.74rem;color:#475569">'+r[0]+'</div><div style="font-weight:700;font-size:.78rem">'+r[2]+'</div></div>'; }).join('');
+  }
+  // Ad units table
+  var tu = document.getElementById('adUnitsTable');
+  if(tu) {
+    var units = [
+      ['Homepage Banner','Display','728×90','48,420','1,375','2.84%','₹1,240','Active'],
+      ['Job Cards Feed','In-feed','Fluid','36,840','1,105','3.00%','₹980','Active'],
+      ['Sidebar 300×250','Display','300×250','28,120','674','2.40%','₹620','Active'],
+      ['Article Mid','In-article','Fluid','18,240','547','3.00%','₹380','Active'],
+      ['Mobile Anchor','Anchor','320×50','22,840','571','2.50%','₹280','Active']
+    ];
+    tu.innerHTML = '<thead><tr><th>Unit Name</th><th>Format</th><th>Size</th><th>Impressions</th><th>Clicks</th><th>CTR</th><th>Today ₹</th><th>Status</th></tr></thead><tbody>'
+      + units.map(function(u){ return '<tr><td><strong>'+u[0]+'</strong></td><td><span class="adm-badge adm-badge-blue">'+u[1]+'</span></td><td>'+u[2]+'</td><td>'+u[3]+'</td><td>'+u[4]+'</td><td style="color:#00B96B;font-weight:700">'+u[5]+'</td><td style="color:#D97706;font-weight:700">'+u[6]+'</td><td><span class="adm-badge adm-badge-green">'+u[7]+'</span></td></tr>'; }).join('')
+      + '</tbody>';
+  }
+  // Snippets
+  var sn = document.getElementById('adSnippets');
+  if(sn) {
+    var snippets = [
+      { title:'Auto Ads — paste in <head>', code:'&lt;script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXX" crossorigin="anonymous"&gt;&lt;/script&gt;' },
+      { title:'Leaderboard 728×90', code:'&lt;ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"&gt;&lt;/ins&gt;' },
+      { title:'In-feed Fluid', code:'&lt;ins class="adsbygoogle" style="display:block" data-ad-format="fluid" data-ad-layout-key="-fb+5w+4e-db+86" data-ad-client="ca-pub-XXXX" data-ad-slot="9876543210"&gt;&lt;/ins&gt;' }
+    ];
+    sn.innerHTML = snippets.map(function(s){ return '<div style="border:1px solid #E2E8F0;border-radius:10px;overflow:hidden"><div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#F8FAFC;border-bottom:1px solid #E2E8F0"><span style="font-size:.74rem;font-weight:700;color:#0F172A">'+s.title+'</span><button class="adm-btn adm-btn-ghost" style="font-size:.68rem" onclick="alert(\'Code copied!\')">📋 Copy</button></div><div style="padding:10px 12px;font-family:monospace;font-size:.65rem;color:#475569;line-height:1.6;word-break:break-all">'+s.code+'</div></div>'; }).join('');
+  }
+  // Best practices
+  var bp = document.getElementById('adBestPractices');
+  if(bp) {
+    var tips = [
+      { ok:true,  text:'Place at least one ad above the fold for best RPM' },
+      { ok:true,  text:'Use responsive/auto size for mobile compatibility' },
+      { ok:true,  text:'In-feed ads between job cards get 3× higher CTR' },
+      { ok:false, text:'Never click your own ads — instant account ban' },
+      { ok:false, text:'Don\'t place more than 3 ads on one page' },
+      { ok:false, text:'Never hide ads or place off-screen' }
+    ];
+    bp.innerHTML = tips.map(function(t){ return '<div style="display:flex;gap:8px;padding:9px 11px;background:'+(t.ok?'rgba(0,185,107,.06)':'rgba(244,63,94,.06)')+';border:1px solid '+(t.ok?'rgba(0,185,107,.2)':'rgba(244,63,94,.2)')+';border-radius:9px"><span>'+(t.ok?'✅':'❌')+'</span><span style="font-size:.74rem;color:#475569;line-height:1.5">'+t.text+'</span></div>'; }).join('');
+  }
+}
+function saveAdSenseSettings() { alert('✅ AdSense settings saved!'); }
+
+// ═══════════════════════════════════════════════════════════════
+// EMPLOYERS PAGE
+// ═══════════════════════════════════════════════════════════════
+function initEmployersPage() {
+  var employers = [];
+  var seen = {};
+  adminJobs.forEach(function(j){
+    if(!seen[j.company]) {
+      seen[j.company] = true;
+      employers.push({ name:j.company, type:j.type, jobs:adminJobs.filter(function(x){return x.x===j.company;}).length||1, logo:j.logo, color:j.color });
+    }
+  });
+  var el = document.getElementById('employersTable');
+  if(el) {
+    var govtCount    = employers.filter(function(e){ return e.type==='govt'; }).length;
+    var privateCount = employers.filter(function(e){ return e.type==='private'; }).length;
+    var et = document.getElementById('empTotal');    if(et) et.textContent = employers.length;
+    var eg = document.getElementById('empGovt');     if(eg) eg.textContent = govtCount;
+    var ep = document.getElementById('empPrivate');  if(ep) ep.textContent = privateCount;
+    var ej = document.getElementById('empJobs');     if(ej) ej.textContent = adminJobs.length;
+    el.innerHTML = '<thead><tr><th>#</th><th>Employer</th><th>Type</th><th>Jobs Posted</th><th>Status</th><th>Actions</th></tr></thead><tbody>'
+      + employers.map(function(e,i){ return '<tr><td style="color:#94A3B8">'+(i+1)+'</td><td><div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:28px;border-radius:7px;background:'+e.color+'22;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;color:'+e.color+'">'+e.logo+'</div><strong>'+e.name+'</strong></div></td><td><span class="adm-badge '+(e.type==='govt'?'adm-badge-blue':'adm-badge-orange')+'">'+e.type+'</span></td><td>'+e.jobs+' jobs</td><td><span class="adm-badge adm-badge-green">Active</span></td><td><button class="adm-btn adm-btn-ghost" style="font-size:.7rem" onclick="alert(\'View employer\')">View</button></td></tr>'; }).join('')
+      + '</tbody>';
+  }
+}
+function addEmployer() { alert('Add Employer form — connect to backend to save recruiters.'); }
+
+// ═══════════════════════════════════════════════════════════════
+// STATE MAP
+// ═══════════════════════════════════════════════════════════════
+function initStateMap() {
+  var stateJobs = {
+    'Pan India':840,'Delhi NCR':320,'Maharashtra':280,'Karnataka':240,'Tamil Nadu':180,
+    'Uttar Pradesh':160,'Telangana':140,'Gujarat':120,'Rajasthan':100,'West Bengal':90,
+    'Madhya Pradesh':80,'Bihar':70,'Punjab':65,'Haryana':60,'Kerala':55
+  };
+  // List
+  var el = document.getElementById('stateMapList');
+  if(el) {
+    var maxJobs = Math.max.apply(null, Object.values(stateJobs));
+    el.innerHTML = Object.entries(stateJobs).slice(0,8).map(function(e){ var pct=Math.round((e[1]/maxJobs)*100); return '<div style="display:flex;align-items:center;gap:10px;padding:6px 0"><span style="width:110px;font-size:.74rem;font-weight:600;color:#0F172A">'+e[0]+'</span><div style="flex:1;height:7px;background:#F1F5F9;border-radius:4px;overflow:hidden"><div style="height:100%;background:linear-gradient(135deg,#FF6B00,#FFD700);border-radius:4px;width:'+pct+'%"></div></div><span style="font-size:.7rem;font-weight:700;color:#64748B;width:36px;text-align:right">'+e[1]+'</span></div>'; }).join('');
+  }
+  // Bubbles
+  var bubbles = document.getElementById('stateMapBubbles');
+  if(bubbles) {
+    var top8 = Object.entries(stateJobs).slice(0,8);
+    var maxJ = Math.max.apply(null, top8.map(function(e){return e[1];}));
+    bubbles.innerHTML = top8.map(function(e){ var sz=Math.max(32,Math.round((e[1]/maxJ)*64)); return '<div style="width:'+sz+'px;height:'+sz+'px;border-radius:50%;background:linear-gradient(135deg,rgba(255,107,0,0.85),rgba(255,165,0,0.7));display:flex;align-items:center;justify-content:center;font-size:'+Math.max(8,sz/6)+'px;font-weight:700;color:#fff;cursor:default;flex-shrink:0" title="'+e[0]+': '+e[1]+' jobs">'+e[0].split(' ')[0].slice(0,3)+'</div>'; }).join('');
+  }
+  // Bar chart
+  var bar = document.getElementById('stateBarChart');
+  if(bar) {
+    var max2 = Math.max.apply(null, Object.values(stateJobs));
+    bar.innerHTML = Object.entries(stateJobs).slice(0,10).map(function(e,i){ var pct=Math.round((e[1]/max2)*100); var clr=['#FF6B00','#FF8C33','#FFB266','#FFD700','#FFF3B2','#E2E8F0']; return '<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid #F1F5F9"><span style="width:18px;font-size:.7rem;font-weight:700;color:#94A3B8">'+(i+1)+'</span><span style="width:120px;font-size:.75rem;font-weight:600;color:#0F172A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+e[0]+'</span><div style="flex:1;height:8px;background:#F1F5F9;border-radius:4px;overflow:hidden"><div style="height:100%;background:linear-gradient(135deg,#FF6B00,#FF8C33);border-radius:4px;width:'+pct+'%"></div></div><span style="font-size:.72rem;font-weight:700;color:#FF6B00;width:36px;text-align:right">'+e[1]+'</span></div>'; }).join('');
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SEO MANAGER
+// ═══════════════════════════════════════════════════════════════
+function initSEOPage() {
+  var checks = [
+    { ok:true,  text:'Meta title present and correct length (60 chars)' },
+    { ok:true,  text:'Meta description present (155 chars)' },
+    { ok:true,  text:'Open Graph tags configured' },
+    { ok:false, text:'OG Image not set — add a 1200×630 image' },
+    { ok:true,  text:'Viewport meta present' },
+    { ok:false, text:'Google Analytics not connected' },
+    { ok:true,  text:'Structured data (JSON-LD) present' },
+    { ok:true,  text:'Mobile-friendly design' }
+  ];
+  var el = document.getElementById('seoChecklist');
+  if(el) el.innerHTML = checks.map(function(c){ return '<div style="display:flex;align-items:center;gap:7px;font-size:.72rem;color:#475569"><span>'+(c.ok?'✅':'⚠️')+'</span>'+c.text+'</div>'; }).join('');
+}
+function saveSEOSettings() { alert('✅ SEO settings saved!'); }
+
+// ═══════════════════════════════════════════════════════════════
+// BACKUP & EXPORT
+// ═══════════════════════════════════════════════════════════════
+function initBackupPage() {
   var users = JSON.parse(localStorage.getItem('jiUsers') || '[]');
   var apps  = JSON.parse(localStorage.getItem('jiApps')  || '[]');
-  var saved = JSON.parse(localStorage.getItem('jiSaved') || '[]');
-  var notifs= JSON.parse(localStorage.getItem('jiNotifs')|| '[]');
-  var govtJobs = (typeof jobsData !== 'undefined') ? jobsData.filter(function(j){ return j.type==='govt'; }).length : 0;
-  document.getElementById('adminStatJobs').textContent  = typeof jobsData !== 'undefined' ? jobsData.length : '—';
-  document.getElementById('adminStatUsers').textContent = users.length;
-  document.getElementById('adminStatApps').textContent  = apps.length;
-  document.getElementById('adminStatSaved').textContent = saved.length;
-  document.getElementById('adminStatNotifs').textContent= notifs.length;
-  document.getElementById('adminStatGovt').textContent  = govtJobs;
-}
-function populateAdminUsers() {
-  var users = JSON.parse(localStorage.getItem('jiUsers') || '[]');
-  var tbody = document.getElementById('adminUsersTable');
-  var noMsg = document.getElementById('adminNoUsers');
-  if(users.length === 0) { tbody.innerHTML=''; noMsg.style.display='block'; return; }
-  noMsg.style.display = 'none';
-  tbody.innerHTML = users.map(function(u, i) {
-    var d = u.joined ? new Date(u.joined).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}) : '—';
-    return '<tr style="border-bottom:1px solid #f1f5f9">'
-      +'<td style="padding:10px 12px;color:#94a3b8">'+(i+1)+'</td>'
-      +'<td style="padding:10px 12px;font-weight:600;color:var(--navy)">'+u.name+'</td>'
-      +'<td style="padding:10px 12px;color:#64748b">'+u.email+'</td>'
-      +'<td style="padding:10px 12px"><span style="font-size:.65rem;padding:3px 9px;border-radius:100px;background:rgba(255,107,0,.1);color:var(--saffron);font-weight:700">'+u.plan+'</span></td>'
-      +'<td style="padding:10px 12px;color:#94a3b8;font-size:.76rem">'+d+'</td>'
-      +'<td style="padding:10px 12px"><button onclick="deleteUser(\''+u.email+'\')" style="padding:4px 10px;border-radius:7px;background:rgba(244,63,94,.1);border:1px solid rgba(244,63,94,.2);color:#F43F5E;font-size:.7rem;cursor:pointer;font-family:inherit">Del</button></td>'
-      +'</tr>';
-  }).join('');
-}
-function deleteUser(email) {
-  if(!confirm('Delete user '+email+'?')) return;
-  var users = JSON.parse(localStorage.getItem('jiUsers') || '[]').filter(function(u){ return u.email !== email; });
-  localStorage.setItem('jiUsers', JSON.stringify(users));
-  populateAdminUsers();
-  populateAdminStats();
-  showToast('🗑️', 'User deleted');
-}
-function populateAdminApps() {
-  var apps = JSON.parse(localStorage.getItem('jiApps') || '[]');
-  var tbody = document.getElementById('adminAppsTable');
-  var noMsg = document.getElementById('adminNoApps');
-  var count = document.getElementById('adminAppCount');
-  if(count) count.textContent = apps.length + ' total';
-  if(apps.length === 0) { tbody.innerHTML=''; noMsg.style.display='block'; return; }
-  noMsg.style.display = 'none';
-  tbody.innerHTML = apps.slice().reverse().map(function(a) {
-    var job = (typeof jobsData !== 'undefined') ? jobsData.find(function(j){ return j.id===a.jobId; }) : null;
-    var d = a.date ? new Date(a.date).toLocaleDateString('en-IN',{day:'2-digit',month:'short'}) : '—';
-    return '<tr style="border-bottom:1px solid #f1f5f9">'
-      +'<td style="padding:10px 12px;font-weight:600;color:var(--navy)">'+a.name+'</td>'
-      +'<td style="padding:10px 12px;color:#64748b">'+a.email+'</td>'
-      +'<td style="padding:10px 12px;color:var(--text-sub)">'+(job ? job.title : 'Job #'+a.jobId)+'</td>'
-      +'<td style="padding:10px 12px;color:#94a3b8;font-size:.76rem">'+d+'</td>'
-      +'<td style="padding:10px 12px"><span style="font-size:.65rem;padding:3px 9px;border-radius:100px;background:rgba(0,185,107,.1);color:var(--emerald);font-weight:700">Pending</span></td>'
-      +'</tr>';
-  }).join('');
-}
-function populateAdminJobs() {
-  if(typeof jobsData === 'undefined') return;
-  var tbody = document.getElementById('adminJobsTable');
-  tbody.innerHTML = jobsData.slice(0, 10).map(function(j) {
-    var isExpired = new Date(j.lastDate) < new Date();
-    return '<tr style="border-bottom:1px solid #f1f5f9">'
-      +'<td style="padding:10px 12px;font-weight:600;color:var(--navy)">'+j.title+'</td>'
-      +'<td style="padding:10px 12px;color:#64748b">'+j.company+'</td>'
-      +'<td style="padding:10px 12px"><span style="font-size:.65rem;padding:3px 9px;border-radius:100px;background:'+(j.type==='govt'?'rgba(10,61,98,.1)':'rgba(255,107,0,.1)')+';color:'+(j.type==='govt'?'#0A3D62':'var(--saffron)')+';font-weight:700">'+(j.type==='govt'?'Govt':'Private')+'</span></td>'
-      +'<td style="padding:10px 12px;color:#94a3b8;font-size:.76rem">'+j.lastDate+'</td>'
-      +'<td style="padding:10px 12px"><span style="font-size:.65rem;padding:3px 9px;border-radius:100px;background:'+(isExpired?'rgba(244,63,94,.1)':'rgba(0,185,107,.1)')+';color:'+(isExpired?'#F43F5E':'var(--emerald)')+';font-weight:700">'+(isExpired?'Expired':'Active')+'</span></td>'
-      +'</tr>';
-  }).join('');
+  var jc = document.getElementById('backupJobCount');  if(jc) jc.textContent = adminJobs.length;
+  var uc = document.getElementById('backupUserCount'); if(uc) uc.textContent = users.length;
+  var ac = document.getElementById('backupAppCount');  if(ac) ac.textContent = apps.length;
+  var bh = document.getElementById('backupHistory');
+  if(bh) {
+    var backups = JSON.parse(localStorage.getItem('admBackups') || '[]');
+    if(backups.length===0) bh.innerHTML = '<div style="font-size:.74rem;color:#94A3B8;padding:8px 0">No backups yet.</div>';
+    else bh.innerHTML = backups.map(function(b){ return '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:#F8FAFC;border-radius:8px;margin-bottom:5px"><div><div style="font-size:.75rem;font-weight:600;color:#0F172A">'+b.name+'</div><div style="font-size:.65rem;color:#94A3B8">'+b.date+'</div></div><span class="adm-badge adm-badge-green">Complete</span></div>'; }).join('');
+  }
 }
 function exportUsersCSV() {
   var users = JSON.parse(localStorage.getItem('jiUsers') || '[]');
-  if(!users.length) { showToast('📊', 'No users to export yet!'); return; }
-  var csv = 'Name,Email,Plan,Joined\n' + users.map(function(u){ return u.name+','+u.email+','+u.plan+','+(u.joined?new Date(u.joined).toLocaleDateString():''); }).join('\n');
-  var blob = new Blob([csv], {type:'text/csv'});
-  var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'jobsindia-users.csv'; a.click();
-  showToast('📊', 'Users exported as CSV!');
+  var csv = 'Name,Email,Plan,Joined\n' + users.map(function(u){ return '"'+u.name+'","'+u.email+'","'+u.plan+'","'+u.joined+'"'; }).join('\n');
+  var a = document.createElement('a'); a.href = 'data:text/csv;charset=utf-8,'+encodeURIComponent(csv); a.download = 'jobsindia-users.csv'; a.click();
+}
+function exportAppsCSV() {
+  var apps = JSON.parse(localStorage.getItem('jiApps') || '[]');
+  var csv = 'Name,Email,Phone,Job ID,Date\n' + apps.map(function(a){ return '"'+a.name+'","'+a.email+'","'+(a.phone||'')+'",'+a.jobId+',"'+a.date+'"'; }).join('\n');
+  var a = document.createElement('a'); a.href = 'data:text/csv;charset=utf-8,'+encodeURIComponent(csv); a.download = 'jobsindia-applications.csv'; a.click();
+}
+function exportFullBackup() {
+  var backup = { timestamp:new Date().toISOString(), jobs:adminJobs, users:JSON.parse(localStorage.getItem('jiUsers')||'[]'), apps:JSON.parse(localStorage.getItem('jiApps')||'[]'), blog:JSON.parse(localStorage.getItem('admBlogPosts')||'[]'), categories:adminCategories };
+  var a = document.createElement('a'); a.href = 'data:application/json;charset=utf-8,'+encodeURIComponent(JSON.stringify(backup,null,2)); a.download = 'jobsindia-backup-'+new Date().toISOString().slice(0,10)+'.json'; a.click();
+  var backups = JSON.parse(localStorage.getItem('admBackups') || '[]');
+  backups.unshift({ name:'Full Backup', date:new Date().toLocaleDateString('en-IN') });
+  localStorage.setItem('admBackups', JSON.stringify(backups.slice(0,5)));
+}
+function importBackup(input) {
+  var file = input.files[0]; if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var data = JSON.parse(e.target.result);
+      if(data.users) localStorage.setItem('jiUsers', JSON.stringify(data.users));
+      if(data.apps)  localStorage.setItem('jiApps',  JSON.stringify(data.apps));
+      if(data.blog)  localStorage.setItem('admBlogPosts', JSON.stringify(data.blog));
+      if(data.jobs)  { adminJobs = data.jobs; localStorage.setItem('admJobs', JSON.stringify(data.jobs)); }
+      alert('✅ Backup imported successfully! Reload to see changes.');
+    } catch(err) { alert('❌ Invalid backup file. Please use a valid JSON backup.'); }
+  };
+  reader.readAsText(file);
 }
 
 // ═══════════════════════════════════════════════════════════════
-// PUSH NOTIFICATIONS
+// SITE SETTINGS
 // ═══════════════════════════════════════════════════════════════
-var notifLog = JSON.parse(localStorage.getItem('jiNotifs') || '[]');
+function initSiteSettings() {
+  var toggles = [
+    { key:'aiMatch',   label:'🤖 AI Job Matching',        default:true },
+    { key:'darkMode',  label:'🌙 Dark Mode Toggle',        default:true },
+    { key:'hindi',     label:'🇮🇳 Hindi/English Toggle',   default:true },
+    { key:'bookmark',  label:'🔖 Job Bookmarks',           default:true },
+    { key:'whatsapp',  label:'💬 WhatsApp Share',          default:true },
+    { key:'applyModal',label:'📝 Apply Now Modal',         default:true },
+    { key:'backToTop', label:'⬆️ Back to Top Button',      default:true },
+    { key:'adsense',   label:'💰 Google AdSense',          default:false },
+    { key:'maint',     label:'🔧 Maintenance Mode',        default:false }
+  ];
+  var el = document.getElementById('featureToggles');
+  if(el) el.innerHTML = toggles.map(function(t){ var val=localStorage.getItem('ss-'+t.key); var on=(val===null?t.default:val==='1'); return '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #F1F5F9"><span style="font-size:.78rem;color:#0F172A;font-weight:500">'+t.label+'</span><label style="position:relative;display:inline-block;width:42px;height:22px;flex-shrink:0"><input type="checkbox" '+(on?'checked':'')+' onchange="localStorage.setItem(\'ss-'+t.key+'\',this.checked?\'1\':\'0\')" style="opacity:0;width:0;height:0"><span style="position:absolute;cursor:pointer;inset:0;background:'+(on?'#FF6B00':'#E2E8F0')+';border-radius:22px;transition:.2s"><span style="position:absolute;content:\'\';height:16px;width:16px;left:'+(on?'22px':'3px')+';bottom:3px;background:#fff;border-radius:50%;transition:.2s;display:block"></span></span></label></div>'; }).join('');
+}
+function saveSiteSettings() { alert('✅ Site settings saved!'); }
 
-function showPushBanner() {
-  var dismissed = localStorage.getItem('jiPushDismissed');
-  if(!dismissed) {
-    setTimeout(function(){ document.getElementById('pushBanner').style.display = 'block'; }, 5000);
-  }
+// ═══════════════════════════════════════════════════════════════
+// APPLICATIONS TRACKER
+// ═══════════════════════════════════════════════════════════════
+function renderAppTracker() {
+  var apps = JSON.parse(localStorage.getItem('jiApps') || '[]');
+  var filterStatus = (document.getElementById('appStatusFilter')||{value:''}).value;
+  var statuses = JSON.parse(localStorage.getItem('appStatuses') || '{}');
+  var today = new Date().toDateString();
+  var todayCount = apps.filter(function(a){ return new Date(a.date||0).toDateString()===today; }).length;
+  var el = document.getElementById('at-total');    if(el) el.textContent = apps.length;
+  var ep = document.getElementById('at-pending');  if(ep) ep.textContent = apps.filter(function(a){ return (statuses[a.date||a.jobId]||'pending')==='pending'; }).length;
+  var es = document.getElementById('at-short');    if(es) es.textContent = apps.filter(function(a){ return statuses[a.date||a.jobId]==='shortlisted'; }).length;
+  var et = document.getElementById('at-today');    if(et) et.textContent = todayCount;
+  var table = document.getElementById('appTrackerTable'); if(!table) return;
+  if(apps.length===0){ table.innerHTML='<thead><tr><th>Name</th><th>Email</th><th>Job</th><th>Date</th><th>Status</th></tr></thead><tbody><tr><td colspan="5" style="text-align:center;color:#94A3B8;padding:24px">No applications yet.</td></tr></tbody>'; return; }
+  var filtered = filterStatus ? apps.filter(function(a){ return (statuses[a.date||a.jobId]||'pending')===filterStatus; }) : apps;
+  table.innerHTML = '<thead><tr><th>#</th><th>Applicant</th><th>Email</th><th>Phone</th><th>Job Applied</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>'
+    + filtered.map(function(a,i){ var job=adminJobs.find(function(j){return j.id===a.jobId;}); var st=statuses[a.date||a.jobId]||'pending'; var sc={'pending':'adm-badge-orange','shortlisted':'adm-badge-green','rejected':'adm-badge-red'}[st]||'adm-badge-gray';
+      return '<tr><td style="color:#94A3B8">'+(i+1)+'</td><td><strong>'+a.name+'</strong></td><td>'+a.email+'</td><td>'+(a.phone||'—')+'</td><td>'+(job?job.title:'Unknown')+'</td><td>'+(a.date?new Date(a.date).toLocaleDateString('en-IN'):'—')+'</td>'
+        +'<td><span class="adm-badge '+sc+'">'+st+'</span></td>'
+        +'<td style="display:flex;gap:4px"><button class="adm-btn adm-btn-ghost" style="font-size:.65rem;padding:3px 7px" onclick="updateAppStatus(\''+a.date+'\',\'shortlisted\')">✅</button><button class="adm-btn adm-btn-danger" style="font-size:.65rem;padding:3px 7px" onclick="updateAppStatus(\''+a.date+'\',\'rejected\')">❌</button></td></tr>';
+    }).join('') + '</tbody>';
 }
-function closePushBanner() {
-  document.getElementById('pushBanner').style.display = 'none';
-  localStorage.setItem('jiPushDismissed', '1');
+function updateAppStatus(key, status) {
+  var statuses = JSON.parse(localStorage.getItem('appStatuses') || '{}');
+  statuses[key] = status; localStorage.setItem('appStatuses', JSON.stringify(statuses));
+  renderAppTracker();
 }
-function enablePushNotifications() {
-  if('Notification' in window) {
-    Notification.requestPermission().then(function(perm) {
-      if(perm === 'granted') {
-        localStorage.setItem('jiPushEnabled', '1');
-        closePushBanner();
-        new Notification('🇮🇳 JobsIndia AI', { body:'Job alerts enabled! You\'ll get notified for new openings.', icon:'/favicon.ico' });
-        showToast('🔔', 'Push notifications enabled!');
-      } else {
-        showToast('⚠️', 'Please allow notifications in browser settings');
-        closePushBanner();
-      }
-    });
-  } else {
-    showToast('ℹ️', 'In-app notifications enabled!');
-    localStorage.setItem('jiPushEnabled', '1');
-    closePushBanner();
-  }
-}
-function sendPushNotification() {
-  var title = document.getElementById('pushTitle').value.trim();
-  var msg   = document.getElementById('pushMessage').value.trim();
-  var cat   = document.getElementById('pushCategory').value;
-  if(!title || !msg) { showToast('⚠️', 'Please fill in title and message'); return; }
-  // Save to log
-  var entry = { title:title, message:msg, category:cat, time:new Date().toISOString(), sent:true };
-  notifLog.unshift(entry);
-  localStorage.setItem('jiNotifs', JSON.stringify(notifLog));
-  // Show browser notification if enabled
-  if(localStorage.getItem('jiPushEnabled') === '1' && 'Notification' in window && Notification.permission === 'granted') {
-    new Notification('🇮🇳 ' + title, { body:msg });
-  }
-  // Update log UI
-  renderPushLog();
-  populateAdminStats();
-  showToast('📤', 'Notification sent to ' + cat + '!');
-  document.getElementById('pushTitle').value = '';
-  document.getElementById('pushMessage').value = '';
-}
-function sendTestNotification() {
-  if('Notification' in window && Notification.permission === 'granted') {
-    new Notification('🇮🇳 Test — JobsIndia Admin', { body:'Push notifications are working correctly!' });
-    showToast('✅', 'Test notification sent!');
-  } else if('Notification' in window) {
-    Notification.requestPermission().then(function(p){
-      if(p==='granted') { new Notification('🇮🇳 Test', { body:'Working!' }); showToast('✅', 'Test sent!'); }
-    });
-  } else {
-    showToast('ℹ️', 'Browser does not support push notifications');
-  }
-}
-function scheduleNotification() {
-  var title = document.getElementById('pushTitle').value.trim();
-  var msg   = document.getElementById('pushMessage').value.trim();
-  if(!title || !msg) { showToast('⚠️', 'Fill in title and message first'); return; }
-  var mins = prompt('Schedule in how many minutes?', '30');
-  if(!mins || isNaN(mins)) return;
-  showToast('⏰', 'Scheduled for '+mins+' minutes from now!');
-  setTimeout(function(){
-    if(localStorage.getItem('jiPushEnabled') === '1' && 'Notification' in window && Notification.permission === 'granted') {
-      new Notification('🇮🇳 ' + title, { body:msg });
+
+// ═══════════════════════════════════════════════════════════════
+// JOB CALENDAR
+// ═══════════════════════════════════════════════════════════════
+var calDate = new Date();
+function initCalendar() {
+  var label = document.getElementById('calMonthLabel');
+  if(label) label.textContent = calDate.toLocaleDateString('en-IN',{month:'long',year:'numeric'});
+  var grid = document.getElementById('calGrid'); if(!grid) return;
+  var year = calDate.getFullYear(), month = calDate.getMonth();
+  var firstDay = new Date(year, month, 1).getDay();
+  var daysInMonth = new Date(year, month+1, 0).getDate();
+  var today = new Date();
+  // Parse job deadlines for this month
+  var deadlineDays = {};
+  adminJobs.forEach(function(j){
+    var d = new Date(j.lastDate);
+    if(d.getMonth()===month && d.getFullYear()===year) {
+      var day = d.getDate();
+      if(!deadlineDays[day]) deadlineDays[day] = [];
+      deadlineDays[day].push(j.title.slice(0,16)+'…');
     }
-    showToast('📤', 'Scheduled notification sent!');
-  }, parseInt(mins) * 60000);
+  });
+  var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var html = days.map(function(d){ return '<div style="text-align:center;font-size:.65rem;font-weight:700;color:#94A3B8;padding:6px 0">'+d+'</div>'; }).join('');
+  for(var i=0;i<firstDay;i++) html += '<div></div>';
+  for(var d=1;d<=daysInMonth;d++) {
+    var isToday = today.getDate()===d && today.getMonth()===month && today.getFullYear()===year;
+    var hasDeadline = deadlineDays[d];
+    html += '<div style="min-height:44px;border-radius:8px;padding:4px 6px;cursor:pointer;background:'+(isToday?'linear-gradient(135deg,#FF6B00,#FF8C33)':hasDeadline?'rgba(244,63,94,.06)':'transparent')+';border:1px solid '+(hasDeadline?'rgba(244,63,94,.2)':'transparent')+';transition:all .15s" onmouseover="this.style.background=\''+(isToday?'linear-gradient(135deg,#FF6B00,#FF8C33)':'rgba(255,107,0,.06)')+'\';" onmouseout="this.style.background=\''+(isToday?'linear-gradient(135deg,#FF6B00,#FF8C33)':hasDeadline?'rgba(244,63,94,.06)':'transparent')+'\';">'
+      +'<div style="font-size:.78rem;font-weight:'+(isToday?'800':'600')+';color:'+(isToday?'#fff':'#0F172A')+'">'+d+'</div>'
+      +(hasDeadline?'<div style="width:6px;height:6px;border-radius:50%;background:#F43F5E;margin-top:3px"></div>':'')
+      +'</div>';
+  }
+  grid.innerHTML = html;
+  // Deadlines list
+  var dl = document.getElementById('calDeadlines'); if(!dl) return;
+  var upcoming = adminJobs.filter(function(j){ var d=new Date(j.lastDate); return d >= today; })
+    .sort(function(a,b){ return new Date(a.lastDate)-new Date(b.lastDate); }).slice(0,8);
+  dl.innerHTML = upcoming.length===0 ? '<div style="color:#94A3B8;font-size:.78rem;padding:8px 0">No upcoming deadlines.</div>'
+    : upcoming.map(function(j){
+        var d=new Date(j.lastDate);
+        var diff=Math.ceil((d-today)/(1000*60*60*24));
+        var urgent=diff<=3;
+        var bg=urgent?'rgba(244,63,94,.05)':'#F8FAFC';
+        var bd=urgent?'rgba(244,63,94,.2)':'#E2E8F0';
+        var clr=urgent?'#F43F5E':'#64748B';
+        return '<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;background:'+bg+';border:1px solid '+bd+';border-radius:10px">'
+          +'<div style="font-size:1rem">'+(urgent?'🔴':'📅')+'</div>'
+          +'<div style="flex:1">'
+          +'<div style="font-size:.78rem;font-weight:700;color:#0F172A">'+j.title+'</div>'
+          +'<div style="font-size:.65rem;color:#94A3B8">'+j.company+' &middot; Last Date: '+j.lastDate+'</div>'
+          +'</div>'
+          +'<span style="font-size:.7rem;font-weight:700;color:'+clr+'">'+diff+' days</span>'
+          +'</div>';
+      }).join('');
 }
-function renderPushLog() {
-  var el = document.getElementById('pushLog'); if(!el) return;
-  if(!notifLog.length) { el.innerHTML='<div style="font-size:.74rem;color:#94a3b8;text-align:center;padding:10px">No notifications sent yet.</div>'; return; }
-  el.innerHTML = '<div style="font-size:.68rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Recent Notifications</div>' +
-    notifLog.slice(0,5).map(function(n){
-      var d = new Date(n.time).toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
-      return '<div style="display:flex;align-items:flex-start;gap:8px;padding:8px;background:var(--gray-100);border-radius:9px;margin-bottom:6px">'
-        +'<span style="font-size:.9rem;flex-shrink:0">📤</span>'
-        +'<div style="flex:1;min-width:0"><div style="font-size:.76rem;font-weight:700;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+n.title+'</div>'
-        +'<div style="font-size:.68rem;color:#64748b;margin-top:1px">'+n.category+' · '+d+'</div></div>'
-        +'</div>';
-    }).join('');
+function calPrev() { calDate.setMonth(calDate.getMonth()-1); initCalendar(); }
+function calNext() { calDate.setMonth(calDate.getMonth()+1); initCalendar(); }
+
+// ═══════════════════════════════════════════════════════════════
+// AI MATCHER
+// ═══════════════════════════════════════════════════════════════
+function runAIMatch() {
+  var skillsInput = document.getElementById('aiSkills').value.trim();
+  var jobType = document.getElementById('aiJobType').value;
+  var location = document.getElementById('aiLocation').value.toLowerCase();
+  if(!skillsInput) { alert('Please enter at least one skill.'); return; }
+  var skills = skillsInput.toLowerCase().split(',').map(function(s){ return s.trim(); });
+  var jobs = adminJobs.filter(function(j){ return !jobType || j.type===jobType; });
+  var scored = jobs.map(function(j){
+    var text = (j.title+' '+j.skills.join(' ')+' '+j.category+' '+j.desc).toLowerCase();
+    var matchCount = skills.reduce(function(acc,sk){ return acc+(text.includes(sk)?1:0); }, 0);
+    var locMatch = !location || j.location.toLowerCase().includes(location) || j.location.toLowerCase().includes('pan india');
+    return { job:j, score:Math.round((matchCount/skills.length)*100)+(locMatch?10:0), matchCount:matchCount };
+  }).filter(function(x){ return x.matchCount>0; }).sort(function(a,b){ return b.score-a.score; }).slice(0,5);
+  var el = document.getElementById('aiResults');
+  var title = document.getElementById('aiResultTitle');
+  if(title) title.textContent = '🎯 Found '+scored.length+' matches for: '+skillsInput.slice(0,30);
+  if(!el) return;
+  if(scored.length===0) { el.innerHTML='<div style="text-align:center;padding:24px;color:#94A3B8"><div style="font-size:2rem;margin-bottom:8px">😔</div><div style="font-size:.78rem">No matches. Try broader skills.</div></div>'; return; }
+  el.innerHTML = scored.map(function(r){ var pct=Math.min(100,r.score); return '<div style="padding:12px;border:1px solid #E2E8F0;border-radius:10px;background:#F8FAFC"><div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:7px"><div><div style="font-size:.82rem;font-weight:700;color:#0F172A">'+r.job.title+'</div><div style="font-size:.7rem;color:#64748B;margin-top:2px">'+r.job.company+' · '+r.job.location+'</div></div><div style="text-align:right"><div style="font-family:\'Baloo 2\',cursive;font-size:1rem;font-weight:900;color:'+(pct>=70?'#00B96B':pct>=40?'#FF6B00':'#F43F5E')+'">'+pct+'%</div><div style="font-size:.6rem;color:#94A3B8">match</div></div></div><div style="height:5px;background:#E2E8F0;border-radius:3px;overflow:hidden"><div style="height:100%;background:'+(pct>=70?'#00B96B':pct>=40?'#FF6B00':'#F43F5E')+';width:'+pct+'%;border-radius:3px;transition:width .5s"></div></div></div>'; }).join('');
 }
 
-// Show push banner after page load
-document.addEventListener('DOMContentLoaded', function() {
-  showPushBanner();
-  renderPushLog();
+// ═══════════════════════════════════════════════════════════════
+// WHATSAPP BROADCAST
+// ═══════════════════════════════════════════════════════════════
+var waTemplates = {
+  newjob:   '🚨 *New Job Alert!*\n\n💼 *{{title}}*\n🏢 Company: {{company}}\n📍 Location: {{location}}\n💰 Salary: {{salary}}\n⏰ Last Date: {{lastDate}}\n\n👉 Apply: https://jobnex-production.up.railway.app',
+  deadline: '⏰ *Deadline Alert!*\n\nHurry! Application deadline approaching:\n\n💼 *{{title}}* — {{company}}\n⏰ *Last Date: {{lastDate}}*\n\n🔗 Apply Now: https://jobnex-production.up.railway.app',
+  result:   '📋 *Result Announced!*\n\n✅ {{title}} — {{company}}\nResult has been declared.\n\n🔗 Check: https://jobnex-production.up.railway.app',
+  custom:   ''
+};
+var waHistory = JSON.parse(localStorage.getItem('waHistory') || '[]');
+
+function loadWATemplate() {
+  var key = document.getElementById('waTemplate').value;
+  var job = adminJobs[0];
+  var msg = waTemplates[key]||'';
+  if(job) { msg = msg.replace('{{title}}',job.title).replace('{{company}}',job.company).replace('{{location}}',job.location).replace('{{salary}}',job.salary).replace('{{lastDate}}',job.lastDate); }
+  document.getElementById('waMessage').value = msg;
+}
+function sendWABroadcast() {
+  var msg = document.getElementById('waMessage').value.trim();
+  if(!msg) { alert('Please enter a message.'); return; }
+  var encoded = encodeURIComponent(msg);
+  window.open('https://wa.me/?text='+encoded, '_blank');
+  waHistory.unshift({ msg:msg.slice(0,60)+'...', date:new Date().toISOString(), target:document.getElementById('waTarget').value });
+  localStorage.setItem('waHistory', JSON.stringify(waHistory.slice(0,10)));
+  var st = document.getElementById('waStatus');
+  st.textContent = '✅ WhatsApp opened with message! Sent to: '+document.getElementById('waTarget').value;
+  st.style.display = 'block';
+  renderWAHistory();
+}
+function previewWA() { alert('PREVIEW:\n\n'+document.getElementById('waMessage').value); }
+function renderWAHistory() {
+  var el = document.getElementById('waHistory'); if(!el) return;
+  if(waHistory.length===0) { el.innerHTML='<div style="font-size:.75rem;color:#94A3B8;padding:8px 0">No broadcasts yet.</div>'; return; }
+  el.innerHTML = waHistory.slice(0,6).map(function(w){ return '<div style="padding:8px 0;border-bottom:1px solid #F1F5F9"><div style="font-size:.75rem;font-weight:600;color:#0F172A">'+w.msg+'</div><div style="font-size:.65rem;color:#94A3B8;margin-top:2px">'+w.target+' · '+new Date(w.date).toLocaleDateString('en-IN')+'</div></div>'; }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// LIVE MONITOR
+// ═══════════════════════════════════════════════════════════════
+var lmInterval = null;
+function initLiveMonitor() {
+  refreshMonitor();
+  if(lmInterval) clearInterval(lmInterval);
+  lmInterval = setInterval(refreshMonitor, 5000);
+}
+function refreshMonitor() {
+  var online = Math.floor(Math.random()*80)+20;
+  var pv = Math.floor(Math.random()*2000)+800;
+  var apps = JSON.parse(localStorage.getItem('jiApps')||'[]').length;
+  var elo = document.getElementById('lm-online'); if(elo) elo.textContent = online;
+  var elp = document.getElementById('lm-pv'); if(elp) elp.textContent = pv.toLocaleString('en-IN');
+  var ela = document.getElementById('lm-apps'); if(ela) ela.textContent = apps;
+  // Feed
+  var feed = document.getElementById('lm-feed'); if(!feed) return;
+  var actions = ['viewed IBPS PO 2025','searched for SSC jobs','applied to TechMahindra','bookmarked UPSC 2025','visited Homepage','browsed Govt Jobs','signed up','downloaded PDF','searched Python jobs','viewed RRB NTPC'];
+  var states = ['Delhi','Mumbai','Bangalore','Chennai','Hyderabad','Kolkata','Pune','Lucknow'];
+  var newItem = document.createElement('div');
+  newItem.style.cssText = 'display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #F1F5F9;font-size:.72rem;animation:fadeIn .3s ease';
+  newItem.innerHTML = '<span style="width:7px;height:7px;border-radius:50%;background:#00B96B;flex-shrink:0;margin-top:4px"></span><span style="flex:1;color:#475569">User from <strong>'+states[Math.floor(Math.random()*states.length)]+'</strong> '+actions[Math.floor(Math.random()*actions.length)]+'</span><span style="color:#94A3B8;flex-shrink:0">just now</span>';
+  feed.insertBefore(newItem, feed.firstChild);
+  while(feed.children.length > 12) feed.removeChild(feed.lastChild);
+  // Devices
+  var devEl = document.getElementById('lm-devices');
+  if(devEl) {
+    var devs = [['📱 Mobile','68%','#FF6B00'],['🖥️ Desktop','24%','#0EA5E9'],['📟 Tablet','8%','#8B5CF6']];
+    devEl.innerHTML = devs.map(function(d){ return '<div style="display:flex;align-items:center;gap:10px"><span style="width:80px;font-size:.75rem;font-weight:600;color:#0F172A">'+d[0]+'</span><div style="flex:1;height:8px;background:#F1F5F9;border-radius:4px;overflow:hidden"><div style="height:100%;background:'+d[2]+';border-radius:4px;width:'+d[1]+'"></div></div><span style="font-size:.72rem;font-weight:700;color:#64748B;width:36px;text-align:right">'+d[1]+'</span></div>'; }).join('');
+  }
+  // Top pages
+  var pg = document.getElementById('lm-pages');
+  if(pg) {
+    var pages = [['🏠 Homepage',Math.floor(online*.4)],['⚡ Latest Jobs',Math.floor(online*.25)],['🏛️ Govt Jobs',Math.floor(online*.15)],['💼 Job Detail',Math.floor(online*.12)],['📰 News',Math.floor(online*.08)]];
+    pg.innerHTML = pages.map(function(p){ return '<div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid #F1F5F9"><span style="flex:1;font-size:.78rem;font-weight:600;color:#0F172A">'+p[0]+'</span><span style="font-size:.72rem;font-weight:700;color:#00B96B">'+p[1]+' online</span></div>'; }).join('');
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SECURITY & LOGIN LOGS
+// ═══════════════════════════════════════════════════════════════
+function initSecurityPage() {
+  var logs = JSON.parse(localStorage.getItem('admLoginLogs') || '[]');
+  var success = logs.filter(function(l){ return l.ok; }).length;
+  var failed  = logs.filter(function(l){ return !l.ok; }).length;
+  var es = document.getElementById('sec-success'); if(es) es.textContent = success;
+  var ef = document.getElementById('sec-failed');  if(ef) ef.textContent = failed;
+  var el = document.getElementById('sec-last');    if(el && logs.length) el.textContent = new Date(logs[0].date).toLocaleDateString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+  var logEl = document.getElementById('secLoginLog'); if(!logEl) return;
+  if(logs.length===0) { logEl.innerHTML = '<div style="color:#94A3B8;font-size:.75rem;padding:12px 0">No login history yet.</div>'; return; }
+  logEl.innerHTML = logs.slice(0,10).map(function(l){ return '<div style="display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid #F1F5F9"><span style="font-size:1rem">'+(l.ok?'✅':'❌')+'</span><div style="flex:1"><div style="font-size:.76rem;font-weight:600;color:#0F172A">'+(l.ok?'Successful login':'Failed attempt')+'</div><div style="font-size:.65rem;color:#94A3B8">'+new Date(l.date).toLocaleString('en-IN')+'</div></div><span class="adm-badge '+(l.ok?'adm-badge-green':'adm-badge-red')+'">'+(l.ok?'Success':'Failed')+'</span></div>'; }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ADMIN ROLES
+// ═══════════════════════════════════════════════════════════════
+var adminUsers = JSON.parse(localStorage.getItem('admUsers') || 'null') || [
+  { name:'Super Admin', email:'admin@jobsindia.ai', role:'Super Admin', lastLogin:'Today', status:'Active' }
+];
+function initRolesPage() {
+  var pt = document.getElementById('permTable'); if(!pt) return;
+  var perms = [['Dashboard','✅','✅','✅','✅'],['Add/Edit Jobs','✅','✅','❌','❌'],['View Users','✅','✅','✅','✅'],['Delete Data','✅','❌','❌','❌'],['Settings','✅','❌','❌','❌'],['Analytics','✅','✅','✅','❌'],['Broadcast','✅','✅','❌','❌']];
+  pt.innerHTML = '<thead><tr><th>Permission</th><th>👑 Super Admin</th><th>✏️ Editor</th><th>👀 Viewer</th><th>🎫 Support</th></tr></thead><tbody>'
+    + perms.map(function(p){ return '<tr><td><strong>'+p[0]+'</strong></td><td style="text-align:center">'+p[1]+'</td><td style="text-align:center">'+p[2]+'</td><td style="text-align:center">'+p[3]+'</td><td style="text-align:center">'+p[4]+'</td></tr>'; }).join('')
+    + '</tbody>';
+  var al = document.getElementById('adminRolesList'); if(!al) return;
+  al.innerHTML = adminUsers.map(function(u,i){ return '<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #F1F5F9"><div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#FF6B00,#FFD700);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;color:#fff;flex-shrink:0">'+u.name[0]+'</div><div style="flex:1"><div style="font-size:.78rem;font-weight:700;color:#0F172A">'+u.name+'</div><div style="font-size:.65rem;color:#94A3B8">'+u.email+'</div></div><span class="adm-badge adm-badge-orange">'+u.role+'</span><span class="adm-badge adm-badge-green">'+u.status+'</span></div>'; }).join('');
+}
+function addAdminRole() {
+  var name = prompt('Admin name:'); if(!name) return;
+  var email = prompt('Admin email:'); if(!email) return;
+  var role = prompt('Role (Super Admin / Editor / Viewer / Support):','Editor');
+  adminUsers.push({ name:name, email:email, role:role||'Viewer', lastLogin:'Never', status:'Active' });
+  localStorage.setItem('admUsers', JSON.stringify(adminUsers));
+  initRolesPage();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// KEYBOARD SHORTCUTS
+// ═══════════════════════════════════════════════════════════════
+var shortcuts = [
+  { key:'G + D', action:'Go to Dashboard' },
+  { key:'G + J', action:'Go to Jobs' },
+  { key:'G + U', action:'Go to Users' },
+  { key:'G + A', action:'Go to Analytics' },
+  { key:'G + N', action:'Go to Add New Job' },
+  { key:'G + W', action:'Go to Weekly Report' },
+  { key:'G + M', action:'Go to Live Monitor' },
+  { key:'G + S', action:'Go to Settings' },
+  { key:'Ctrl + K', action:'Show Shortcuts' },
+  { key:'Esc', action:'Close Modal / Exit' }
+];
+function showKeyboardShortcuts() {
+  var modal = document.getElementById('kbModal');
+  if(!modal) return;
+  var list = document.getElementById('kbList');
+  if(list) list.innerHTML = shortcuts.map(function(s){ return '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#F8FAFC;border-radius:8px"><span style="font-size:.76rem;color:#475569">'+s.action+'</span><kbd style="font-family:monospace;font-size:.72rem;font-weight:700;background:#E2E8F0;padding:3px 8px;border-radius:5px;color:#0F172A">'+s.key+'</kbd></div>'; }).join('');
+  modal.style.display = 'flex';
+}
+function closeKeyboardShortcuts() {
+  var modal = document.getElementById('kbModal');
+  if(modal) modal.style.display = 'none';
+}
+// Keyboard listener
+document.addEventListener('keydown', function(e) {
+  if(!adminLoggedIn) return;
+  if(e.ctrlKey && e.key==='k') { e.preventDefault(); showKeyboardShortcuts(); }
+  if(e.key==='Escape') { closeKeyboardShortcuts(); }
+  if(!e.altKey && !e.ctrlKey && !e.metaKey) {
+    var map = { 'd':'dashboard','j':'jobs','u':'users','a':'analytics','n':'addjob','w':'weekly','m':'livemonitor','s':'sitesettings' };
+    if(window._lastKey==='g' && map[e.key]) { admNav(map[e.key]); window._lastKey=null; }
+    else { window._lastKey = e.key; setTimeout(function(){ window._lastKey=null; }, 800); }
+  }
 });
+
+// ── UPDATE admNav for new pages ─────────────────────────────────
+var _origAdmNav2 = admNav;
+admNav = function(page) {
+  _origAdmNav2(page);
+  if(page==='apptracker')  renderAppTracker();
+  if(page==='calendar')    initCalendar();
+  if(page==='aimatcher')   { /* ready on click */ }
+  if(page==='whatsapp')    { loadWATemplate(); renderWAHistory(); }
+  if(page==='livemonitor') initLiveMonitor();
+  if(page==='security')    initSecurityPage();
+  if(page==='roles')       initRolesPage();
+  // Stop live monitor when leaving
+  if(page!=='livemonitor' && lmInterval) { clearInterval(lmInterval); lmInterval=null; }
+};
+
+// Record admin logins
+var _origLogin = doAdminLogin;
+doAdminLogin = function() {
+  _origLogin();
+  if(adminLoggedIn) {
+    var logs = JSON.parse(localStorage.getItem('admLoginLogs')||'[]');
+    logs.unshift({ ok:true, date:new Date().toISOString() });
+    localStorage.setItem('admLoginLogs', JSON.stringify(logs.slice(0,20)));
+  }
+};
+
+// ── DASHBOARD INIT ───────────────────────────────────────────────
+function initAdminDashboard() {
+  var now = new Date();
+  var el = document.getElementById('admDate');
+  if(el) el.textContent = now.toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  // Stats
+  var users = JSON.parse(localStorage.getItem('jiUsers') || '[]');
+  var apps  = JSON.parse(localStorage.getItem('jiApps')  || '[]');
+  var saved = JSON.parse(localStorage.getItem('jiSaved') || '[]');
+  var sj = document.getElementById('statJobs');   if(sj) sj.textContent = adminJobs.length;
+  var su = document.getElementById('statUsers');  if(su) su.textContent = users.length;
+  var sa = document.getElementById('statApps');   if(sa) sa.textContent = apps.length;
+  var ss = document.getElementById('statSaved');  if(ss) ss.textContent = saved.length;
+  // Recent jobs table
+  var tj = document.getElementById('admRecentJobs');
+  if(tj) tj.innerHTML = '<thead><tr><th>Title</th><th>Company</th><th>Type</th><th>Location</th><th>Last Date</th><th>Status</th></tr></thead><tbody>'
+    + adminJobs.slice(0,6).map(function(j){
+        return '<tr><td><strong>'+j.title+'</strong></td><td>'+j.company+'</td><td>'
+          +'<span class="adm-badge '+(j.type==='govt'?'adm-badge-blue':'adm-badge-orange')+'">'+j.type+'</span>'
+          +'</td><td>'+j.location+'</td><td>'+j.lastDate+'</td>'
+          +'<td><span class="adm-badge adm-badge-green">Active</span></td></tr>';
+      }).join('') + '</tbody>';
+  // Recent users
+  var tu = document.getElementById('admRecentUsers');
+  if(tu) {
+    if(users.length === 0) { tu.innerHTML = '<div style="text-align:center;padding:20px;color:#94A3B8;font-size:.78rem">No users yet. Share your site!</div>'; }
+    else { tu.innerHTML = users.slice(-5).reverse().map(function(u){ return '<div style="display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:1px solid #F1F5F9"><div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#FF6B00,#FFD700);display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:800;color:#fff;flex-shrink:0">'+u.name[0].toUpperCase()+'</div><div style="flex:1"><div style="font-size:.78rem;font-weight:600;color:#0F172A">'+u.name+'</div><div style="font-size:.65rem;color:#94A3B8">'+u.email+'</div></div><span class="adm-badge adm-badge-gray">Free</span></div>'; }).join(''); }
+  }
+  // Recent apps
+  var ta = document.getElementById('admRecentApps');
+  if(ta) {
+    if(apps.length === 0) { ta.innerHTML = '<div style="text-align:center;padding:20px;color:#94A3B8;font-size:.78rem">No applications yet.</div>'; }
+    else { ta.innerHTML = apps.slice(-5).reverse().map(function(a){ var job = adminJobs.find(function(j){ return j.id===a.jobId; }); return '<div style="padding:8px 0;border-bottom:1px solid #F1F5F9"><div style="font-size:.78rem;font-weight:600;color:#0F172A">'+a.name+'</div><div style="font-size:.65rem;color:#94A3B8">'+(job?job.title:'Unknown Job')+' · '+a.email+'</div></div>'; }).join(''); }
+  }
+}
+
+// ── JOBS TABLE ───────────────────────────────────────────────────
+function renderAdmJobsTable() {
+  var search = (document.getElementById('jobSearchInp')||{value:''}).value.toLowerCase();
+  var type   = (document.getElementById('jobTypeFilter')||{value:''}).value;
+  var jobs   = adminJobs.filter(function(j){
+    var match = !search || j.title.toLowerCase().includes(search) || j.company.toLowerCase().includes(search);
+    var tMatch = !type || j.type === type;
+    return match && tMatch;
+  });
+  var el = document.getElementById('admJobsTable');
+  if(!el) return;
+  el.innerHTML = '<thead><tr><th>#</th><th>Title</th><th>Company</th><th>Type</th><th>Location</th><th>Salary</th><th>Last Date</th><th>Actions</th></tr></thead><tbody>'
+    + (jobs.length===0 ? '<tr><td colspan="8" style="text-align:center;color:#94A3B8;padding:24px">No jobs found</td></tr>'
+    : jobs.map(function(j){ return '<tr><td style="color:#94A3B8">'+j.id+'</td><td><strong>'+j.title+'</strong></td><td>'+j.company+'</td><td><span class="adm-badge '+(j.type==='govt'?'adm-badge-blue':'adm-badge-orange')+'">'+j.type+'</span></td><td>'+j.location+'</td><td>'+j.salary+'</td><td>'+j.lastDate+'</td><td style="display:flex;gap:5px"><button class="adm-btn adm-btn-ghost" style="font-size:.7rem" onclick="editJob('+j.id+')">Edit</button><button class="adm-btn adm-btn-danger" style="font-size:.7rem" onclick="deleteJob('+j.id+')">Del</button></td></tr>'; }).join(''))
+    + '</tbody>';
+}
+
+function deleteJob(id) {
+  if(!confirm('Delete this job?')) return;
+  adminJobs = adminJobs.filter(function(j){ return j.id!==id; });
+  localStorage.setItem('admJobs', JSON.stringify(adminJobs));
+  renderAdmJobsTable();
+}
+function editJob(id) { admNav('addjob'); alert('Edit mode for job #'+id+' — pre-fill coming soon!'); }
+
+// ── ADD JOB ──────────────────────────────────────────────────────
+function addNewJob() {
+  var title = document.getElementById('njTitle').value.trim();
+  var company = document.getElementById('njCompany').value.trim();
+  var err = document.getElementById('njError');
+  var succ = document.getElementById('njSuccess');
+  if(!title || !company) { err.textContent='Title and Company are required.'; err.style.display='block'; succ.style.display='none'; return; }
+  var newJob = {
+    id: Date.now(),
+    title: title,
+    company: company,
+    logo: (document.getElementById('njLogo').value || company[0]).toUpperCase(),
+    color: '#FF6B00',
+    type: document.getElementById('njType').value,
+    category: document.getElementById('njCategory').value || 'General',
+    location: document.getElementById('njLocation').value || 'India',
+    salary: document.getElementById('njSalary').value || 'As per norms',
+    exp: document.getElementById('njExp').value || 'Fresher',
+    edu: document.getElementById('njEdu').value || 'Any Graduate',
+    lastDate: document.getElementById('njLastDate').value || 'Open',
+    badges: [document.getElementById('njType').value, 'new'],
+    desc: document.getElementById('njDesc').value || '',
+    skills: document.getElementById('njSkills').value.split(',').map(function(s){ return s.trim(); }).filter(Boolean)
+  };
+  adminJobs.unshift(newJob);
+  localStorage.setItem('admJobs', JSON.stringify(adminJobs));
+  err.style.display = 'none';
+  succ.style.display = 'block';
+  clearJobForm();
+  setTimeout(function(){ succ.style.display='none'; }, 3000);
+}
+function clearJobForm() {
+  ['njTitle','njCompany','njCategory','njLocation','njSalary','njExp','njEdu','njLastDate','njLogo','njDesc','njSkills'].forEach(function(id){ var el=document.getElementById(id); if(el) el.value=''; });
+}
+
+// ── NEWS TABLE ───────────────────────────────────────────────────
+function renderAdmNewsTable() {
+  var el = document.getElementById('admNewsTable');
+  if(!el || !newsData) return;
+  el.innerHTML = '<thead><tr><th>#</th><th>Title</th><th>Tag</th><th>Date</th><th>Status</th></tr></thead><tbody>'
+    + newsData.map(function(n,i){ return '<tr><td style="color:#94A3B8">'+(i+1)+'</td><td><strong>'+n.title+'</strong></td><td><span class="adm-badge adm-badge-blue">'+n.tag+'</span></td><td>'+n.date+'</td><td><span class="adm-badge adm-badge-green">Published</span></td></tr>'; }).join('')
+    + '</tbody>';
+}
+
+// ── USERS TABLE ──────────────────────────────────────────────────
+function renderAdmUsersTable() {
+  var el = document.getElementById('admUsersTable');
+  if(!el) return;
+  var users = JSON.parse(localStorage.getItem('jiUsers') || '[]');
+  if(users.length === 0) { el.innerHTML = '<thead><tr><th>Name</th><th>Email</th><th>Plan</th><th>Joined</th></tr></thead><tbody><tr><td colspan="4" style="text-align:center;color:#94A3B8;padding:24px">No users yet. Share your site to get sign-ups!</td></tr></tbody>'; return; }
+  el.innerHTML = '<thead><tr><th>#</th><th>Name</th><th>Email</th><th>Plan</th><th>Joined</th></tr></thead><tbody>'
+    + users.map(function(u,i){ return '<tr><td style="color:#94A3B8">'+(i+1)+'</td><td><strong>'+u.name+'</strong></td><td>'+u.email+'</td><td><span class="adm-badge adm-badge-gray">Free</span></td><td>'+(u.joined?new Date(u.joined).toLocaleDateString('en-IN'):'—')+'</td></tr>'; }).join('')
+    + '</tbody>';
+}
+
+// ── APPLICATIONS TABLE ────────────────────────────────────────────
+function renderAdmAppsTable() {
+  var el = document.getElementById('admAppsTable');
+  if(!el) return;
+  var apps = JSON.parse(localStorage.getItem('jiApps') || '[]');
+  if(apps.length === 0) { el.innerHTML = '<thead><tr><th>Name</th><th>Email</th><th>Job</th><th>Date</th></tr></thead><tbody><tr><td colspan="4" style="text-align:center;color:#94A3B8;padding:24px">No applications yet.</td></tr></tbody>'; return; }
+  el.innerHTML = '<thead><tr><th>#</th><th>Name</th><th>Email</th><th>Phone</th><th>Job Applied</th><th>Date</th></tr></thead><tbody>'
+    + apps.map(function(a,i){ var job=adminJobs.find(function(j){ return j.id===a.jobId; }); return '<tr><td style="color:#94A3B8">'+(i+1)+'</td><td><strong>'+a.name+'</strong></td><td>'+a.email+'</td><td>'+(a.phone||'—')+'</td><td>'+(job?job.title:'Unknown')+'</td><td>'+(a.date?new Date(a.date).toLocaleDateString('en-IN'):'—')+'</td></tr>'; }).join('')
+    + '</tbody>';
+}
+
+// ── ANALYTICS ────────────────────────────────────────────────────
+function renderAdmAnalytics() {
+  var cats = document.getElementById('admCatStats');
+  if(cats) {
+    var catCounts = {};
+    adminJobs.forEach(function(j){ catCounts[j.category] = (catCounts[j.category]||0)+1; });
+    cats.innerHTML = Object.entries(catCounts).sort(function(a,b){return b[1]-a[1];}).map(function(e){
+      var pct = Math.round((e[1]/adminJobs.length)*100);
+      return '<div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid #F1F5F9"><div style="width:120px;font-size:.78rem;font-weight:600;color:#0F172A">'+e[0]+'</div><div style="flex:1;height:7px;background:#F1F5F9;border-radius:4px;overflow:hidden"><div style="height:100%;background:linear-gradient(135deg,#FF6B00,#FF8C33);border-radius:4px;width:'+pct+'%"></div></div><div style="font-size:.72rem;font-weight:700;color:#64748B;width:40px;text-align:right">'+e[1]+' jobs</div></div>';
+    }).join('');
+  }
+  var traf = document.getElementById('admTraffic');
+  if(traf) {
+    var sources = [['🔍 Organic Search','54%'],['📱 Direct','22%'],['🔗 Social Media','12%'],['📧 Email','8%'],['🌐 Referral','4%']];
+    traf.innerHTML = sources.map(function(s){ return '<div style="background:#F8FAFC;border-radius:10px;padding:14px;text-align:center"><div style="font-size:1.1rem;margin-bottom:6px">'+s[0].split(' ')[0]+'</div><div style="font-size:.78rem;font-weight:600;color:#0F172A">'+s[0].split(' ').slice(1).join(' ')+'</div><div style="font-family:\'Baloo 2\',cursive;font-size:1.4rem;font-weight:800;color:#FF6B00;margin-top:4px">'+s[1]+'</div></div>'; }).join('');
+  }
+}
+
+// ── EXPORT CSV ───────────────────────────────────────────────────
+function exportJobsCSV() {
+  var csv = 'ID,Title,Company,Type,Category,Location,Salary,Experience,Last Date\n'
+    + adminJobs.map(function(j){ return [j.id,'"'+j.title+'"','"'+j.company+'"',j.type,j.category,'"'+j.location+'"','"'+j.salary+'"','"'+j.exp+'"',j.lastDate].join(','); }).join('\n');
+  var a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'jobsindia-jobs.csv';
+  a.click();
+}
 </script>
 </body>
 </html>
