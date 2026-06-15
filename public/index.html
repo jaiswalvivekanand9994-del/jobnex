@@ -74,7 +74,7 @@ a{text-decoration:none;color:inherit}button{cursor:pointer;border:none;backgroun
 .snav-links{display:flex;align-items:center;gap:3px}
 .snav-link{padding:7px 11px;border-radius:8px;color:rgba(255,255,255,.68);font-size:.78rem;font-weight:500;cursor:pointer;transition:var(--tr)}
 .snav-link:hover,.snav-link.active{background:rgba(255,107,43,.15);color:var(--sf2)}
-.snav-acts{display:flex;align-items:center;gap:7px}
+.snav-acts{display:flex;align-items:center;gap:12px}
 .sicon-btn{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:var(--tr);color:rgba(255,255,255,.7);font-size:.85rem}
 .sicon-btn:hover{background:rgba(255,107,43,.2);color:var(--sf2)}
 .slang-btn{padding:5px 10px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.75);font-size:.72rem;font-weight:700;cursor:pointer;transition:var(--tr)}
@@ -140,8 +140,11 @@ a{text-decoration:none;color:inherit}button{cursor:pointer;border:none;backgroun
 .auth-divider{display:flex;align-items:center;gap:10px;margin:14px 0}
 .auth-divider span{font-size:.7rem;color:rgba(255,255,255,.25)}
 .auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08)}
-.auth-google{width:100%;padding:10px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.75);font-size:.82rem;font-weight:600;cursor:pointer;font-family:var(--sans);transition:var(--tr);display:flex;align-items:center;justify-content:center;gap:8px}
-.auth-google:hover{background:rgba(255,255,255,.1);color:#fff}
+.auth-google{width:100%;padding:11px;border-radius:100px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:.88rem;font-weight:600;cursor:pointer;font-family:var(--sans);transition:all 0.2s ease;display:flex;align-items:center;justify-content:center;gap:10px;position:relative;overflow:hidden}
+.auth-google:hover,.auth-google:focus{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.3);outline:none;transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.15)}
+.auth-google:active{transform:translateY(0) scale(0.98);box-shadow:none}
+.auth-google.loading{opacity:0.8;pointer-events:none}
+.auth-google svg{width:18px;height:18px}
 .auth-switch{text-align:center;margin-top:14px;font-size:.75rem;color:rgba(255,255,255,.4)}
 .auth-switch span{color:var(--sf2);cursor:pointer;font-weight:700}
 .auth-switch span:hover{text-decoration:underline}
@@ -692,6 +695,52 @@ tbody tr:hover td{background:rgba(255,255,255,0.02);color:var(--tx)}
 .pwd-cat-card ul { list-style: disc; margin: 0; padding-left: 20px; color: var(--tx2); font-size: .85rem; line-height: 1.6; }
 @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 @media(max-width: 768px) { .pwd-ai-box { flex-direction: column; align-items: stretch; } .pwd-ai-box button { margin-top: 8px; justify-content: center; } .pwd-cat-panel { padding: 16px; } }
+/* AI Smart Chat Widget */
+.ai-chat-btn { position: fixed; bottom: 24px; right: 24px; width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--sf), var(--sf2)); color: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(255,107,43,0.4); cursor: pointer; z-index: 9999; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.ai-chat-btn:hover { transform: scale(1.1); }
+.ai-chat-btn svg { width: 32px; height: 32px; fill: none; stroke: currentColor; stroke-width: 2; }
+.ai-chat-window { position: fixed; bottom: 100px; right: 24px; width: 320px; height: 420px; background: #fff; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); display: flex; flex-direction: column; z-index: 9998; overflow: hidden; transform: translateY(20px); opacity: 0; pointer-events: none; transition: all 0.3s ease; border: 1px solid var(--bd); }
+.ai-chat-window.show { transform: translateY(0); opacity: 1; pointer-events: auto; }
+.ai-chat-head { padding: 16px 20px; background: #fff; border-bottom: 1px solid var(--bd); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.ai-chat-tit { font-weight: 800; font-family: var(--disp); font-size: 1.2rem; display: flex; align-items: center; gap: 8px; color: var(--tx1); }
+.ai-chat-tit span { display: inline-block; width: 10px; height: 10px; background: #10b981; border-radius: 50%; box-shadow: 0 0 10px rgba(16,185,129,0.5); }
+.ai-chat-close { cursor: pointer; color: var(--tx3); transition: 0.2s; padding: 4px; border-radius: 6px; }
+.ai-chat-close:hover { background: #f1f5f9; color: var(--tx1); }
+.ai-lang-toggle { font-size: 0.8rem; font-weight: 600; color: var(--tx2); background: #f1f5f9; padding: 4px 10px; border-radius: 12px; cursor: pointer; border: 1px solid var(--bd); transition: 0.2s;}
+.ai-lang-toggle:hover { border-color: var(--tx3); color: var(--tx1); }
+.ai-chat-body { flex: 1; padding: 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; background: #fcfcfc; scrollbar-width: thin; }
+.ai-msg { max-width: 88%; padding: 14px 18px; border-radius: 16px; font-size: 0.95rem; line-height: 1.5; font-family: var(--sans); }
+.ai-msg.bot { background: #fff; color: var(--tx1); align-self: flex-start; border-bottom-left-radius: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.04); border: 1px solid var(--bd); }
+.ai-msg.user { background: var(--nv); color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; box-shadow: 0 4px 12px rgba(10,45,66,0.15); }
+.ai-sugg-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.ai-chip { background: #fff; border: 1px solid var(--bd); color: var(--tx2); font-size: 0.8rem; font-weight: 600; padding: 6px 12px; border-radius: 100px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+.ai-chip:hover { border-color: var(--sf); color: var(--sf); transform: translateY(-1px); }
+.ai-chat-foot { padding: 16px; background: #fff; border-top: 1px solid var(--bd); display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
+.ai-chat-inp-wrap { display: flex; align-items: center; background: #f8fafc; border: 1px solid var(--bd); border-radius: 100px; padding: 4px 8px; transition: 0.2s; }
+.ai-chat-inp-wrap:focus-within { border-color: var(--nv); background: #fff; box-shadow: 0 0 0 3px rgba(10,45,66,0.1); }
+.ai-chat-inp { flex: 1; background: transparent; border: none; padding: 10px 12px; font-size: 0.95rem; outline: none; font-family: var(--sans); color: var(--tx1); }
+.ai-voice-btn { width: 36px; height: 36px; border-radius: 50%; color: var(--tx3); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
+.ai-voice-btn:hover { color: var(--sf); background: rgba(255,107,43,0.1); }
+.ai-chat-send { width: 40px; height: 40px; border-radius: 50%; background: var(--nv); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; transition: 0.2s; margin-left: 4px; }
+.ai-chat-send:hover { background: #0a2d42; transform: scale(1.05); }
+.ai-bot-rich { margin-top: 10px; background: #fff; border: 1px solid #cbd5e1; border-radius: 12px; padding: 12px; font-size: 0.85rem; box-shadow: 0 4px 10px rgba(0,0,0,0.04); transition: all 0.2s ease; }
+.ai-bot-rich:hover { border-color: var(--sf); box-shadow: 0 6px 16px rgba(255,107,43,0.1); }
+.ai-bot-rich strong { display: block; margin-bottom: 6px; color: var(--nv); font-size: 0.95rem; font-weight: 800; }
+.ai-bot-rich ul { padding-left: 18px; margin: 0; color: #475569; line-height: 1.5; font-weight: 500; }
+.ai-typing { display: flex; gap: 4px; align-items: center; height: 20px; }
+.ai-typing span { width: 6px; height: 6px; background: var(--tx3); border-radius: 50%; animation: aiBounce 1.4s infinite ease-in-out both; }
+.ai-typing span:nth-child(1) { animation-delay: -0.32s; }
+.ai-typing span:nth-child(2) { animation-delay: -0.16s; }
+@keyframes aiBounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+@media(max-width: 480px) { .ai-chat-window { bottom: 0; right: 0; width: 100%; height: 100%; border-radius: 0; } .ai-chat-btn { bottom: 20px; right: 20px; } }
+/* Settings Tabs */
+.st-tabs { display: flex; gap: 8px; margin-bottom: 24px; border-bottom: 1px solid var(--bd); padding-bottom: 8px; overflow-x: auto; scrollbar-width: none; }
+.st-tabs::-webkit-scrollbar { display: none; }
+.st-tab { padding: 10px 16px; font-size: 0.85rem; font-weight: 600; color: var(--tx2); background: transparent; border: none; cursor: pointer; border-radius: var(--r); transition: 0.2s; white-space: nowrap; }
+.st-tab:hover { background: var(--bg3); color: var(--tx1); }
+.st-tab.active { background: var(--bg3); color: var(--sf); box-shadow: inset 0 -2px 0 var(--sf); }
+.st-panel { display: none; animation: fadeIn 0.3s ease; }
+.st-panel.show { display: block; }
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebSite","name":"JobNex.in","url":"https://jobnex.in","description":"India AI-Powered Job Portal — 12000+ Govt Jobs","potentialAction":{"@type":"SearchAction","target":"https://jobnex.in/?q={search_term_string}","query-input":"required name=search_term_string"}}
@@ -792,8 +841,6 @@ function updatePreview() {
 
   </div>
   <div class="snav-acts">
-    <button class="sicon-btn" onclick="toggleDark()" title="Dark mode">🌙</button>
-    <button class="slang-btn" id="langBtn" onclick="toggleLang()">🇮🇳 हिंदी</button>
     <div id="authBtns" style="display:flex;gap:6px">
       <button class="s-login-btn" onclick="openAuth('login')">Log In</button>
       <button class="s-signup-btn" onclick="openAuth('signup')">Sign Up →</button>
@@ -1429,8 +1476,8 @@ function updatePreview() {
         <div style="text-align:right;margin:-6px 0 12px"><span style="font-size:.72rem;color:var(--sf2);cursor:pointer" onclick="showToast('Reset Password','Check your email for reset link.','info')">Forgot password?</span></div>
         <button class="auth-submit" onclick="doSiteLogin()">Log In →</button>
         <div class="auth-divider"><span>or</span></div>
-        <button class="auth-google" onclick="showToast('Google Login','Coming soon!','info')">
-          <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#EA4335" d="M5.27 9.76A7.08 7.08 0 0 1 12 4.9c1.69 0 3.21.6 4.4 1.58l3.28-3.28A11.94 11.94 0 0 0 12 1 11.99 11.99 0 0 0 1.24 7.65l4.03 3.1z"/><path fill="#34A853" d="M16.04 18.01A7.07 7.07 0 0 1 12 19.1a7.08 7.08 0 0 1-6.72-4.82l-4.06 3.13A12 12 0 0 0 12 23c3.17 0 6.1-1.17 8.33-3.09l-4.29-1.9z"/><path fill="#4A90D9" d="M20.89 12.22c0-.73-.06-1.27-.19-1.82H12v3.27h5.12a4.6 4.6 0 0 1-1.95 2.97l4.29 1.9C21.39 16.64 20.89 14.62 20.89 12.22z"/><path fill="#FBBC05" d="M5.28 14.28A7.15 7.15 0 0 1 4.9 12c0-.8.14-1.56.38-2.28l-4.03-3.1A11.95 11.95 0 0 0 0 12c0 1.92.45 3.73 1.24 5.35l4.04-3.07z"/></svg>
+        <button class="auth-google" id="googleBtn1" onclick="doGoogleAuth('login', this)">
+          <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
           Continue with Google
         </button>
         <div class="auth-switch">Don't have an account? <span onclick="switchAuthTab('signup')">Sign Up free</span></div>
@@ -1443,8 +1490,8 @@ function updatePreview() {
         <div class="auth-fg"><label class="auth-lbl">Password</label><input type="password" class="auth-inp" id="siteSignupPass" placeholder="Minimum 6 characters" onkeydown="if(event.key==='Enter')doSiteSignup()"></div>
         <button class="auth-submit" onclick="doSiteSignup()">Create Free Account →</button>
         <div class="auth-divider"><span>or</span></div>
-        <button class="auth-google" onclick="showToast('Google Signup','Coming soon!','info')">
-          <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#EA4335" d="M5.27 9.76A7.08 7.08 0 0 1 12 4.9c1.69 0 3.21.6 4.4 1.58l3.28-3.28A11.94 11.94 0 0 0 12 1 11.99 11.99 0 0 0 1.24 7.65l4.03 3.1z"/><path fill="#34A853" d="M16.04 18.01A7.07 7.07 0 0 1 12 19.1a7.08 7.08 0 0 1-6.72-4.82l-4.06 3.13A12 12 0 0 0 12 23c3.17 0 6.1-1.17 8.33-3.09l-4.29-1.9z"/><path fill="#4A90D9" d="M20.89 12.22c0-.73-.06-1.27-.19-1.82H12v3.27h5.12a4.6 4.6 0 0 1-1.95 2.97l4.29 1.9C21.39 16.64 20.89 14.62 20.89 12.22z"/><path fill="#FBBC05" d="M5.28 14.28A7.15 7.15 0 0 1 4.9 12c0-.8.14-1.56.38-2.28l-4.03-3.1A11.95 11.95 0 0 0 0 12c0 1.92.45 3.73 1.24 5.35l4.04-3.07z"/></svg>
+        <button class="auth-google" id="googleBtn2" onclick="doGoogleAuth('signup', this)">
+          <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
           Continue with Google
         </button>
         <div class="auth-switch">Already have an account? <span onclick="switchAuthTab('login')">Log In</span></div>
@@ -1517,6 +1564,7 @@ function updatePreview() {
   <div class="sbi" onclick="nav('push-notif')"><svg class="sbic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Push Notifications<span class="sbbadge">New</span></div>
   <div class="sbi" onclick="nav('whatsapp')"><svg class="sbic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8A8.5 8.5 0 0 1 3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 8.5-8.5h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp Alerts</div>
   <div class="sbi" onclick="nav('ai-matcher')"><svg class="sbic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/></svg>AI Job Matcher<span class="sbbadge b">AI</span></div>
+  <div class="sbi" onclick="nav('ai-chat')"><svg class="sbic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>AI Smart Chat<span class="sbbadge b">Bot</span></div>
   <div class="sb-sec">Monitor</div>
   <div class="sbi" onclick="nav('live-monitor')"><svg class="sbic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Live Monitor<span class="sbbadge g">Live</span></div>
   <div class="sbi" onclick="nav('support')"><svg class="sbic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Support Tickets<span class="sbbadge">12</span></div>
@@ -1749,7 +1797,199 @@ function updatePreview() {
   </div>
   <div class="acard"><div class="acard-tit">All Invoices</div><div class="atbl"><table><thead><tr><th>Invoice #</th><th>Customer</th><th>Amount</th><th>Plan</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody id="invTbl"></tbody></table></div></div>
 </div>
-  <div class="apage" id="page-settings"><div class="aph"><div><h2>⚙️ Settings</h2><p>Site preferences and configuration</p></div></div><div class="ag2"><div class="acard"><div class="acard-tit">Site Information</div><div class="arow"><div><label class="albl">Site Name</label><input type="text" class="ainp" value="JobNex.in"></div></div><div class="arow"><div><label class="albl">Contact Email</label><input type="email" class="ainp" value="support@jobnex.in"></div></div><div class="arow"><div><label class="albl">Google Analytics ID</label><input type="text" class="ainp" placeholder="G-XXXXXXXXXX"></div></div><div class="arow"><div><label class="albl">Razorpay Key ID</label><input type="text" class="ainp" placeholder="rzp_live_xxxxxxxx"></div></div><div class="arow"><div><label class="albl">Twilio SID (WhatsApp)</label><input type="text" class="ainp" placeholder="ACxxxxxxxxxxxxxxxx"></div></div><div class="arow"><div><label class="albl">SMTP Host (Nodemailer)</label><input type="text" class="ainp" placeholder="smtp.gmail.com"></div></div><button class="abtn ab-p" onclick="showToast('Settings Saved','Site config updated.','ok')" style="margin-top:4px">Save Changes</button></div><div class="acard"><div class="acard-tit">Feature Toggles</div><div class="atg-row"><span class="atg-lbl">🤖 AI Job Matching</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div><div class="atg-row"><span class="atg-lbl">📧 Email Notifications</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div><div class="atg-row"><span class="atg-lbl">💬 WhatsApp Alerts</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div><div class="atg-row"><span class="atg-lbl">🔔 Push Notifications</span><label class="toggle"><input type="checkbox"><div class="tg-tr"></div><div class="tg-th"></div></label></div><div class="atg-row"><span class="atg-lbl">💰 Google AdSense</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div><div class="atg-row"><span class="atg-lbl">♿ Accessibility Mode</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div><div class="atg-row"><span class="atg-lbl">🌐 Hindi Language</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div><div class="atg-row"><span class="atg-lbl">🔧 Maintenance Mode</span><label class="toggle"><input type="checkbox"><div class="tg-tr"></div><div class="tg-th"></div></label></div></div></div></div>
+  <div class="apage" id="page-ai-chat">
+    <div class="aph">
+      <div><h2>🤖 Enterprise AI Control Center</h2><p>Manage RAG Knowledge, Integrations, and Analytics</p></div>
+      <div style="display:flex;gap:6px"><button class="abtn ab-p ab-sm" onclick="showToast('Syncing','Triggering Vector DB Sync...','info')">🔄 Sync Knowledge</button></div>
+    </div>
+    
+    <div class="astats" style="margin-bottom:14px">
+      <div class="astat"><div class="asl">Total Conversations</div><div class="asv">14.2K</div><span class="adelta dup">↑ 12%</span></div>
+      <div class="astat"><div class="asl">AI Accuracy Score</div><div class="asv">98.4%</div><span class="adelta dup">High</span></div>
+      <div class="astat"><div class="asl">Indexed Documents</div><div class="asv">1,840</div><span class="adelta dup">+42 this week</span></div>
+      <div class="astat"><div class="asl">Failed Queries</div><div class="asv">1.2%</div><span class="adelta" style="color:var(--gd)">Needs Review</span></div>
+    </div>
+
+    <div class="ag2">
+      <!-- Knowledge Base Manager -->
+      <div class="acard" style="grid-column: 1 / -1;">
+        <div class="acard-tit" style="display:flex;justify-content:space-between">
+          Knowledge Base Manager
+          <button class="abtn ab-g ab-sm" onclick="showToast('Upload','Select PDF or DOCX file to index','info')">Upload Document</button>
+        </div>
+        <div class="atbl">
+          <table>
+            <thead><tr><th>Document Source</th><th>Type</th><th>Tokens</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr><td>SSC CGL 2025 Official Notification</td><td><span class="sbbadge r">PDF</span></td><td>24,500</td><td><span class="sbbadge g">Indexed</span></td><td style="color:var(--sf);cursor:pointer;font-weight:600">Re-index</td></tr>
+              <tr><td>UPPSC PwD Guidelines 2024</td><td><span class="sbbadge b">DOCX</span></td><td>8,200</td><td><span class="sbbadge g">Indexed</span></td><td style="color:var(--sf);cursor:pointer;font-weight:600">Re-index</td></tr>
+              <tr><td>Railway RRB NTPC FAQ</td><td><span class="sbbadge">URL</span></td><td>12,100</td><td><span class="sbbadge y">Syncing...</span></td><td style="color:var(--sf);cursor:pointer;font-weight:600">Cancel</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Settings & Integrations -->
+      <div class="acard">
+        <div class="acard-tit">Prompt & Integrations</div>
+        <div class="arow"><div><label class="albl">System Prompt (Role)</label><textarea class="ainp" style="height:60px;resize:none">You are a highly intelligent Government Job expert. You must only provide verified information.</textarea></div></div>
+        <div class="arow">
+          <div>
+            <label class="albl">RAG Strictness / Creativity</label>
+            <input type="range" min="0" max="100" value="20" style="width:100%;margin-top:6px">
+            <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--tx3);margin-top:4px"><span>Strict (Facts Only)</span><span>Creative</span></div>
+          </div>
+        </div>
+        <div class="atg-row" style="margin-top:12px"><span class="atg-lbl">WhatsApp AI Bot Integration</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+        <div class="atg-row"><span class="atg-lbl">Multilingual Auto-Translate</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+        <button class="abtn ab-p" onclick="showToast('AI Settings Saved','Configuration updated successfully.','ok')" style="margin-top:8px">Save Configuration</button>
+      </div>
+
+      <!-- Live Logs -->
+      <div class="acard">
+        <div class="acard-tit">Live Conversations Log</div>
+        <div class="atbl">
+          <table>
+            <thead><tr><th>User</th><th>Intent Detected</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>Guest_892</td><td><span style="font-size:0.8rem;font-weight:600">Job Search (SSC)</span></td><td><span class="sbbadge g">Active</span></td></tr>
+              <tr><td>Priya M.</td><td><span style="font-size:0.8rem;font-weight:600">Document Validation</span></td><td><span class="sbbadge g">Active</span></td></tr>
+              <tr><td>Rahul K.</td><td><span style="font-size:0.8rem;font-weight:600">Eligibility Query</span></td><td><span class="sbbadge">Closed</span></td></tr>
+              <tr><td>Sunita V.</td><td><span style="font-size:0.8rem;font-weight:600">PwD Quota Query</span></td><td><span class="sbbadge">Closed</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="apage" id="page-settings">
+    <div class="aph">
+      <div><h2>⚙️ Enterprise Settings</h2><p>Platform configuration and modules</p></div>
+    </div>
+    <div class="st-tabs">
+      <button class="st-tab active" onclick="switchSettingsTab('st-general', this)">General & Branding</button>
+      <button class="st-tab" onclick="switchSettingsTab('st-seo', this)">SEO Settings</button>
+      <button class="st-tab" onclick="switchSettingsTab('st-email', this)">Email / SMTP</button>
+      <button class="st-tab" onclick="switchSettingsTab('st-security', this)">Security Settings</button>
+      <button class="st-tab" onclick="switchSettingsTab('st-api', this)">API Keys</button>
+    </div>
+
+    <!-- Panel 1: General & Branding -->
+    <div id="st-general" class="st-panel show">
+      <div class="ag2">
+        <div class="acard">
+          <div class="acard-tit">Site Information</div>
+          <div class="arow"><div><label class="albl">Site Name</label><input type="text" class="ainp" value="JobNex.in"></div></div>
+          <div class="arow"><div><label class="albl">Tagline</label><input type="text" class="ainp" value="India's #1 Govt Job Portal"></div></div>
+          <div class="arow"><div><label class="albl">Language</label><select class="ainp"><option>English</option><option>Hindi</option></select></div></div>
+          <div class="arow"><div><label class="albl">Timezone</label><select class="ainp"><option>Asia/Kolkata (IST)</option></select></div></div>
+          <button class="abtn ab-p" onclick="showToast('Saved','General settings updated.','ok')" style="margin-top:4px">Save Info</button>
+        </div>
+        <div class="acard">
+          <div class="acard-tit">Branding & Domains</div>
+          <div class="arow"><div><label class="albl">Logo (Light / Dark)</label><div style="display:flex;gap:10px"><button class="abtn ab-g ab-sm">Upload Light Logo</button><button class="abtn ab-g ab-sm">Upload Dark Logo</button></div></div></div>
+          <div class="arow"><div><label class="albl">Favicon</label><button class="abtn ab-g ab-sm">Upload Favicon</button></div></div>
+          <div class="arow" style="margin-top:10px"><div><label class="albl">Primary Domain</label><input type="text" class="ainp" value="jobnex.in"></div></div>
+          <div class="arow"><div><label class="albl">SSL Status</label><div style="color:var(--em);font-size:0.8rem;font-weight:700">🔒 Active (Auto-renews)</div></div></div>
+        </div>
+        <div class="acard" style="grid-column: 1/-1;">
+          <div class="acard-tit">Feature Toggles</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+            <div>
+              <div class="atg-row"><span class="atg-lbl">🤖 AI Job Matching</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+              <div class="atg-row"><span class="atg-lbl">💬 WhatsApp Alerts</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+              <div class="atg-row"><span class="atg-lbl">♿ Accessibility Mode</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+            </div>
+            <div>
+              <div class="atg-row"><span class="atg-lbl">💰 Google AdSense</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+              <div class="atg-row"><span class="atg-lbl">🔔 Push Notifications</span><label class="toggle"><input type="checkbox"><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+              <div class="atg-row"><span class="atg-lbl">🔧 Maintenance Mode</span><label class="toggle"><input type="checkbox"><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 2: SEO Settings -->
+    <div id="st-seo" class="st-panel">
+      <div class="ag2">
+        <div class="acard">
+          <div class="acard-tit">Meta Configuration</div>
+          <div class="arow"><div><label class="albl">Global Meta Title</label><input type="text" class="ainp" value="JobNex - Sarkari Naukri & Govt Jobs"></div></div>
+          <div class="arow"><div><label class="albl">Meta Description</label><textarea class="ainp" style="height:80px">Find the latest Govt Jobs, SSC, UPSC, and Banking recruitment notifications.</textarea></div></div>
+          <div class="arow"><div><label class="albl">Global Keywords</label><input type="text" class="ainp" value="sarkari naukri, govt jobs, ssc, upsc"></div></div>
+          <button class="abtn ab-p" onclick="showToast('Saved','SEO settings updated.','ok')" style="margin-top:4px">Save SEO</button>
+        </div>
+        <div class="acard">
+          <div class="acard-tit">Open Graph & Social</div>
+          <div class="arow"><div><label class="albl">OG:Title</label><input type="text" class="ainp" value="JobNex - Best Govt Job Portal"></div></div>
+          <div class="arow"><div><label class="albl">OG:Image URL</label><input type="text" class="ainp" value="https://jobnex.in/og-banner.jpg"></div></div>
+          <div class="atg-row" style="margin-top:10px"><span class="atg-lbl">Auto-generate Sitemap</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 3: Email / SMTP -->
+    <div id="st-email" class="st-panel">
+      <div class="ag2">
+        <div class="acard">
+          <div class="acard-tit">SMTP Configuration</div>
+          <div class="arow"><div><label class="albl">SMTP Host</label><input type="text" class="ainp" value="smtp.sendgrid.net"></div></div>
+          <div class="arow"><div><label class="albl">SMTP Port</label><input type="text" class="ainp" value="587"></div></div>
+          <div class="arow"><div><label class="albl">SMTP Username</label><input type="text" class="ainp" value="apikey"></div></div>
+          <div class="arow"><div><label class="albl">SMTP Password</label><input type="password" class="ainp" value="**********"></div></div>
+          <button class="abtn ab-p" onclick="showToast('Saved','SMTP credentials saved.','ok')" style="margin-top:4px">Save Credentials</button>
+        </div>
+        <div class="acard">
+          <div class="acard-tit">Sender Info & Test</div>
+          <div class="arow"><div><label class="albl">From Name</label><input type="text" class="ainp" value="JobNex Support"></div></div>
+          <div class="arow"><div><label class="albl">From Email</label><input type="email" class="ainp" value="no-reply@jobnex.in"></div></div>
+          <hr style="border:0;border-top:1px solid var(--bd);margin:20px 0">
+          <div class="arow"><div><label class="albl">Send Test Email To</label><input type="email" class="ainp" placeholder="admin@example.com"></div></div>
+          <button class="abtn ab-g" onclick="showToast('Email Sent','Test email dispatched successfully!','ok')">Send Test Email</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 4: Security Settings -->
+    <div id="st-security" class="st-panel">
+      <div class="ag2">
+        <div class="acard">
+          <div class="acard-tit">Admin Security</div>
+          <div class="atg-row"><span class="atg-lbl">Require 2FA for Admin Login</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="atg-row"><span class="atg-lbl">Lock out after 5 failed attempts</span><label class="toggle"><input type="checkbox" checked><div class="tg-tr"></div><div class="tg-th"></div></label></div>
+          <div class="arow" style="margin-top:12px"><div><label class="albl">Session Timeout (Minutes)</label><input type="number" class="ainp" value="120"></div></div>
+          <button class="abtn ab-p" onclick="showToast('Saved','Security config updated.','ok')" style="margin-top:4px">Save Security Options</button>
+        </div>
+        <div class="acard">
+          <div class="acard-tit">Rate Limiting & Firewall</div>
+          <div class="arow"><div><label class="albl">Global Rate Limit (Reqs/Min)</label><input type="number" class="ainp" value="1000"></div></div>
+          <div class="arow"><div><label class="albl">API Rate Limit (Reqs/Min)</label><input type="number" class="ainp" value="300"></div></div>
+          <div class="arow"><div><label class="albl">Blocked IPs</label><textarea class="ainp" style="height:60px" placeholder="Enter IP addresses separated by commas..."></textarea></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 5: API Keys -->
+    <div id="st-api" class="st-panel">
+      <div class="acard">
+        <div class="acard-tit" style="display:flex;justify-content:space-between">
+          Active API Keys
+          <button class="abtn ab-g ab-sm" onclick="showToast('Key Generated','New API Key created.','ok')">+ Generate New Key</button>
+        </div>
+        <div class="atbl">
+          <table>
+            <thead><tr><th>Name</th><th>Key Prefix</th><th>Permissions</th><th>Created</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr><td>Mobile App V1</td><td><code>pk_live_8F2a...</code></td><td><span class="sbbadge b">Full Access</span></td><td>Oct 12, 2025</td><td><span class="sbbadge g">Active</span></td><td style="color:var(--sf);cursor:pointer">Revoke</td></tr>
+              <tr><td>Partner Portal Integration</td><td><code>pk_live_4C9x...</code></td><td><span class="sbbadge">Read Only</span></td><td>Nov 03, 2025</td><td><span class="sbbadge g">Active</span></td><td style="color:var(--sf);cursor:pointer">Revoke</td></tr>
+              <tr><td>Legacy Crawler</td><td><code>pk_test_9A1b...</code></td><td><span class="sbbadge r">Deprecated</span></td><td>Jan 15, 2024</td><td><span class="sbbadge">Revoked</span></td><td style="color:var(--sf);cursor:pointer">Delete</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ALL REMAINING ADMIN STUB PAGES -->
   <div class="apage" id="page-news">
@@ -1969,6 +2209,37 @@ function updatePreview() {
   </div>
 </div>
 
+<!-- AI SMART CHAT WIDGET -->
+<div class="ai-chat-btn" onclick="toggleAiChat()">
+  <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M9 10h.01M15 10h.01"></path></svg>
+</div>
+
+<div class="ai-chat-window" id="aiChatWindow">
+  <div class="ai-chat-head">
+    <div class="ai-chat-tit"><span></span> JobNex AI</div>
+    <div style="display:flex; gap:12px; align-items:center;">
+      <div class="ai-lang-toggle" onclick="showToast('Language Changed','Switched to Hindi.','ok')">A/अ</div>
+      <div class="ai-chat-close" onclick="toggleAiChat()">✕</div>
+    </div>
+  </div>
+  <div class="ai-chat-body" id="aiChatBody">
+    <div class="ai-msg bot">Hello! I'm JobNex AI, your Enterprise Job Assistant. How can I help you discover govt jobs today?</div>
+  </div>
+  <div class="ai-chat-foot">
+    <div class="ai-sugg-chips">
+      <div class="ai-chip" onclick="quickAsk('Find PwD Jobs in UP')">PwD Jobs UP</div>
+      <div class="ai-chip" onclick="quickAsk('Checklist for SSC CGL')">SSC Checklist</div>
+      <div class="ai-chip" onclick="quickAsk('UPSC age limit?')">UPSC Age Limit</div>
+    </div>
+    <div class="ai-chat-inp-wrap">
+      <div class="ai-voice-btn" onclick="showToast('Listening...','Voice search activated. Speak now.','info')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg></div>
+      <input type="text" class="ai-chat-inp" id="aiChatInp" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter')sendAiMessage()">
+      <button class="ai-chat-send" onclick="sendAiMessage()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+      </button>
+    </div>
+  </div>
+</div>
 
 <script>
 // ============ DATA ============
@@ -2044,6 +2315,20 @@ function showPage(id) {
 }
 
 function goBack() { showPage(prevPage || 'latest'); }
+
+function switchSettingsTab(tabId, btnElement) {
+  // Hide all panels
+  var panels = document.querySelectorAll('#page-settings .st-panel');
+  panels.forEach(function(p) { p.classList.remove('show'); });
+  
+  // Remove active state from tabs
+  var tabs = document.querySelectorAll('#page-settings .st-tab');
+  tabs.forEach(function(t) { t.classList.remove('active'); });
+  
+  // Show target panel and activate button
+  document.getElementById(tabId).classList.add('show');
+  btnElement.classList.add('active');
+}
 
 // ============ JOB CARD ============
 function renderJobCard(job, showFull) {
@@ -2526,6 +2811,33 @@ function switchAuthTab(tab) {
   document.getElementById('signupTab').classList.toggle('active', tab==='signup');
   document.getElementById('authSubtitle').textContent = tab==='login' ? 'Welcome back! Log in to your account' : 'Create your free JobNex.in account';
   document.getElementById('authErr').style.display = 'none';
+}
+
+function doGoogleAuth(type, btn) {
+  var origHtml = btn.innerHTML;
+  btn.classList.add('loading');
+  btn.innerHTML = '<span class="ld" style="margin-right:8px;background:#fff"></span> Connecting...';
+  
+  setTimeout(function() {
+    var users = JSON.parse(localStorage.getItem('siteUsers') || '[]');
+    var user = users.find(function(u){ return u.email==='google_user@gmail.com'; });
+    
+    if(!user) {
+      user = { name: 'Google User', email: 'google_user@gmail.com', phone: '', password: '', plan: 'free', joined: new Date().toISOString() };
+      users.push(user);
+      localStorage.setItem('siteUsers', JSON.stringify(users));
+    }
+    
+    siteUser = user;
+    localStorage.setItem('siteUser', JSON.stringify(user));
+    
+    btn.classList.remove('loading');
+    btn.innerHTML = origHtml;
+    
+    closeAuth();
+    updateAuthUI();
+    showToast('Success!', 'Successfully authenticated with Google.', 'ok');
+  }, 1200);
 }
 
 function doSiteLogin() {
@@ -3409,6 +3721,65 @@ function renderDynamicPage(slug) {
   
   pg.classList.add('active');
   window.scrollTo(0,0);
+}
+
+// ============ AI SMART CHAT ============
+function toggleAiChat() {
+  document.getElementById('aiChatWindow').classList.toggle('show');
+}
+
+function quickAsk(text) {
+  var inp = document.getElementById('aiChatInp');
+  inp.value = text;
+  document.getElementById('aiChatWindow').classList.add('show');
+  sendAiMessage();
+}
+
+function sendAiMessage() {
+  var inp = document.getElementById('aiChatInp');
+  var msg = inp.value.trim();
+  if(!msg) return;
+  inp.value = '';
+  
+  var body = document.getElementById('aiChatBody');
+  var userDiv = document.createElement('div');
+  userDiv.className = 'ai-msg user';
+  userDiv.textContent = msg;
+  body.appendChild(userDiv);
+  body.scrollTop = body.scrollHeight;
+  
+  // Show typing indicator
+  var typingDiv = document.createElement('div');
+  typingDiv.className = 'ai-msg bot ai-typing';
+  typingDiv.innerHTML = '<span></span><span></span><span></span>';
+  body.appendChild(typingDiv);
+  body.scrollTop = body.scrollHeight;
+  
+  // Simulate AI Response
+  setTimeout(function() {
+    body.removeChild(typingDiv);
+    var botDiv = document.createElement('div');
+    botDiv.className = 'ai-msg bot';
+    botDiv.innerHTML = simulateAiResponse(msg);
+    body.appendChild(botDiv);
+    body.scrollTop = body.scrollHeight;
+  }, 1000 + Math.random() * 1000);
+}
+
+function simulateAiResponse(msg) {
+  var m = msg.toLowerCase();
+  if(m.includes('pwd') && m.includes('up')) {
+    return "I found 3 matching PwD vacancies in Uttar Pradesh based on your profile:<div class='ai-bot-rich'><strong>UPPSC RO/ARO 2025</strong><ul><li>3% Locomotor Disability Quota</li><li>Age limit: 21-40 yrs (+10 yrs relaxation)</li><li>Status: <span style='color:green'>Open</span></li></ul></div>Would you like a step-by-step application guide for this?";
+  }
+  if(m.includes('checklist') || m.includes('ssc')) {
+    return "Here is your personalized document checklist for SSC CGL 2025:<div class='ai-bot-rich'><strong>Required Documents</strong><ul><li>Aadhaar Card / Govt ID</li><li>10th & 12th Marksheets</li><li>Graduation Degree Certificate</li><li>Category Certificate (if applicable)</li><li>Passport Photo (Date printed)</li></ul></div>I can validate these if you upload them.";
+  }
+  if(m.includes('upsc') && m.includes('age')) {
+    return "The age limit for UPSC Civil Services 2025 is <strong>21 to 32 years</strong> as of Aug 1, 2025. <br><br>Relaxations apply: OBC (+3 yrs), SC/ST (+5 yrs), PwBD (+10 yrs). Do you want me to calculate your eligibility based on your DOB?";
+  }
+  if(m.includes('resume') || m.includes('cv')) return "I can help optimize your resume to beat ATS tracking. Would you like to upload your current resume?";
+  if(m.includes('hi') || m.includes('hello')) return "Hello! I can help you search for jobs, check eligibility, generate document checklists, or optimize your resume. What do you need?";
+  return "That's a great question! I'm searching my knowledge base of over 12,000 Govt Jobs and Rules... <br><br>While I process that, check out the 'Latest Jobs' section on the homepage.";
 }
 
 // Initial render
